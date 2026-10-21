@@ -1,0 +1,2461 @@
+{
+ "meta": {
+  "id": "EarthHole",
+  "title": "What if you fell into a hole through the Earth?",
+  "fps": 30,
+  "width": 1920,
+  "height": 1080,
+  "music": {
+   "keys": [
+    [
+     0,
+     0.5
+    ],
+    [
+     3,
+     0.8
+    ],
+    [
+     6.5,
+     0.6
+    ],
+    [
+     10,
+     0.35
+    ],
+    [
+     42,
+     0.4
+    ],
+    [
+     86,
+     0.5
+    ],
+    [
+     96,
+     0.6
+    ],
+    [
+     180,
+     0.75
+    ],
+    [
+     222,
+     0.85
+    ],
+    [
+     240,
+     0.6
+    ],
+    [
+     264,
+     0.4
+    ],
+    [
+     282,
+     0.5
+    ],
+    [
+     314,
+     0.35
+    ],
+    [
+     322,
+     0
+    ]
+   ],
+   "root": 49
+  }
+ },
+ "hud": {
+  "telemetry": {
+   "keys": [
+    [
+     3.0,
+     3
+    ],
+    [
+     3.6,
+     40
+    ],
+    [
+     4.2,
+     160
+    ],
+    [
+     4.9,
+     420
+    ],
+    [
+     5.6,
+     800
+    ],
+    [
+     6.5,
+     1145.4
+    ],
+    [
+     9.1,
+     2290.8
+    ],
+    [
+     10.0,
+     2290.8
+    ],
+    [
+     89.2,
+     0
+    ],
+    [
+     96,
+     6.8
+    ],
+    [
+     104,
+     15
+    ],
+    [
+     110,
+     29.4
+    ],
+    [
+     112,
+     33
+    ],
+    [
+     116,
+     47.3
+    ],
+    [
+     119,
+     49.9
+    ],
+    [
+     124,
+     56
+    ],
+    [
+     129,
+     71.8
+    ],
+    [
+     134,
+     85
+    ],
+    [
+     144,
+     280
+    ],
+    [
+     147,
+     288.4
+    ],
+    [
+     158,
+     340
+    ],
+    [
+     162,
+     365.7
+    ],
+    [
+     170,
+     395
+    ],
+    [
+     175,
+     572.7
+    ],
+    [
+     180,
+     740
+    ],
+    [
+     184,
+     763.5
+    ],
+    [
+     196,
+     800
+    ],
+    [
+     210,
+     1000
+    ],
+    [
+     213,
+     1021.1
+    ],
+    [
+     222,
+     1090
+    ],
+    [
+     230,
+     1145.4
+    ],
+    [
+     240,
+     1170
+    ],
+    [
+     252,
+     2150
+    ],
+    [
+     257,
+     2203.3
+    ],
+    [
+     264,
+     2245
+    ],
+    [
+     270,
+     2280
+    ],
+    [
+     276,
+     2290.8
+    ],
+    [
+     279,
+     2292.5
+    ],
+    [
+     282,
+     2296
+    ],
+    [
+     292,
+     12604.6
+    ]
+   ],
+   "start": 3.0,
+   "end": 292
+  }
+ },
+ "segments": [
+  {
+   "id": "pole",
+   "from": 0,
+   "to": 3.0,
+   "scene": "northpole",
+   "params": {
+    "walk": [
+     [
+      0,
+      0
+     ],
+     [
+      1.5,
+      1
+     ]
+    ],
+    "drop": [
+     [
+      0,
+      -1
+     ],
+     [
+      1.55,
+      -1
+     ],
+     [
+      1.5501,
+      0
+     ],
+     [
+      3.0,
+      1.45
+     ]
+    ],
+    "sunElev": 16
+   },
+   "camera": {
+    "path": "keys",
+    "pos": [
+     [
+      0,
+      [
+       7.5,
+       2.4,
+       13
+      ]
+     ],
+     [
+      1.5,
+      [
+       6.0,
+       2.6,
+       10.5
+      ]
+     ],
+     [
+      3.0,
+      [
+       2.2,
+       6.5,
+       6.5
+      ]
+     ]
+    ],
+    "look": [
+     [
+      0,
+      [
+       0,
+       1.0,
+       4
+      ]
+     ],
+     [
+      1.5,
+      [
+       0,
+       0.9,
+       3.6
+      ]
+     ],
+     [
+      3.0,
+      [
+       0,
+       -6,
+       0.5
+      ]
+     ]
+    ],
+    "fov": 42
+   },
+   "effects": {
+    "vignette": 0.4
+   },
+   "hud": {
+    "telemetry": false
+   },
+   "captions": [
+    {
+     "from": 0.2,
+     "to": 3.0,
+     "text": "What if you fell into a hole|through the Earth?",
+     "style": "top"
+    }
+   ],
+   "sfx": [
+    {
+     "at": 0.0,
+     "type": "footsteps",
+     "dur": 1.5,
+     "rate": 1.8,
+     "gain": 0.4
+    },
+    {
+     "at": 1.55,
+     "type": "whoosh",
+     "gain": 0.7
+    }
+   ]
+  },
+  {
+   "id": "plunge",
+   "from": 3.0,
+   "to": 6.5,
+   "scene": "tunnel",
+   "params": {
+    "view": "below",
+    "bloom": 0.6,
+    "s": [
+     [
+      0.0,
+      3
+     ],
+     [
+      0.6,
+      40
+     ],
+     [
+      1.2,
+      160
+     ],
+     [
+      1.9,
+      420
+     ],
+     [
+      2.6,
+      800
+     ],
+     [
+      3.5,
+      1145.4
+     ]
+    ]
+   },
+   "transitionIn": "whip",
+   "effects": {
+    "speedLines": [
+     [
+      0,
+      0.2
+     ],
+     [
+      3.5,
+      0.6
+     ]
+    ],
+    "shake": [
+     [
+      0,
+      0.2
+     ],
+     [
+      3.5,
+      0.6
+     ]
+    ],
+    "vignette": 0.45
+   },
+   "captions": [
+    {
+     "from": 0.3,
+     "to": 3.3,
+     "text": "6,371 km straight down.|No air. No brakes.",
+     "style": "subtle"
+    }
+   ],
+   "sfx": [
+    {
+     "at": 0.0,
+     "type": "riser",
+     "dur": 3.4,
+     "gain": 0.6
+    },
+    {
+     "at": 0.05,
+     "type": "whoosh",
+     "gain": 0.8
+    }
+   ],
+   "ambience": "roar"
+  },
+  {
+   "id": "cut",
+   "from": 6.5,
+   "to": 10.0,
+   "scene": "earthcut",
+   "params": {
+    "labels": 0,
+    "spin": [
+     [
+      0,
+      -20
+     ],
+     [
+      3.5,
+      -5
+     ]
+    ],
+    "s": [
+     [
+      0.0,
+      1145.4
+     ],
+     [
+      2.6,
+      2290.8
+     ],
+     [
+      3.5,
+      2290.8
+     ]
+    ]
+   },
+   "camera": {
+    "path": "keys",
+    "pos": [
+     [
+      0,
+      [
+       21,
+       5,
+       15
+      ]
+     ],
+     [
+      3.5,
+      [
+       18,
+       4,
+       21
+      ]
+     ]
+    ],
+    "look": [
+     [
+      0,
+      [
+       0,
+       0,
+       0
+      ]
+     ],
+     [
+      3.5,
+      [
+       0,
+       0,
+       0
+      ]
+     ]
+    ],
+    "fov": 40
+   },
+   "transitionIn": "flash",
+   "effects": {
+    "vignette": 0.4
+   },
+   "captions": [
+    {
+     "from": 0.3,
+     "to": 2.0,
+     "text": "Through the centre of the Earth\u2026",
+     "style": "subtle"
+    },
+    {
+     "from": 2.0,
+     "to": 3.5,
+     "text": "\u2026and out the other side|in 38 minutes, 11 seconds.",
+     "style": "subtle"
+    }
+   ],
+   "sfx": [
+    {
+     "at": 0.0,
+     "type": "boom",
+     "gain": 0.9
+    },
+    {
+     "at": 0.1,
+     "type": "hum",
+     "dur": 3.3,
+     "gain": 0.4
+    }
+   ]
+  },
+  {
+   "id": "intro",
+   "from": 10,
+   "to": 20,
+   "scene": "earthcut",
+   "params": {
+    "labels": [
+     [
+      0,
+      0
+     ],
+     [
+      1.5,
+      1
+     ]
+    ],
+    "dot": 0,
+    "trail": 0,
+    "spin": [
+     [
+      0,
+      10
+     ],
+     [
+      10,
+      20
+     ]
+    ]
+   },
+   "camera": {
+    "path": "keys",
+    "pos": [
+     [
+      0,
+      [
+       16,
+       3,
+       26
+      ]
+     ],
+     [
+      10,
+      [
+       12,
+       2,
+       30
+      ]
+     ]
+    ],
+    "look": [
+     [
+      0,
+      [
+       0,
+       0,
+       0
+      ]
+     ],
+     [
+      10,
+      [
+       0,
+       0,
+       0
+      ]
+     ]
+    ],
+    "fov": 40
+   },
+   "transitionIn": "dip",
+   "hud": {
+    "telemetry": false
+   },
+   "captions": [
+    {
+     "from": 0.3,
+     "to": 3.8,
+     "text": "To fall through, you'd need a hole|12,742 km long.",
+     "style": "subtle"
+    },
+    {
+     "from": 4.0,
+     "to": 7.0,
+     "text": "The deepest hole ever dug is 12.3 km|(Kola, Russia, 1989).",
+     "style": "subtle"
+    },
+    {
+     "from": 7.0,
+     "to": 10.0,
+     "text": "That's 0.1% of the way.",
+     "style": "subtle"
+    }
+   ],
+   "sfx": [
+    {
+     "at": 0.0,
+     "type": "hum",
+     "dur": 10,
+     "gain": 0.3
+    }
+   ]
+  },
+  {
+   "id": "spin",
+   "from": 20,
+   "to": 36,
+   "scene": "earthcut",
+   "params": {
+    "labels": 0,
+    "dot": 0,
+    "trail": 0,
+    "spin": [
+     [
+      0,
+      0
+     ],
+     [
+      16,
+      160
+     ]
+    ]
+   },
+   "camera": {
+    "path": "keys",
+    "pos": [
+     [
+      0,
+      [
+       26,
+       8,
+       10
+      ]
+     ],
+     [
+      16,
+      [
+       22,
+       6,
+       18
+      ]
+     ]
+    ],
+    "look": [
+     [
+      0,
+      [
+       0,
+       0,
+       0
+      ]
+     ],
+     [
+      16,
+      [
+       0,
+       0,
+       0
+      ]
+     ]
+    ],
+    "fov": 40
+   },
+   "transitionIn": "whip",
+   "hud": {
+    "telemetry": false
+   },
+   "captions": [
+    {
+     "from": 0.1,
+     "to": 3.0,
+     "text": "FIRST: WHERE TO DIG",
+     "style": "top"
+    },
+    {
+     "from": 0.5,
+     "to": 4.5,
+     "text": "Earth spins. At the equator, the ground moves at 1,670 km/h.",
+     "style": "subtle"
+    },
+    {
+     "from": 4.7,
+     "to": 9.5,
+     "text": "Dig anywhere else, and the deep part of your tunnel|moves slower than the top. You'd scrape the walls all the way.",
+     "style": "subtle"
+    },
+    {
+     "from": 9.7,
+     "to": 13.3,
+     "text": "Only one line doesn't swing sideways:|the axis. Pole to pole.",
+     "style": "subtle"
+    },
+    {
+     "from": 13.4,
+     "to": 16.0,
+     "text": "So we start at the North Pole.",
+     "style": "subtle"
+    }
+   ]
+  },
+  {
+   "id": "arctic",
+   "from": 36,
+   "to": 42,
+   "scene": "northpole",
+   "params": {
+    "walk": 0,
+    "drop": -1,
+    "sunElev": 16
+   },
+   "camera": {
+    "path": "keys",
+    "pos": [
+     [
+      0,
+      [
+       30,
+       9,
+       34
+      ]
+     ],
+     [
+      6,
+      [
+       16,
+       5,
+       20
+      ]
+     ]
+    ],
+    "look": [
+     [
+      0,
+      [
+       0,
+       0,
+       2
+      ]
+     ],
+     [
+      6,
+      [
+       0,
+       0.8,
+       3
+      ]
+     ]
+    ],
+    "fov": 40
+   },
+   "transitionIn": "dip",
+   "hud": {
+    "telemetry": false
+   },
+   "captions": [
+    {
+     "from": 0.4,
+     "to": 5.8,
+     "text": "The North Pole: sea ice 2 m thick,|floating on 4,261 m of ocean.",
+     "style": "subtle"
+    }
+   ],
+   "ambience": "wind"
+  },
+  {
+   "id": "air1",
+   "from": 42,
+   "to": 50,
+   "scene": "tunnel",
+   "params": {
+    "depthKm": [
+     [
+      0,
+      0.3
+     ],
+     [
+      8,
+      1.2
+     ]
+    ],
+    "speedKmh": [
+     [
+      0,
+      196.5
+     ],
+     [
+      8,
+      186.3
+     ]
+    ],
+    "haze": [
+     [
+      0,
+      0.08
+     ],
+     [
+      8,
+      0.15
+     ]
+    ],
+    "panic": 0.6,
+    "view": "side",
+    "exposure": 2.2
+   },
+   "hud": {
+    "telemetry": false,
+    "stats": [
+     {
+      "from": 0.3,
+      "to": 8,
+      "label": "SPEED (TERMINAL)",
+      "value": "{n} km/h",
+      "count": [
+       [
+        0,
+        196.47275538217013
+       ],
+       [
+        8,
+        186.25989610984945
+       ]
+      ],
+      "decimals": 0
+     },
+     {
+      "from": 0.3,
+      "to": 8,
+      "label": "AIR DENSITY",
+      "value": "\u00d7{n}",
+      "count": [
+       [
+        0,
+        1.0362279914699473
+       ],
+       [
+        8,
+        1.1529786848722077
+       ]
+      ],
+      "decimals": 1
+     }
+    ]
+   },
+   "transitionIn": "whip",
+   "captions": [
+    {
+     "from": 0.1,
+     "to": 2.6,
+     "text": "PROBLEM 1: AIR",
+     "style": "top"
+    },
+    {
+     "from": 2.6,
+     "to": 7.8,
+     "text": "With air in the tunnel, you'd hit terminal velocity:|about 200 km/h. And then it gets worse.",
+     "style": "subtle"
+    }
+   ],
+   "sfx": [
+    {
+     "at": 0.0,
+     "type": "whoosh",
+     "gain": 0.6
+    }
+   ],
+   "ambience": "wind"
+  },
+  {
+   "id": "air2",
+   "from": 50,
+   "to": 60,
+   "scene": "tunnel",
+   "params": {
+    "depthKm": [
+     [
+      0,
+      8
+     ],
+     [
+      5,
+      25
+     ],
+     [
+      10,
+      45
+     ]
+    ],
+    "speedKmh": [
+     [
+      0,
+      124.4
+     ],
+     [
+      5,
+      45.4
+     ],
+     [
+      10,
+      13.9
+     ]
+    ],
+    "haze": [
+     [
+      0,
+      0.3
+     ],
+     [
+      10,
+      0.7
+     ]
+    ],
+    "view": "side"
+   },
+   "hud": {
+    "telemetry": false,
+    "stats": [
+     {
+      "from": 0.2,
+      "to": 10,
+      "label": "DEPTH",
+      "value": "{n} km",
+      "count": [
+       [
+        0,
+        8
+       ],
+       [
+        5,
+        25
+       ],
+       [
+        10,
+        45
+       ]
+      ],
+      "decimals": 0
+     },
+     {
+      "from": 0.2,
+      "to": 10,
+      "label": "AIR DENSITY",
+      "value": "\u00d7{n}",
+      "count": [
+       [
+        0,
+        2.5831037927310243
+       ],
+       [
+        5,
+        19.406325138710983
+       ],
+       [
+        10,
+        208.11239447533
+       ]
+      ],
+      "decimals": 0
+     },
+     {
+      "from": 0.2,
+      "to": 10,
+      "label": "SPEED (TERMINAL)",
+      "value": "{n} km/h",
+      "count": [
+       [
+        0,
+        124.43973200098749
+       ],
+       [
+        5,
+        45.40026041499171
+       ],
+       [
+        10,
+        13.863759714385004
+       ]
+      ],
+      "decimals": 0
+     }
+    ]
+   },
+   "captions": [
+    {
+     "from": 0.2,
+     "to": 4.6,
+     "text": "Deeper down, the air is squeezed|by all the air above it.",
+     "style": "subtle"
+    },
+    {
+     "from": 4.7,
+     "to": 9.9,
+     "text": "Its density doubles every ~6 km.|The thicker it gets, the slower you fall.",
+     "style": "subtle"
+    }
+   ],
+   "ambience": "wind"
+  },
+  {
+   "id": "air3",
+   "from": 60,
+   "to": 70,
+   "scene": "tunnel",
+   "params": {
+    "depthKm": [
+     [
+      0,
+      50
+     ],
+     [
+      5,
+      56.4
+     ],
+     [
+      10,
+      56.4
+     ]
+    ],
+    "speedKmh": [
+     [
+      0,
+      10.305918228745316
+     ],
+     [
+      5,
+      0
+     ],
+     [
+      10,
+      0
+     ]
+    ],
+    "haze": [
+     [
+      0,
+      0.8
+     ],
+     [
+      10,
+      0.9
+     ]
+    ],
+    "view": "close"
+   },
+   "hud": {
+    "telemetry": false,
+    "stats": [
+     {
+      "from": 0.2,
+      "to": 10,
+      "label": "DEPTH",
+      "value": "{n} km",
+      "count": [
+       [
+        0,
+        50
+       ],
+       [
+        5,
+        56.4
+       ],
+       [
+        10,
+        56.4
+       ]
+      ],
+      "decimals": 0
+     },
+     {
+      "from": 0.2,
+      "to": 10,
+      "label": "AIR DENSITY",
+      "value": "\u00d7{n}",
+      "count": [
+       [
+        0,
+        376.60545538936583
+       ],
+       [
+        5,
+        804.6371730238897
+       ],
+       [
+        10,
+        804.6371730238897
+       ]
+      ],
+      "decimals": 0
+     }
+    ]
+   },
+   "captions": [
+    {
+     "from": 0.2,
+     "to": 4.6,
+     "text": "Around 56 km down, the air is as dense|as your own body.",
+     "style": "subtle"
+    },
+    {
+     "from": 4.7,
+     "to": 8.0,
+     "text": "You stop falling. You float.|(It takes 2.3 hours to get here.)",
+     "style": "subtle"
+    },
+    {
+     "from": 8.0,
+     "to": 10.0,
+     "text": "So: pump out all the air.",
+     "style": "subtle"
+    }
+   ],
+   "ambience": "wind"
+  },
+  {
+   "id": "heat",
+   "from": 70,
+   "to": 86,
+   "scene": "earthcut",
+   "params": {
+    "labels": [
+     [
+      0,
+      0
+     ],
+     [
+      1,
+      1
+     ]
+    ],
+    "dot": 0,
+    "trail": 0,
+    "mark": [
+     [
+      0,
+      -1
+     ],
+     [
+      2,
+      -1
+     ],
+     [
+      2.01,
+      6
+     ],
+     [
+      11,
+      6
+     ],
+     [
+      11.01,
+      -1
+     ]
+    ],
+    "spin": [
+     [
+      0,
+      30
+     ],
+     [
+      16,
+      45
+     ]
+    ]
+   },
+   "camera": {
+    "path": "keys",
+    "pos": [
+     [
+      0,
+      [
+       10,
+       2,
+       30
+      ]
+     ],
+     [
+      16,
+      [
+       5,
+       1,
+       20
+      ]
+     ]
+    ],
+    "look": [
+     [
+      0,
+      [
+       0,
+       0,
+       0
+      ]
+     ],
+     [
+      16,
+      [
+       0,
+       0,
+       0
+      ]
+     ]
+    ],
+    "fov": 40
+   },
+   "transitionIn": "dip",
+   "hud": {
+    "telemetry": false
+   },
+   "captions": [
+    {
+     "from": 0.1,
+     "to": 2.5,
+     "text": "PROBLEM 2: HEAT",
+     "style": "top"
+    },
+    {
+     "from": 2.5,
+     "to": 7.0,
+     "text": "The centre is about 5,200 \u00b0C \u2014|nearly as hot as the surface of the Sun.",
+     "style": "subtle"
+    },
+    {
+     "from": 7.1,
+     "to": 11.0,
+     "text": "The pressure: 3.6 million atmospheres.",
+     "style": "subtle"
+    },
+    {
+     "from": 11.1,
+     "to": 16.0,
+     "text": "No material we know could hold this tunnel open.|So let's pretend one does.",
+     "style": "subtle"
+    }
+   ],
+   "sfx": [
+    {
+     "at": 0.0,
+     "type": "hum",
+     "dur": 16,
+     "gain": 0.35
+    }
+   ]
+  },
+  {
+   "id": "jump",
+   "from": 86,
+   "to": 96,
+   "scene": "northpole",
+   "params": {
+    "walk": [
+     [
+      0,
+      0
+     ],
+     [
+      3.150000000000003,
+      1
+     ]
+    ],
+    "drop": [
+     [
+      0,
+      -1
+     ],
+     [
+      3.199000000000003,
+      -1
+     ],
+     [
+      3.200000000000003,
+      0
+     ],
+     [
+      10,
+      6.799999999999997
+     ]
+    ],
+    "sunElev": 16
+   },
+   "camera": {
+    "path": "keys",
+    "pos": [
+     [
+      0,
+      [
+       7.5,
+       2.4,
+       13
+      ]
+     ],
+     [
+      3.200000000000003,
+      [
+       5.5,
+       2.6,
+       10
+      ]
+     ],
+     [
+      10,
+      [
+       1.2,
+       9,
+       4.5
+      ]
+     ]
+    ],
+    "look": [
+     [
+      0,
+      [
+       0,
+       1.0,
+       4
+      ]
+     ],
+     [
+      3.200000000000003,
+      [
+       0,
+       0.9,
+       3.6
+      ]
+     ],
+     [
+      10,
+      [
+       0,
+       -30,
+       0
+      ]
+     ]
+    ],
+    "fov": 42
+   },
+   "transitionIn": "dip",
+   "hud": {
+    "telemetry": false
+   },
+   "captions": [
+    {
+     "from": 0.3,
+     "to": 3.2,
+     "text": "Vacuum. Unbreakable walls.|Let's jump.",
+     "style": "subtle"
+    },
+    {
+     "from": 3.6,
+     "to": 9.8,
+     "text": "From the first second, you're weightless:|in free fall, nothing pushes on you.",
+     "style": "subtle"
+    }
+   ],
+   "sfx": [
+    {
+     "at": 0.2,
+     "type": "footsteps",
+     "dur": 2.8,
+     "rate": 1.8,
+     "gain": 0.4
+    },
+    {
+     "at": 3.200000000000003,
+     "type": "whoosh",
+     "gain": 0.7
+    }
+   ],
+   "ambience": "wind"
+  },
+  {
+   "id": "ocean1",
+   "from": 96,
+   "to": 104,
+   "scene": "tunnel",
+   "params": {
+    "view": "close",
+    "exposure": 1.9,
+    "s": [
+     [
+      0,
+      6.8
+     ],
+     [
+      8,
+      15
+     ]
+    ]
+   },
+   "transitionIn": "whip",
+   "captions": [
+    {
+     "from": 0.3,
+     "to": 4.0,
+     "text": "Sunlight fades out within ~200 m.",
+     "style": "subtle"
+    },
+    {
+     "from": 4.2,
+     "to": 7.9,
+     "text": "14 s: 1,000 m. Total darkness \u2014|only animals that make their own light.",
+     "style": "subtle"
+    }
+   ],
+   "sfx": [
+    {
+     "at": 0,
+     "type": "whoosh",
+     "gain": 0.5
+    }
+   ],
+   "ambience": "slowmo"
+  },
+  {
+   "id": "ocean2",
+   "from": 104,
+   "to": 112,
+   "scene": "tunnel",
+   "params": {
+    "view": "above",
+    "exposure": 1.6,
+    "s": [
+     [
+      0,
+      15
+     ],
+     [
+      6,
+      29.4
+     ],
+     [
+      8,
+      33
+     ]
+    ]
+   },
+   "captions": [
+    {
+     "from": 6.0,
+     "to": 8.0,
+     "text": "29 s: the bottom|of the Arctic Ocean.",
+     "style": "subtle"
+    }
+   ],
+   "ambience": "slowmo"
+  },
+  {
+   "id": "crust",
+   "from": 112,
+   "to": 124,
+   "scene": "tunnel",
+   "params": {
+    "view": "side",
+    "s": [
+     [
+      0,
+      33
+     ],
+     [
+      4,
+      47.3
+     ],
+     [
+      7,
+      49.9
+     ],
+     [
+      12,
+      56
+     ]
+    ]
+   },
+   "transitionIn": "whip",
+   "captions": [
+    {
+     "from": 4.0,
+     "to": 6.9,
+     "text": "47 s: through the crust.|Into the mantle.",
+     "style": "subtle"
+    },
+    {
+     "from": 7.0,
+     "to": 11.9,
+     "text": "50 s: 12,262 m. Deeper than any hole|humans have ever dug. 1,768 km/h.",
+     "style": "subtle"
+    }
+   ],
+   "sfx": [
+    {
+     "at": 0,
+     "type": "whoosh",
+     "gain": 0.6
+    }
+   ],
+   "ambience": "roar"
+  },
+  {
+   "id": "glow",
+   "from": 124,
+   "to": 134,
+   "scene": "tunnel",
+   "params": {
+    "view": "close",
+    "s": [
+     [
+      0,
+      56
+     ],
+     [
+      5,
+      71.8
+     ],
+     [
+      10,
+      85
+     ]
+    ]
+   },
+   "captions": [
+    {
+     "from": 5.0,
+     "to": 9.9,
+     "text": "1:12 \u2014 26 km down, the rock is 525 \u00b0C.|Hot enough to glow.",
+     "style": "subtle"
+    }
+   ],
+   "ambience": "roar"
+  },
+  {
+   "id": "lapse1",
+   "from": 134,
+   "to": 144,
+   "scene": "earthcut",
+   "params": {
+    "labels": 0,
+    "spin": [
+     [
+      0,
+      50
+     ],
+     [
+      10,
+      56
+     ]
+    ],
+    "s": [
+     [
+      0,
+      85
+     ],
+     [
+      10,
+      280
+     ]
+    ]
+   },
+   "camera": {
+    "path": "keys",
+    "pos": [
+     [
+      0,
+      [
+       14,
+       6,
+       24
+      ]
+     ],
+     [
+      10,
+      [
+       12,
+       5,
+       25
+      ]
+     ]
+    ],
+    "look": [
+     [
+      0,
+      [
+       0,
+       0,
+       0
+      ]
+     ],
+     [
+      10,
+      [
+       0,
+       0,
+       0
+      ]
+     ]
+    ],
+    "fov": 40
+   },
+   "transitionIn": "dip",
+   "captions": [
+    {
+     "from": 0.3,
+     "to": 5.0,
+     "text": "You keep accelerating.|1 km every second\u2026 then 2\u2026 then 3.",
+     "style": "subtle"
+    },
+    {
+     "from": 5.2,
+     "to": 9.9,
+     "text": "Weightless the whole way.|Gravity is still 1 g out here.",
+     "style": "subtle"
+    }
+   ]
+  },
+  {
+   "id": "tz",
+   "from": 144,
+   "to": 158,
+   "scene": "tunnel",
+   "params": {
+    "view": "side",
+    "s": [
+     [
+      0,
+      280
+     ],
+     [
+      3,
+      288.4
+     ],
+     [
+      14,
+      305
+     ]
+    ]
+   },
+   "transitionIn": "whip",
+   "captions": [
+    {
+     "from": 3.0,
+     "to": 6.5,
+     "text": "4:48 \u2014 410 km.|The transition zone.",
+     "style": "subtle"
+    },
+    {
+     "from": 6.6,
+     "to": 13.9,
+     "text": "Its blue ringwoodite crystals can trap water.|This layer may hold as much water as all the oceans.",
+     "style": "subtle"
+    }
+   ],
+   "sfx": [
+    {
+     "at": 0,
+     "type": "whoosh",
+     "gain": 0.6
+    }
+   ],
+   "ambience": "roar"
+  },
+  {
+   "id": "lower",
+   "from": 158,
+   "to": 170,
+   "scene": "tunnel",
+   "params": {
+    "view": "below",
+    "s": [
+     [
+      0,
+      340
+     ],
+     [
+      4,
+      365.7
+     ],
+     [
+      12,
+      395
+     ]
+    ]
+   },
+   "captions": [
+    {
+     "from": 4.0,
+     "to": 11.9,
+     "text": "6:06 \u2014 660 km. The lower mantle:|55% of the entire Earth.",
+     "style": "subtle"
+    }
+   ],
+   "ambience": "roar"
+  },
+  {
+   "id": "half",
+   "from": 170,
+   "to": 180,
+   "scene": "earthcut",
+   "params": {
+    "labels": 0,
+    "spin": [
+     [
+      0,
+      60
+     ],
+     [
+      10,
+      66
+     ]
+    ],
+    "s": [
+     [
+      0,
+      395
+     ],
+     [
+      5,
+      572.7
+     ],
+     [
+      10,
+      700
+     ]
+    ]
+   },
+   "camera": {
+    "path": "keys",
+    "pos": [
+     [
+      0,
+      [
+       14,
+       4,
+       25
+      ]
+     ],
+     [
+      10,
+      [
+       12,
+       3,
+       26
+      ]
+     ]
+    ],
+    "look": [
+     [
+      0,
+      [
+       0,
+       0,
+       0
+      ]
+     ],
+     [
+      10,
+      [
+       0,
+       0,
+       0
+      ]
+     ]
+    ],
+    "fov": 40
+   },
+   "transitionIn": "dip",
+   "captions": [
+    {
+     "from": 5.0,
+     "to": 9.9,
+     "text": "9:33 \u2014 halfway to the centre in time\u2026|but only a quarter of the way in distance.",
+     "style": "subtle"
+    }
+   ]
+  },
+  {
+   "id": "cmb",
+   "from": 180,
+   "to": 196,
+   "scene": "tunnel",
+   "params": {
+    "view": "close",
+    "s": [
+     [
+      0,
+      740
+     ],
+     [
+      4,
+      763.5
+     ],
+     [
+      16,
+      800
+     ]
+    ]
+   },
+   "transitionIn": "whip",
+   "captions": [
+    {
+     "from": 4.0,
+     "to": 7.5,
+     "text": "12:43 \u2014 2,891 km. The core.",
+     "style": "subtle"
+    },
+    {
+     "from": 7.6,
+     "to": 12.0,
+     "text": "Down here gravity is 9% STRONGER|than at the surface.",
+     "style": "subtle"
+    },
+    {
+     "from": 12.1,
+     "to": 15.9,
+     "text": "Most of Earth's mass is now below you,|and much closer.",
+     "style": "subtle"
+    }
+   ],
+   "sfx": [
+    {
+     "at": 4.0,
+     "type": "boom",
+     "gain": 0.7
+    }
+   ],
+   "ambience": "roar"
+  },
+  {
+   "id": "outer",
+   "from": 196,
+   "to": 210,
+   "scene": "tunnel",
+   "params": {
+    "view": "side",
+    "s": [
+     [
+      0,
+      800
+     ],
+     [
+      14,
+      960
+     ]
+    ]
+   },
+   "captions": [
+    {
+     "from": 0.3,
+     "to": 6.5,
+     "text": "An ocean of liquid iron \u2014|larger than the planet Mars.",
+     "style": "subtle"
+    },
+    {
+     "from": 6.6,
+     "to": 13.9,
+     "text": "Its swirling currents generate|Earth's magnetic field.",
+     "style": "subtle"
+    }
+   ],
+   "ambience": "roar"
+  },
+  {
+   "id": "inner",
+   "from": 210,
+   "to": 222,
+   "scene": "tunnel",
+   "params": {
+    "view": "below",
+    "s": [
+     [
+      0,
+      1000
+     ],
+     [
+      3,
+      1021.1
+     ],
+     [
+      12,
+      1060
+     ]
+    ]
+   },
+   "captions": [
+    {
+     "from": 3.0,
+     "to": 6.8,
+     "text": "17:01 \u2014 5,150 km.|The inner core.",
+     "style": "subtle"
+    },
+    {
+     "from": 6.9,
+     "to": 11.9,
+     "text": "5,200 \u00b0C, yet solid: 3.3 million atmospheres|crush the iron into crystals.",
+     "style": "subtle"
+    }
+   ],
+   "ambience": "roar"
+  },
+  {
+   "id": "centre",
+   "from": 222,
+   "to": 240,
+   "scene": "tunnel",
+   "params": {
+    "view": "close",
+    "bloom": 0.7,
+    "s": [
+     [
+      0,
+      1090
+     ],
+     [
+      8,
+      1145.4
+     ],
+     [
+      18,
+      1170
+     ]
+    ]
+   },
+   "transitionIn": "flash",
+   "effects": {
+    "vignette": 0.45,
+    "flash": [
+     {
+      "at": 8.0,
+      "dur": 0.5
+     }
+    ]
+   },
+   "captions": [
+    {
+     "from": 8.0,
+     "to": 11.4,
+     "text": "19:05 \u2014 the centre of the Earth.",
+     "style": "top"
+    },
+    {
+     "from": 8.2,
+     "to": 11.4,
+     "text": "Top speed: 35,707 km/h.",
+     "style": "subtle"
+    },
+    {
+     "from": 11.5,
+     "to": 14.8,
+     "text": "Gravity: zero.",
+     "style": "subtle"
+    },
+    {
+     "from": 14.9,
+     "to": 18.0,
+     "text": "The whole planet pulls on you|equally from every side.",
+     "style": "subtle"
+    }
+   ],
+   "sfx": [
+    {
+     "at": 0,
+     "type": "riser",
+     "dur": 8,
+     "gain": 0.6
+    },
+    {
+     "at": 8.0,
+     "type": "boom",
+     "gain": 1.0
+    },
+    {
+     "at": 8.2,
+     "type": "hum",
+     "dur": 9,
+     "gain": 0.4
+    }
+   ],
+   "ambience": "slowmo"
+  },
+  {
+   "id": "climb",
+   "from": 240,
+   "to": 252,
+   "scene": "earthcut",
+   "params": {
+    "labels": 0,
+    "spin": [
+     [
+      0,
+      70
+     ],
+     [
+      12,
+      78
+     ]
+    ],
+    "s": [
+     [
+      0,
+      1170
+     ],
+     [
+      12,
+      1900
+     ]
+    ]
+   },
+   "camera": {
+    "path": "keys",
+    "pos": [
+     [
+      0,
+      [
+       10,
+       4,
+       20
+      ]
+     ],
+     [
+      12,
+      [
+       9,
+       3,
+       23
+      ]
+     ]
+    ],
+    "look": [
+     [
+      0,
+      [
+       0,
+       0,
+       0
+      ]
+     ],
+     [
+      12,
+      [
+       0,
+       0,
+       0
+      ]
+     ]
+    ],
+    "fov": 40
+   },
+   "transitionIn": "dip",
+   "captions": [
+    {
+     "from": 0.3,
+     "to": 5.5,
+     "text": "Now everything runs in reverse.|Gravity pulls back and slows you down.",
+     "style": "subtle"
+    },
+    {
+     "from": 5.7,
+     "to": 11.9,
+     "text": "Same layers, same temperatures \u2014|just in the opposite order.",
+     "style": "subtle"
+    }
+   ]
+  },
+  {
+   "id": "antarctica",
+   "from": 252,
+   "to": 264,
+   "scene": "tunnel",
+   "params": {
+    "view": "below",
+    "s": [
+     [
+      0,
+      2150
+     ],
+     [
+      5,
+      2203.3
+     ],
+     [
+      12,
+      2245
+     ]
+    ]
+   },
+   "transitionIn": "whip",
+   "captions": [
+    {
+     "from": 5.0,
+     "to": 11.9,
+     "text": "The far end is the South Pole.|You climb into Antarctica's rock.",
+     "style": "subtle"
+    }
+   ],
+   "ambience": "roar"
+  },
+  {
+   "id": "stop",
+   "from": 264,
+   "to": 282,
+   "scene": "tunnel",
+   "params": {
+    "view": "above",
+    "bloom": 0.5,
+    "s": [
+     [
+      0,
+      2245
+     ],
+     [
+      6,
+      2280
+     ],
+     [
+      12,
+      2290.8
+     ],
+     [
+      15,
+      2292.5
+     ],
+     [
+      18,
+      2296
+     ]
+    ]
+   },
+   "effects": {
+    "vignette": 0.45
+   },
+   "captions": [
+    {
+     "from": 12.0,
+     "to": 15.0,
+     "text": "38:11 \u2014 you stop.",
+     "style": "top"
+    },
+    {
+     "from": 6.0,
+     "to": 11.9,
+     "text": "Slower\u2026 slower\u2026",
+     "style": "subtle"
+    },
+    {
+     "from": 12.2,
+     "to": 15.0,
+     "text": "But the South Pole sits on a 2.8 km ice sheet.",
+     "style": "subtle"
+    },
+    {
+     "from": 15.1,
+     "to": 18.0,
+     "text": "Its surface is 2,835 m above where you started.|You run out of speed 2.8 km short.",
+     "style": "subtle"
+    }
+   ],
+   "sfx": [
+    {
+     "at": 12.0,
+     "type": "thud",
+     "gain": 0.5
+    }
+   ],
+   "ambience": "slowmo"
+  },
+  {
+   "id": "forever",
+   "from": 282,
+   "to": 292,
+   "scene": "earthcut",
+   "params": {
+    "labels": 0,
+    "spin": [
+     [
+      0,
+      80
+     ],
+     [
+      10,
+      95
+     ]
+    ],
+    "s": [
+     [
+      0,
+      2296
+     ],
+     [
+      10,
+      12604.6
+     ]
+    ]
+   },
+   "camera": {
+    "path": "keys",
+    "pos": [
+     [
+      0,
+      [
+       12,
+       5,
+       24
+      ]
+     ],
+     [
+      10,
+      [
+       10,
+       4,
+       28
+      ]
+     ]
+    ],
+    "look": [
+     [
+      0,
+      [
+       0,
+       0,
+       0
+      ]
+     ],
+     [
+      10,
+      [
+       0,
+       0,
+       0
+      ]
+     ]
+    ],
+    "fov": 40
+   },
+   "transitionIn": "dip",
+   "captions": [
+    {
+     "from": 0.3,
+     "to": 4.5,
+     "text": "\u2026and you fall back in.",
+     "style": "subtle"
+    },
+    {
+     "from": 4.6,
+     "to": 9.9,
+     "text": "Pole to pole and back every 76 minutes, 22 seconds.|Forever.",
+     "style": "subtle"
+    }
+   ],
+   "sfx": [
+    {
+     "at": 0,
+     "type": "whoosh",
+     "gain": 0.5
+    }
+   ]
+  },
+  {
+   "id": "bonus",
+   "from": 292,
+   "to": 314,
+   "scene": "earthcut",
+   "params": {
+    "labels": 0,
+    "dot": 0,
+    "trail": 0,
+    "spin": [
+     [
+      0,
+      95
+     ],
+     [
+      22,
+      120
+     ]
+    ]
+   },
+   "camera": {
+    "path": "keys",
+    "pos": [
+     [
+      0,
+      [
+       14,
+       4,
+       26
+      ]
+     ],
+     [
+      22,
+      [
+       10,
+       3,
+       30
+      ]
+     ]
+    ],
+    "look": [
+     [
+      0,
+      [
+       0,
+       0,
+       0
+      ]
+     ],
+     [
+      22,
+      [
+       0,
+       0,
+       0
+      ]
+     ]
+    ],
+    "fov": 40
+   },
+   "hud": {
+    "telemetry": false
+   },
+   "captions": [
+    {
+     "from": 0.3,
+     "to": 5.8,
+     "text": "If Earth had the same density all the way through,|the trip would take 42 minutes.",
+     "style": "subtle"
+    },
+    {
+     "from": 5.9,
+     "to": 10.9,
+     "text": "Its heavy iron core pulls harder|and makes it 4 minutes faster.",
+     "style": "subtle"
+    },
+    {
+     "from": 11.0,
+     "to": 21.8,
+     "text": "On such a planet, a straight tunnel between ANY two cities \u2014|London to Karachi, or next door \u2014 takes the same 42 minutes.",
+     "style": "subtle"
+    }
+   ]
+  },
+  {
+   "id": "outro",
+   "from": 314,
+   "to": 322,
+   "scene": "northpole",
+   "params": {
+    "walk": 0,
+    "drop": -1,
+    "showHero": 0,
+    "sunElev": 16
+   },
+   "camera": {
+    "path": "keys",
+    "pos": [
+     [
+      0,
+      [
+       8,
+       5,
+       12
+      ]
+     ],
+     [
+      8,
+      [
+       3,
+       14,
+       5
+      ]
+     ]
+    ],
+    "look": [
+     [
+      0,
+      [
+       0,
+       0,
+       0
+      ]
+     ],
+     [
+      8,
+      [
+       0,
+       -20,
+       0
+      ]
+     ]
+    ],
+    "fov": 42
+   },
+   "transitionIn": "dip",
+   "hud": {
+    "telemetry": false
+   },
+   "effects": {
+    "fade": {
+     "color": "black",
+     "amount": [
+      [
+       6.5,
+       0
+      ],
+      [
+       8,
+       1
+      ]
+     ]
+    }
+   },
+   "captions": [
+    {
+     "from": 0.5,
+     "to": 6.5,
+     "text": "So\u2026|would you jump?",
+     "style": "top"
+    }
+   ],
+   "ambience": "wind"
+  }
+ ]
+}

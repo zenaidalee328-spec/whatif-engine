@@ -1,0 +1,631 @@
+{
+  "meta": {
+    "id": "StoppedSleeping",
+    "title": "What If You Stopped Sleeping and Couldn't Stop?",
+    "fps": 30,
+    "music": {
+      "keys": [[0, 0.8], [7, 0.6], [12, 0.2], [50, 0.3], [88, 0.42], [113, 0.5], [142, 0.55], [182, 0.68], [212, 0.75], [234, 0.78], [262, 0.85], [287, 0.92], [288, 0.35], [306, 0.3], [318, 0.15]],
+      "root": 55
+    }
+  },
+  "hud": {
+    "clock": {
+      "label": "AWAKE FOR",
+      "keys": [
+        [12, 0], [28, 14400],
+        [28.001, 18000], [50, 23400],
+        [76, 61200],
+        [88, 86280],
+        [88.001, 86530], [113, 87430],
+        [113.001, 112200], [126, 112680],
+        [126.001, 114240], [142, 114840],
+        [142.001, 144000], [168, 145200], [182, 145600],
+        [182.001, 172800], [212, 181800],
+        [212.001, 259200], [234, 260520],
+        [234.001, 345600], [262, 950400],
+        [288, 1641600]
+      ],
+      "format": "hms",
+      "sub": "SLEPT: 0 MIN",
+      "colorRamp": [0, 300000]
+    },
+    "start": 12,
+    "end": 288
+  },
+  "segments": [
+    {
+      "id": "hook-hour70",
+      "from": 0,
+      "to": 7,
+      "scene": "nightstreet",
+      "params": {
+        "clock": 1.0,
+        "bend": [[0, 0.7], [7, 1]],
+        "flicker": 0.7,
+        "shadows": [
+          { "x": 5.7, "z": -6, "stretch": 1.3, "opacity": 0.95 },
+          { "x": -5.4, "z": -13 },
+          { "x": 6.6, "z": -21, "stretch": 1.5 }
+        ]
+      },
+      "camera": { "path": "pov-walk", "from": [5.5, 0.15, 8], "to": [5.5, 0.15, 1], "stepRate": 1.3, "sway": 0.6, "pitch": -2, "fov": 62 },
+      "effects": {
+        "chroma": [[0, 0.3], [6, 0.7]],
+        "redPulse": 0.45,
+        "doubleVision": 0.3,
+        "shake": 0.25,
+        "vignette": 0.7,
+        "flash": [{ "at": 3.1, "dur": 0.15 }]
+      },
+      "hud": { "alerts": [{ "from": 0.6, "to": 7, "text": "STATUS: HALLUCINATING", "blink": true }] },
+      "captions": [
+        { "from": 0.3, "to": 3.0, "text": "HOUR 70.", "style": "big", "hl": ["70."] },
+        { "from": 3.3, "to": 6.8, "text": "The shadows have started following you.", "hl": ["shadows"] }
+      ],
+      "sfx": [
+        { "at": 0, "type": "heartbeat", "dur": 6.8, "gain": 0.55 },
+        { "at": 0.6, "type": "whisper", "dur": 2.2, "gain": 0.8, "pan": -0.5 },
+        { "at": 3.1, "type": "glitch", "gain": 0.6 },
+        { "at": 4.6, "type": "riser", "dur": 2.3, "gain": 0.6 }
+      ]
+    },
+    {
+      "id": "title",
+      "from": 7,
+      "to": 12,
+      "scene": "black",
+      "transitionIn": "flash",
+      "captions": [
+        { "from": 0.3, "to": 2.9, "text": "What if you stopped sleeping…", "style": "big", "hl": ["sleeping…"] },
+        { "from": 3.0, "to": 4.9, "text": "…and couldn't stop?", "style": "center", "hl": ["stop?"] }
+      ],
+      "sfx": [
+        { "at": 0.05, "type": "boom", "gain": 1.0 },
+        { "at": 4.7, "type": "whoosh", "gain": 0.6 }
+      ]
+    },
+    {
+      "id": "bedroom-3am",
+      "from": 12,
+      "to": 28,
+      "scene": "room",
+      "transitionIn": "wake",
+      "params": { "variant": "bed", "digital": true, "clock": [[0, 3.0], [16, 6.98]], "lamp": 0.12 },
+      "camera": {
+        "path": "pov-stand",
+        "pos": [0.45, 0.8, -1.95],
+        "look": [-0.3, 0.7, -2.05],
+        "yaw": [[0, 0], [10, 0], [12, -14], [16, -14]],
+        "pitch": [[0, 0], [10, 0], [12, 22], [16, 22]],
+        "fov": 60
+      },
+      "effects": { "vignette": 0.6, "eyelids": { "blinks": [{ "at": 3.0, "amount": 0.6 }, { "at": 8.6, "amount": 0.5 }] } },
+      "hud": {
+        "location": "BEDROOM · 3:00 AM",
+        "next": [{ "from": 4, "to": 16, "title": "Brain at hour 17", "at": 61200, "unit": "hours" }]
+      },
+      "captions": [
+        { "from": 0.8, "to": 4.6, "text": "3:00 AM. You wake up for no reason.", "hl": ["3:00"] },
+        { "from": 5.0, "to": 8.8, "text": "You will never fall asleep again.", "hl": ["never"] },
+        { "from": 10.0, "to": 15.6, "text": "Hour 4. Sunrise. You never even dozed off.", "hl": ["4."] }
+      ],
+      "sfx": [
+        { "at": 0.2, "type": "heartbeat", "dur": 1.6, "gain": 0.5 },
+        { "at": 1.0, "type": "tick", "dur": 14.5, "rate": 4, "gain": 0.25 },
+        { "at": 13.2, "type": "riser", "dur": 2.6, "gain": 0.4 }
+      ]
+    },
+    {
+      "id": "bus-commute",
+      "from": 28,
+      "to": 50,
+      "scene": "bus",
+      "transitionIn": "whip",
+      "params": { "clock": [[0, 8.0], [22, 9.5]], "speed": 10 },
+      "camera": {
+        "path": "pov-stand",
+        "pos": [0.95, 1.24, 0.9],
+        "look": [0.2, 1.15, -6],
+        "yaw": [[0, 0], [7.5, 0], [9, -62], [14, -62], [15.5, 0]],
+        "pitch": [[0, 0], [7.5, 0], [9, -4]],
+        "fov": 62
+      },
+      "effects": { "shake": 0.12, "vignette": 0.45 },
+      "hud": {
+        "location": "BUS · 8:00 AM",
+        "next": [{ "from": 1, "to": 22, "title": "Brain at hour 17", "at": 61200, "unit": "hours" }]
+      },
+      "captions": [
+        { "from": 1.0, "to": 5.4, "text": "Hour 5. Rush hour. Everything feels normal.", "hl": ["normal."] },
+        { "from": 6.2, "to": 11.4, "text": "Adults need at least 7 hours of sleep a night.", "hl": ["7"] },
+        { "from": 12.2, "to": 16.6, "text": "You won't get a single minute.", "hl": ["minute."] },
+        { "from": 17.4, "to": 21.6, "text": "And your brain is keeping count.", "hl": ["count."] }
+      ],
+      "sfx": [
+        { "at": 9.0, "type": "thud", "gain": 0.35 },
+        { "at": 15.0, "type": "beep", "gain": 0.3, "pan": 0.3 }
+      ]
+    },
+    {
+      "id": "office-day",
+      "from": 50,
+      "to": 76,
+      "scene": "room",
+      "transitionIn": "whip",
+      "params": { "variant": "office", "clock": [[0, 9.5], [26, 20.0]], "lamp": 0.3 },
+      "camera": {
+        "path": "pov-stand",
+        "pos": [0.15, 1.25, -0.2],
+        "look": [0.35, 1.25, -2.5],
+        "yaw": [[0, 0], [9, 0], [10.5, -18], [14, -18], [15.5, 0]],
+        "pitch": [[0, -6], [9, -6], [10.5, 12], [14, 12], [15.5, -6]],
+        "droop": [[0, 0], [18, 0], [26, 0.12]],
+        "fov": 64
+      },
+      "effects": {
+        "blur": [[0, 0], [12, 0.3], [19, 0.9], [26, 1.2]],
+        "vignette": [[0, 0.45], [26, 0.6]],
+        "eyelids": { "blinks": [{ "at": 6, "amount": 0.4 }, { "at": 16.5, "amount": 0.6 }, { "at": 23, "amount": 0.7, "hold": 0.15 }] }
+      },
+      "hud": {
+        "location": "OFFICE · 9:30 AM",
+        "stats": [{ "from": 19.2, "to": 26, "label": "YOUR BRAIN TESTS LIKE", "value": "0.05%", "sub": "blood alcohol", "color": "#ffc65c" }],
+        "next": [
+          { "from": 1, "to": 18.8, "title": "Brain at hour 17", "at": 61200, "unit": "hours" },
+          { "from": 19.4, "to": 26, "title": "Brain at hour 24", "at": 86400, "unit": "hours" }
+        ]
+      },
+      "captions": [
+        { "from": 0.8, "to": 5.0, "text": "Hour 8. Your third coffee.", "hl": ["third"] },
+        { "from": 5.8, "to": 10.2, "text": "The clock on the wall starts to race.", "hl": ["race."] },
+        { "from": 11.2, "to": 17.6, "text": "Your reactions quietly slow down.", "hl": ["slow"] },
+        { "from": 19.2, "to": 25.6, "text": "Hour 17. Your brain now tests like 0.05% blood alcohol.", "hl": ["0.05%"] }
+      ],
+      "sfx": [
+        { "at": 0.6, "type": "tick", "dur": 7, "rate": 7, "gain": 0.15 },
+        { "at": 9.5, "type": "tick", "dur": 8, "rate": 3, "gain": 0.3 },
+        { "at": 16.8, "type": "riser", "dur": 2.4, "gain": 0.5 },
+        { "at": 19.2, "type": "boom", "gain": 0.85 }
+      ]
+    },
+    {
+      "id": "bedroom-night",
+      "from": 76,
+      "to": 88,
+      "scene": "room",
+      "transitionIn": "dip",
+      "params": { "variant": "bed", "digital": true, "clock": [[0, 20.0], [12, 26.97]], "lamp": [[0, 0.5], [3, 0.1]] },
+      "camera": { "path": "pov-stand", "pos": [0.45, 0.8, -1.95], "look": [-0.3, 0.7, -2.05], "fov": 60 },
+      "effects": {
+        "vignette": 0.65,
+        "eyelids": { "droop": [[0, 0.1], [4.2, 0.2], [5.2, 0.97], [7.8, 0.97], [8.1, 0.05]] }
+      },
+      "hud": {
+        "location": "BEDROOM · 8:00 PM",
+        "next": [{ "from": 0.5, "to": 12, "title": "Brain at hour 24", "at": 86400, "unit": "hours" }]
+      },
+      "captions": [
+        { "from": 0.5, "to": 4.0, "text": "Hour 17. You go to bed early.", "hl": ["early."] },
+        { "from": 4.4, "to": 7.8, "text": "You close your eyes…" },
+        { "from": 8.2, "to": 11.7, "text": "Nothing happens.", "hl": ["Nothing"] }
+      ],
+      "sfx": [
+        { "at": 5.0, "type": "tick", "dur": 3, "rate": 1, "gain": 0.4 },
+        { "at": 8.1, "type": "heartbeat", "dur": 3.5, "gain": 0.6 }
+      ]
+    },
+    {
+      "id": "supermarket-24h",
+      "from": 88,
+      "to": 113,
+      "scene": "supermarket",
+      "transitionIn": "whip",
+      "params": {
+        "glare": [[0, 0.1], [6, 0.3], [24, 0.55]],
+        "flicker": [[0, 0], [12, 0.4]],
+        "cart": true,
+        "shoppers": [
+          { "x": -0.9, "z": -24, "rotY": -1.5708, "shirt": "#c0392b" },
+          { "x": 0.55, "z": -38, "speed": -0.9, "rotY": 0, "shirt": "#3c6fd8" }
+        ]
+      },
+      "camera": {
+        "path": "pov-walk",
+        "from": [-0.1, 0, 8],
+        "to": [0.25, 0, -14],
+        "stepRate": [[0, 1.8], [15, 1.4]],
+        "sway": [[0, 0.1], [12, 0.45], [25, 0.6]],
+        "droop": [[0, 0], [25, 0.12]],
+        "yaw": [[0, 0], [14, 0], [15.4, -52], [19.5, -48], [20.8, -8]],
+        "pitch": [[0, -5], [14, -5], [15.4, -9], [20.8, -5]],
+        "fov": 64
+      },
+      "effects": {
+        "doubleVision": [[0, 0], [9.8, 0], [12, 0.65], [15.4, 0.55], [16.4, 1], [25, 0.85]],
+        "blur": [[0, 0.3], [10, 0.8], [18, 1.4], [25, 1.8]],
+        "glare": [[0, 0.05], [6, 0.25], [24, 0.45]],
+        "vignette": [[0, 0.45], [25, 0.62]],
+        "eyelids": { "blinks": [{ "at": 7.5, "amount": 0.5 }, { "at": 13.1, "amount": 0.55 }, { "at": 22.6, "amount": 0.8, "hold": 0.12, "open": 0.35 }] }
+      },
+      "hud": {
+        "location": "24-HOUR SUPERMARKET · 3:10 AM",
+        "stats": [{ "from": 15.2, "to": 25, "label": "YOUR BRAIN TESTS LIKE", "value": "{n}%", "count": [[15.2, 0.05], [17, 0.1]], "decimals": 2, "sub": "blood alcohol", "color": "#ff6b5c" }],
+        "alerts": [{ "from": 20.6, "to": 25, "text": "ABOVE THE US DRIVING LIMIT (0.08%)", "blink": true }],
+        "next": [{ "from": 0.6, "to": 25, "title": "Microsleeps", "at": 111600, "unit": "hours" }]
+      },
+      "captions": [
+        { "from": 0.5, "to": 3.6, "text": "Hour 24. Just a quick run for coffee.", "hl": ["24."] },
+        { "from": 4.4, "to": 8.8, "text": "3 AM. The lights feel way too bright.", "hl": ["bright."] },
+        { "from": 9.8, "to": 14.4, "text": "The labels start to split in two.", "hl": ["two."] },
+        { "from": 15.2, "to": 20.0, "text": "Your brain now tests like 0.10% blood alcohol.", "hl": ["0.10%"] },
+        { "from": 20.6, "to": 24.8, "text": "On paper, you're too drunk to drive.", "hl": ["drunk"] }
+      ],
+      "sfx": [
+        { "at": 0.15, "type": "footsteps", "dur": 24.8, "rate": 1.7, "gain": 0.45 },
+        { "at": 0.1, "type": "cart", "dur": 24.8, "gain": 0.35 },
+        { "at": 9.8, "type": "warble", "dur": 3, "gain": 0.4 },
+        { "at": 8.0, "type": "beep", "gain": 0.25, "pan": 0.5 },
+        { "at": 13.4, "type": "riser", "dur": 1.8, "gain": 0.5 },
+        { "at": 15.2, "type": "boom", "gain": 0.9 },
+        { "at": 22.6, "type": "heartbeat", "dur": 2.3, "gain": 0.6 },
+        { "at": 19.0, "type": "beep", "gain": 0.2, "pan": 0.5 }
+      ]
+    },
+    {
+      "id": "street-walk-31h",
+      "from": 113,
+      "to": 126,
+      "scene": "street",
+      "transitionIn": "whip",
+      "params": {
+        "clock": 10.2,
+        "walkers": [
+          { "x": -4.6, "z": -12, "speed": 1.3, "shirt": "#e2483d" },
+          { "x": 4.4, "z": -36, "speed": 1.2, "shirt": "#8b4fd1" }
+        ],
+        "cars": [{ "x": -1.75, "z": -90, "speed": 9, "color": "#ecf0f1" }, { "x": 1.75, "z": 20, "speed": -8, "color": "#2e86c1" }]
+      },
+      "camera": {
+        "path": "pov-walk",
+        "from": [4.7, 0.16, 10],
+        "to": [4.7, 0.16, -16],
+        "stepRate": [[0, 2.0], [12, 1.6]],
+        "sway": [[0, 0], [5, 0.25], [12, 0.7]],
+        "droop": [[0, 0], [8, 0.1], [12.2, 0.5]],
+        "yaw": 5,
+        "fov": 64
+      },
+      "effects": {
+        "blur": [[0, 0], [6, 1.2], [11.8, 3.5]],
+        "doubleVision": [[0, 0], [6.5, 0], [9, 0.6], [12, 0.8]],
+        "desaturate": 0.15,
+        "vignette": [[0, 0.5], [12, 0.75]],
+        "eyelids": { "blinks": [{ "at": 5.6, "amount": 0.55, "close": 0.15, "open": 0.35 }, { "at": 8.6, "amount": 0.75, "hold": 0.2, "open": 0.5 }] },
+        "microsleep": [{ "at": 12.3, "dur": 0.7 }]
+      },
+      "hud": {
+        "location": "MAIN STREET · 10:10 AM",
+        "next": [{ "from": 0.5, "to": 12.2, "title": "Hallucinations", "at": 172800, "unit": "hours" }]
+      },
+      "captions": [
+        { "from": 0.5, "to": 4.0, "text": "Hour 31. You just need some air.", "hl": ["31."] },
+        { "from": 4.6, "to": 8.2, "text": "Your eyelids weigh a ton.", "hl": ["ton."] },
+        { "from": 8.8, "to": 11.8, "text": "Just for a second…" }
+      ],
+      "sfx": [
+        { "at": 0.2, "type": "footsteps", "dur": 11.8, "rate": 1.9, "gain": 0.5 },
+        { "at": 11.8, "type": "heartbeat", "dur": 1.2, "gain": 0.8 }
+      ]
+    },
+    {
+      "id": "street-road-31h",
+      "from": 126,
+      "to": 142,
+      "scene": "street",
+      "transitionIn": "wake",
+      "params": {
+        "clock": 10.4,
+        "cars": [{ "x": 1.75, "z": [[0, -95], [1, -79], [2, -65], [3, -56], [4.5, -50], [6, -47.5]], "color": "#27ae60", "lights": 1 }],
+        "walkers": [{ "x": -4.6, "z": -60, "speed": 1.1, "shirt": "#2e9d6a" }]
+      },
+      "camera": {
+        "path": "keys",
+        "pos": [[0, [0.6, 1.66, -39.6]], [6, [0.6, 1.66, -39.6]], [9.5, [3.4, 1.68, -41]], [16, [4.7, 1.84, -46]]],
+        "look": [[0, [2.5, 1.2, -60]], [1.2, [0.2, 1.4, -60]], [6, [0.2, 1.4, -60]], [9.5, [5.5, 1.5, -60]], [16, [4.6, 1.6, -75]]],
+        "fov": [[0, 50], [1.4, 64]]
+      },
+      "effects": {
+        "shake": [[0, 1], [1.2, 0.3], [2.5, 0.08], [16, 0.08]],
+        "blur": [[2, 0], [16, 0.6]],
+        "vignette": 0.6
+      },
+      "hud": {
+        "location": "MIDDLE OF THE ROAD · 10:44 AM",
+        "alerts": [{ "from": 0.3, "to": 16, "text": "MEMORY GAP: {n} MIN", "count": [[0.1, 0], [1.1, 26]] }],
+        "next": [{ "from": 2, "to": 16, "title": "Hallucinations", "at": 172800, "unit": "hours" }]
+      },
+      "captions": [
+        { "from": 1.6, "to": 5.0, "text": "Wait… how did you get here?", "hl": ["here?"] },
+        { "from": 6.6, "to": 11.0, "text": "Microsleeps can last up to 15 seconds.", "hl": ["15"] },
+        { "from": 11.6, "to": 15.7, "text": "Most of the time, you don't even notice them.", "hl": ["notice"] }
+      ],
+      "sfx": [
+        { "at": 0.15, "type": "screech", "gain": 0.6 },
+        { "at": 0.35, "type": "horn", "gain": 0.45 },
+        { "at": 0.5, "type": "heartbeat", "dur": 4, "gain": 0.6 },
+        { "at": 6.5, "type": "footsteps", "dur": 3, "rate": 2.4, "gain": 0.4 }
+      ]
+    },
+    {
+      "id": "meeting-40h",
+      "from": 142,
+      "to": 168,
+      "scene": "meeting",
+      "transitionIn": "whip",
+      "params": {
+        "clock": 19,
+        "stare": [[0, 0], [13.3, 0], [14.2, 1], [25, 0.9]],
+        "spill": [[0, 0], [13.25, 0], [13.75, 1]],
+        "talk": [[0, 1], [13, 1], [13.6, 0]]
+      },
+      "camera": {
+        "path": "pov-stand",
+        "pos": [0, 1.22, 2.3],
+        "look": [0, 1.1, -5],
+        "droop": [[0, 0], [8, 0.15], [11, 0.45], [12.3, 1], [13.2, 1], [13.35, 0]],
+        "yaw": [[0, 0], [16, 0], [18, 20], [21, -20], [23, 0]],
+        "sway": 0.15,
+        "fov": 58
+      },
+      "effects": {
+        "eyelids": { "droop": [[0, 0], [9, 0.3], [11.6, 0.8], [12.3, 1], [13.2, 1], [13.35, 0]] },
+        "microsleep": [{ "at": 12.35, "dur": 0.85 }],
+        "shake": [[13.3, 1], [14.5, 0]],
+        "blur": [[0, 0.4], [11, 1.5], [13.3, 0], [26, 0.8]],
+        "vignette": 0.55
+      },
+      "hud": {
+        "location": "MEETING ROOM · 7:00 PM",
+        "alerts": [{ "from": 13.4, "to": 22, "text": "MICROSLEEP DETECTED", "blink": true }],
+        "next": [{ "from": 0.5, "to": 26, "title": "Hallucinations", "at": 172800, "unit": "hours" }]
+      },
+      "captions": [
+        { "from": 0.5, "to": 4.4, "text": "Hour 40. A late meeting.", "hl": ["40."] },
+        { "from": 5.0, "to": 9.4, "text": "Someone asks you a simple question.", "hl": ["question."] },
+        { "from": 10.0, "to": 12.2, "text": "You start to answer…" },
+        { "from": 14.0, "to": 18.4, "text": "…and wake up mid-sentence.", "hl": ["mid-sentence."] },
+        { "from": 19.2, "to": 25.6, "text": "You never felt yourself falling asleep.", "hl": ["never"] }
+      ],
+      "sfx": [
+        { "at": 13.3, "type": "thud", "gain": 0.8 },
+        { "at": 13.6, "type": "crash", "gain": 0.35 },
+        { "at": 13.4, "type": "heartbeat", "dur": 4, "gain": 0.6 }
+      ]
+    },
+    {
+      "id": "brain-local-sleep",
+      "from": 168,
+      "to": 182,
+      "scene": "brain",
+      "transitionIn": "dip",
+      "params": { "offline": [[0, 0.1], [6, 0.95]] },
+      "effects": { "vignette": 0.5 },
+      "hud": {
+        "tags": [{ "from": 0.5, "to": 14, "text": "LOCAL SLEEP", "sub": "Vyazovskiy et al., Nature 2011" }]
+      },
+      "captions": [
+        { "from": 0.5, "to": 4.8, "text": "In 2011, scientists recorded the brains of tired rats.", "hl": ["2011,"] },
+        { "from": 5.3, "to": 9.6, "text": "While the rats were awake, groups of neurons switched off.", "hl": ["off."] },
+        { "from": 10.0, "to": 13.8, "text": "Parts of the brain were napping on their own.", "hl": ["napping"] }
+      ],
+      "sfx": [
+        { "at": 0.4, "type": "hum", "dur": 13.4, "gain": 0.6 },
+        { "at": 5.4, "type": "glitch", "gain": 0.25 },
+        { "at": 7.3, "type": "glitch", "gain": 0.25 },
+        { "at": 9.1, "type": "glitch", "gain": 0.25 },
+        { "at": 12.4, "type": "riser", "dur": 1.6, "gain": 0.4 }
+      ]
+    },
+    {
+      "id": "nightstreet-48h",
+      "from": 182,
+      "to": 212,
+      "scene": "nightstreet",
+      "transitionIn": "glitch",
+      "params": {
+        "clock": [[0, 3.0], [30, 4.4]],
+        "bend": [[0, 0], [7, 0.25], [30, 0.95]],
+        "flicker": [[0, 0], [10, 0.5]],
+        "shadows": [
+          { "x": 6.6, "z": -22, "opacity": 0.85, "stretch": 1.2 },
+          { "x": -5.8, "z": -31, "opacity": 0.8 },
+          { "x": 5.5, "follow": 6, "opacity": 0.95, "stretch": 1.25 }
+        ]
+      },
+      "camera": {
+        "path": "pov-walk",
+        "from": [5.5, 0.15, 10],
+        "to": [5.6, 0.15, -36],
+        "stepRate": 1.7,
+        "sway": [[0, 0.15], [30, 0.5]],
+        "yaw": [[0, 0], [20.6, 0], [21.6, 168], [23.6, 168], [24.6, 0]],
+        "fov": 62
+      },
+      "effects": {
+        "chroma": [[0, 0], [10, 0.15], [30, 0.45]],
+        "redPulse": [[8, 0], [30, 0.35]],
+        "doubleVision": [[12, 0], [30, 0.3]],
+        "vignette": 0.62,
+        "flash": [{ "at": 21.6, "dur": 0.12 }]
+      },
+      "hud": {
+        "location": "DOWNTOWN · 3:00 AM",
+        "alerts": [{ "from": 11, "to": 30, "text": "STATUS: HALLUCINATING", "blink": true }],
+        "next": [{ "from": 0.5, "to": 30, "title": "Delusions", "at": 259200, "unit": "hours" }]
+      },
+      "captions": [
+        { "from": 0.5, "to": 4.6, "text": "Hour 48. Two full days without sleep.", "hl": ["Two"] },
+        { "from": 5.4, "to": 10.2, "text": "The edges of the world start to move.", "hl": ["move."] },
+        { "from": 11.0, "to": 16.2, "text": "From about hour 48, hallucinations get complex.", "hl": ["complex."] },
+        { "from": 17.0, "to": 20.6, "text": "Then someone says your name.", "hl": ["name."] },
+        { "from": 25.0, "to": 29.6, "text": "Nobody's there. At least, nobody real.", "hl": ["real."] }
+      ],
+      "sfx": [
+        { "at": 0.2, "type": "footsteps", "dur": 29.6, "rate": 1.7, "gain": 0.35 },
+        { "at": 17.2, "type": "whisper", "dur": 1.6, "gain": 1.0, "pan": -0.7 },
+        { "at": 19.4, "type": "riser", "dur": 2.2, "gain": 0.5 },
+        { "at": 21.6, "type": "boom", "gain": 1.0 },
+        { "at": 21.9, "type": "heartbeat", "dur": 4, "gain": 0.7 },
+        { "at": 9.0, "type": "warble", "dur": 3, "gain": 0.3 }
+      ]
+    },
+    {
+      "id": "bedroom-72h",
+      "from": 212,
+      "to": 234,
+      "scene": "room",
+      "transitionIn": "glitch",
+      "params": {
+        "variant": "bed",
+        "digital": true,
+        "clock": [[0, 3.0], [22, 3.37]],
+        "lamp": 0.35,
+        "warp": [[0, 0.3], [22, 1]],
+        "crawl": 0.8,
+        "red": [[0, 0.2], [22, 0.75]],
+        "shadow": [[0, 0], [5, 0], [7, 0.9]],
+        "shadowStretch": [[7, 1], [21, 1.6]]
+      },
+      "camera": { "path": "pov-stand", "pos": [0.1, 1.62, 1.9], "look": [-1.6, 1.25, -2.2], "sway": 0.35, "yaw": [[0, 18], [6, 0]], "fov": 56 },
+      "effects": {
+        "chroma": 0.3,
+        "doubleVision": [[0, 0.15], [22, 0.45]],
+        "redPulse": [[0, 0.2], [22, 0.45]],
+        "shake": 0.1,
+        "vignette": 0.7
+      },
+      "hud": {
+        "location": "BEDROOM · 3:00 AM",
+        "alerts": [{ "from": 0.5, "to": 22, "text": "STATUS: HALLUCINATING", "blink": true }],
+        "next": [{ "from": 0.5, "to": 22, "title": "The world record", "at": 950400, "unit": "days" }]
+      },
+      "captions": [
+        { "from": 0.5, "to": 4.6, "text": "Hour 72. Three days awake.", "hl": ["72."] },
+        { "from": 5.4, "to": 10.2, "text": "You start believing things that aren't real.", "hl": ["real."] },
+        { "from": 11.0, "to": 15.8, "text": "The walls are breathing. You're sure of it.", "hl": ["breathing."] },
+        { "from": 16.6, "to": 21.6, "text": "After 72 hours, it starts to look like psychosis.", "hl": ["psychosis."] }
+      ],
+      "sfx": [
+        { "at": 6.8, "type": "whisper", "dur": 2, "gain": 0.7, "pan": -0.6 },
+        { "at": 10.0, "type": "warble", "dur": 4, "gain": 0.4 },
+        { "at": 13.6, "type": "whisper", "dur": 1.8, "gain": 0.7, "pan": 0.6 },
+        { "at": 15.0, "type": "heartbeat", "dur": 6.5, "gain": 0.6 },
+        { "at": 19.4, "type": "riser", "dur": 2.6, "gain": 0.55 }
+      ]
+    },
+    {
+      "id": "city-days",
+      "from": 234,
+      "to": 262,
+      "scene": "city",
+      "transitionIn": "flash",
+      "params": { "clock": [[0, 3], [28, 171]], "lightsOff": 0, "hero": 1 },
+      "camera": { "path": "orbit", "center": [0, 4, 0], "radius": 30, "height": 14, "startDeg": 30, "degPerSec": 4, "fov": 45 },
+      "effects": { "vignette": 0.5, "blur": [[0, 0], [28, 0.5]] },
+      "hud": {
+        "location": "DAY 4 → DAY 11",
+        "compare": [{ "from": 3, "to": 28, "label": "YOU vs THE RECORD", "value": [[3, 110], [26, 264]], "target": 264, "targetLabel": "RANDY GARDNER, 1964", "unit": "h" }]
+      },
+      "captions": [
+        { "from": 0.8, "to": 5.4, "text": "Days and nights start to blur together.", "hl": ["blur"] },
+        { "from": 6.2, "to": 11.4, "text": "In 1964, a 17-year-old stayed awake for 264 hours.", "hl": ["264"] },
+        { "from": 12.2, "to": 16.8, "text": "By day 4, he was hallucinating.", "hl": ["4,"] },
+        { "from": 17.6, "to": 22.2, "text": "11 days. The longest anyone has officially gone.", "hl": ["11"] },
+        { "from": 23.0, "to": 27.6, "text": "Guinness stopped tracking the record in 1997.", "hl": ["1997."] }
+      ],
+      "sfx": [
+        { "at": 0.5, "type": "tick", "dur": 27, "rate": 2, "gain": 0.25 },
+        { "at": 4, "type": "whoosh", "gain": 0.3 },
+        { "at": 8, "type": "whoosh", "gain": 0.3 },
+        { "at": 12, "type": "whoosh", "gain": 0.3 },
+        { "at": 16, "type": "whoosh", "gain": 0.3 },
+        { "at": 20, "type": "whoosh", "gain": 0.3 },
+        { "at": 23.6, "type": "riser", "dur": 2.4, "gain": 0.5 },
+        { "at": 26, "type": "boom", "gain": 0.9 }
+      ]
+    },
+    {
+      "id": "hospital-sim",
+      "from": 262,
+      "to": 288,
+      "scene": "hospital",
+      "transitionIn": "dip",
+      "params": { "bpm": [[0, 92], [26, 128]], "dim": [[0, 0], [26, 0.55]], "flicker": [[0, 0], [17, 0], [21, 0.5]] },
+      "camera": {
+        "path": "pov-stand",
+        "pos": [0, 1.0, -2.0],
+        "look": [0, 1.2, 3],
+        "yaw": [[0, 0], [8, 0], [9.5, 54], [13.5, 54], [15, 0]],
+        "pitch": [[0, 0], [8, 0], [9.5, 20], [13.5, 20], [15, 0], [22, 18]],
+        "fov": 60
+      },
+      "effects": {
+        "blur": [[0, 0.8], [26, 2.4]],
+        "desaturate": [[0, 0.2], [26, 0.6]],
+        "vignette": 0.7,
+        "tunnel": [[15, 0], [26, 0.6]],
+        "eyelids": { "droop": [[0, 0.15], [20, 0.35], [24.5, 0.6], [25.8, 1]] }
+      },
+      "hud": {
+        "location": "HOSPITAL · DAY 11+",
+        "tags": [{ "from": 0.5, "to": 26, "text": "SIMULATION", "sub": "based on rat studies (Science, 1983)" }],
+        "meters": [
+          { "from": 10, "to": 26, "label": "BODY WEIGHT", "value": [[10, 0.9], [25, 0.55]], "color": "#ffb04a", "noValue": true },
+          { "from": 15.5, "to": 26, "label": "BODY TEMPERATURE", "value": [[15.5, 0.85], [25, 0.5]], "color": "#6fb8ff", "noValue": true }
+        ]
+      },
+      "captions": [
+        { "from": 0.8, "to": 5.0, "text": "Past day 11, there's no human data.", "hl": ["no"] },
+        { "from": 5.6, "to": 9.2, "text": "Only rats.", "hl": ["rats."] },
+        { "from": 10.0, "to": 15.0, "text": "In a 1983 study, they ate more, but kept losing weight.", "hl": ["losing"] },
+        { "from": 15.6, "to": 20.0, "text": "Their body temperature kept falling.", "hl": ["falling."] },
+        { "from": 20.6, "to": 25.6, "text": "Within 2 to 3 weeks, they died.", "hl": ["died."] }
+      ],
+      "sfx": [
+        { "at": 20.6, "type": "boom", "gain": 0.7 },
+        { "at": 24.5, "type": "heartbeat", "dur": 1.4, "gain": 0.5 }
+      ]
+    },
+    {
+      "id": "city-sleeps",
+      "from": 288,
+      "to": 306,
+      "scene": "city",
+      "transitionIn": "dip",
+      "params": { "clock": 1.5, "lightsOff": [[0, 0], [12, 0.97]], "hero": 1 },
+      "camera": { "path": "dolly", "from": { "pos": [22, 16, 30], "look": [0, 5, 0] }, "to": { "pos": [5, 8.6, 13], "look": [0.1, 6.4, 1] }, "fov": 45 },
+      "effects": { "vignette": 0.6 },
+      "captions": [
+        { "from": 0.8, "to": 5.2, "text": "For a rare few, this isn't a what-if.", "hl": ["isn't"] },
+        { "from": 5.8, "to": 11.2, "text": "Fatal familial insomnia runs in about 70 families worldwide.", "hl": ["70"] },
+        { "from": 11.8, "to": 17.4, "text": "Average survival: about 18 months.", "hl": ["18"] }
+      ],
+      "sfx": [{ "at": 11.8, "type": "boom", "gain": 0.5 }]
+    },
+    {
+      "id": "end",
+      "from": 306,
+      "to": 318,
+      "scene": "city",
+      "params": { "clock": 1.5, "lightsOff": 0.97, "hero": [[0, 1], [2.6, 1], [3.0, 0]] },
+      "camera": { "path": "dolly", "from": { "pos": [5, 8.6, 13], "look": [0.1, 6.4, 1] }, "to": { "pos": [4, 8.2, 10.5], "look": [0.1, 6.4, 1] }, "fov": 45 },
+      "effects": { "vignette": [[0, 0.6], [4, 0.9]], "tunnel": [[3, 0], [5, 0.5]] },
+      "captions": [
+        { "from": 0.2, "to": 3.4, "text": "Tonight, almost everyone gets to switch off." },
+        { "from": 4.0, "to": 8.0, "text": "How long have YOU stayed awake?", "style": "center", "hl": ["YOU"] },
+        { "from": 8.2, "to": 11.9, "text": "Tell us in the comments.", "style": "center" }
+      ],
+      "sfx": [{ "at": 3.0, "type": "thud", "gain": 0.4 }]
+    }
+  ]
+}

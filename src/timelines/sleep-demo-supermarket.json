@@ -1,0 +1,80 @@
+{
+  "meta": {
+    "id": "SleepDemoSupermarket",
+    "title": "What If You Stopped Sleeping — 10s engine demo (hour 24, supermarket)",
+    "fps": 30,
+    "music": { "keys": [[0, 0.3], [5.5, 0.45], [6.1, 0.75], [10, 0.6]], "root": 55 }
+  },
+  "hud": {
+    "clock": {
+      "label": "AWAKE FOR",
+      "keys": [[0, 86530], [10, 86930]],
+      "format": "hms",
+      "sub": "SLEPT: 0 MIN",
+      "colorRamp": [0, 259200]
+    },
+    "start": 0.1
+  },
+  "segments": [
+    {
+      "id": "supermarket-24h",
+      "from": 0,
+      "to": 10,
+      "scene": "supermarket",
+      "transitionIn": "whip",
+      "params": {
+        "glare": [[0, 0.1], [4, 0.3], [9, 0.55]],
+        "flicker": [[0, 0], [5, 0.4]],
+        "cart": true,
+        "shoppers": [
+          { "x": -0.9, "z": -24, "rotY": -1.5708, "shirt": "#c0392b" },
+          { "x": 0.55, "z": -34, "speed": -0.9, "rotY": 0, "shirt": "#3c6fd8" }
+        ]
+      },
+      "camera": {
+        "path": "pov-walk",
+        "from": [-0.1, 0, 8],
+        "to": [0.25, 0, -8],
+        "stepRate": [[0, 1.9], [6, 1.5]],
+        "sway": [[0, 0.1], [5, 0.45], [10, 0.6]],
+        "droop": [[0, 0], [9, 0.12]],
+        "yaw": [[0, 0], [5.4, 0], [6.6, -52], [8.8, -48], [9.8, -10]],
+        "pitch": [[0, -5], [5.4, -5], [6.6, -9]],
+        "fov": 64
+      },
+      "effects": {
+        "doubleVision": [[0, 0], [2.4, 0], [4.2, 0.65], [6.6, 0.55], [7.4, 1], [10, 0.85]],
+        "blur": [[0, 0], [3, 0.6], [7, 1.4], [10, 1.8]],
+        "glare": [[0, 0.05], [4, 0.25], [9, 0.45]],
+        "vignette": [[0, 0.45], [10, 0.62]],
+        "eyelids": { "blinks": [{ "at": 3.3, "amount": 0.55, "close": 0.12, "open": 0.25 }, { "at": 8.6, "amount": 0.8, "close": 0.15, "hold": 0.12, "open": 0.35 }] }
+      },
+      "hud": {
+        "location": "24-HOUR SUPERMARKET · 03:10 AM",
+        "stats": [
+          { "from": 1.2, "to": 10, "label": "YOUR BRAIN TESTS LIKE", "value": "{n}%", "count": [[1.2, 0.05], [3.2, 0.1]], "decimals": 2, "sub": "blood alcohol", "color": "#ff6b5c" }
+        ],
+        "alerts": [
+          { "from": 6.1, "to": 10, "text": "ABOVE THE US DRIVING LIMIT (0.08%)", "blink": true }
+        ],
+        "next": [{ "from": 0.6, "to": 10, "title": "Microsleeps", "at": 111600, "unit": "hours" }]
+      },
+      "captions": [
+        { "from": 0.4, "to": 2.7, "text": "Hour 24. Just a quick run for coffee.", "hl": ["24."] },
+        { "from": 2.9, "to": 5.8, "text": "The labels start to split in two.", "hl": ["two."] },
+        { "from": 6.1, "to": 9.8, "text": "On paper, you're too drunk to drive.", "hl": ["drunk"] }
+      ],
+      "sfx": [
+        { "at": 0, "type": "whoosh", "gain": 0.8 },
+        { "at": 0.15, "type": "footsteps", "dur": 9.8, "rate": 1.8, "gain": 0.45 },
+        { "at": 0.1, "type": "cart", "dur": 9.9, "gain": 0.35 },
+        { "at": 2.9, "type": "warble", "dur": 2.2, "gain": 0.4 },
+        { "at": 4.3, "type": "beep", "gain": 0.25, "pan": 0.5 },
+        { "at": 4.6, "type": "riser", "dur": 1.5, "gain": 0.5 },
+        { "at": 6.1, "type": "boom", "gain": 0.9 },
+        { "at": 8.6, "type": "heartbeat", "dur": 1.4, "gain": 0.6 },
+        { "at": 9.1, "type": "beep", "gain": 0.2, "pan": 0.5 }
+      ]
+    }
+  ]
+}
