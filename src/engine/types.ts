@@ -149,6 +149,7 @@ export type ClockSpec = {
   sub?: string; // e.g. "SLEPT: 0 MIN"
   colorRamp?: [number, number]; // value range for white -> amber -> red
   labelKeys?: [number, string][]; // change the label over time (absolute t), e.g. 'DISAPPEARS IN' -> 'RETURNS IN'
+  subKeys?: [number, string][]; // change the sub line over time (absolute t)
   style?: 'panel' | 'minimal'; // minimal = no box, thin digits (cinematic)
   unit?: string; // appended to the number, e.g. ' km/h'
   decimals?: number; // for format 'number'

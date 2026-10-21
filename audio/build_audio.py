@@ -20,7 +20,7 @@ SCENE_AMBIENCE = {
     'street': 'street', 'room': 'room', 'city': 'city', 'brain': 'brain',
     'supermarket': 'supermarket', 'black': 'none',
     'northpole': 'wind', 'tunnel': 'roar', 'earthcut': 'space', 'planet': 'space',
-    'city2': 'city', 'land2': 'wind',
+    'city2': 'city', 'rooftop': 'rooftop', 'land2': 'wind',
 }
 
 
@@ -212,6 +212,10 @@ def main(path):
         if kind == 'space':
             kk = k(d)
             return lp(x, 90) * 0.12 + np.sin(2 * np.pi * 41 * kk) * 0.03
+        if kind == 'rooftop':  # city hum far below + crowd murmur
+            kk = k(d)
+            murmur = bp(x, 250, 1100) * (0.6 + 0.4 * lp(np.abs(noise(d)), 3) * 6)
+            return lp(x, 300) * 0.12 + murmur * 0.05
         if kind == 'slowmo':
             return lp(x, 120) * 0.2
         if kind == 'office':

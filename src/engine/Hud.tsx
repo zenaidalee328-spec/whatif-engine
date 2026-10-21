@@ -45,6 +45,7 @@ const fill = (s: string, n: number | undefined, d = 0) => (n === undefined ? s :
 /** Global "AWAKE FOR" style counter. T = absolute seconds. */
 export const ClockPanel: React.FC<{ c: ClockSpec & { text?: string }; T: number; opacity: number }> = ({ c, T, opacity }) => {
   const label = c.labelKeys ? [...c.labelKeys].reverse().find(([t0]) => T >= t0)?.[1] ?? c.label : c.label;
+  const sub = c.subKeys ? [...c.subKeys].reverse().find(([t0]) => T >= t0)?.[1] ?? c.sub : c.sub;
   const val = v(c.keys, T, 0);
   const fmt = c.format ?? 'hms';
   const ms = Math.max(0, val);
@@ -56,7 +57,7 @@ export const ClockPanel: React.FC<{ c: ClockSpec & { text?: string }; T: number;
       <div style={{ opacity, fontFamily: FONT, textShadow: '0 2px 14px rgba(0,0,0,0.6)' }}>
         <div style={{ fontSize: 15, letterSpacing: 4, fontWeight: 600, color: 'rgba(255,255,255,0.8)' }}>{label}</div>
         <div style={{ fontSize: 54, fontWeight: 400, fontFamily: c.format === 'number' ? SERIF : undefined, fontVariantNumeric: 'tabular-nums', color: col, lineHeight: 1.1, letterSpacing: 0.5 }}>{text}</div>
-        {c.sub && <div style={{ fontSize: 14, letterSpacing: 2, color: 'rgba(255,255,255,0.6)' }}>{c.sub}</div>}
+        {sub && <div style={{ fontSize: 14, letterSpacing: 2, color: 'rgba(255,255,255,0.6)' }}>{sub}</div>}
       </div>
     );
   return (

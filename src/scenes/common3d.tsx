@@ -121,6 +121,7 @@ export type PersonProps = {
   legSpread?: number; // legs forced apart (radians): right leg forward, left back (slipping, splits)
   legsOnly?: boolean; // draw only the legs (POV: your own legs below the camera)
   shoes?: string;
+  clutch?: number; // 0..1 both hands pressed to the head (ears popping, dizziness, panic)
 };
 
 const Limb: React.FC<{ len: number; r: number; color: string; mat?: THREE.Material }> = ({ len, r, color, mat }) => (
@@ -153,6 +154,7 @@ export const Person: React.FC<PersonProps> = ({
   legSpread,
   legsOnly = false,
   shoes = '#1c1c22',
+  clutch = 0,
 }) => {
   const darkMat = useMemo(
     () => new THREE.MeshBasicMaterial({ color: '#030305', transparent: true, opacity: 1, depthWrite: false }),
@@ -188,20 +190,20 @@ export const Person: React.FC<PersonProps> = ({
           {!m && <meshStandardMaterial color={shirt} flatShading roughness={0.9} />}
         </mesh>
         {/* arms */}
-        <group position={[0.27, 0.5, 0]} rotation={[-armR + (walk !== undefined ? Math.sin(walk + Math.PI) * 0.4 : 0), 0, -0.08]}>
+        <group position={[0.27, 0.5, 0]} rotation={[(-armR + (walk !== undefined ? Math.sin(walk + Math.PI) * 0.4 : 0)) * (1 - clutch) - 0.35 * clutch, 0, -0.08 + 2.33 * clutch]}>
           <Limb len={0.32} r={0.055} color={shirt} mat={m} />
-          <group position={[0, -0.3, 0]} rotation={[-elbowR, 0, 0]}>
+          <group position={[0, -0.3, 0]} rotation={[-elbowR * (1 - clutch), 0, 1.95 * clutch]}>
             <Limb len={0.3} r={0.048} color={skin} mat={m} />
           </group>
         </group>
-        <group position={[-0.27, 0.5, 0]} rotation={[-armL + (walk !== undefined ? Math.sin(walk) * 0.4 : 0), 0, 0.08]}>
+        <group position={[-0.27, 0.5, 0]} rotation={[(-armL + (walk !== undefined ? Math.sin(walk) * 0.4 : 0)) * (1 - clutch) - 0.35 * clutch, 0, 0.08 - 2.33 * clutch]}>
           <Limb len={0.32} r={0.055} color={shirt} mat={m} />
-          <group position={[0, -0.3, 0]}>
+          <group position={[0, -0.3, 0]} rotation={[0, 0, -1.95 * clutch]}>
             <Limb len={0.3} r={0.048} color={skin} mat={m} />
           </group>
         </group>
         {/* head */}
-        <group position={[0, 0.78, 0]} rotation={[headTilt, headTurn, 0]}>
+        <group position={[0, 0.78, 0]} rotation={[headTilt + 0.25 * clutch, headTurn, 0]}>
           <mesh castShadow material={m}>
             <sphereGeometry args={[0.15, 14, 12]} />
             {!m && <meshStandardMaterial color={skin} flatShading roughness={0.8} />}

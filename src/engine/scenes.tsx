@@ -32,6 +32,7 @@ const DEF = (pos: [number, number, number], look: [number, number, number], fov:
 
 type Mover = { x: number; z: number | [number, number][]; speed?: number; color?: string; shirt?: string; rotY?: number; lights?: number };
 
+import { RooftopScene } from '../scenes/Rooftop';
 export const SCENES: Record<string, { component: React.FC<SceneProps>; ambience: string; about: string }> = {
   street: {
     ambience: 'street',
@@ -172,6 +173,11 @@ export const SCENES: Record<string, { component: React.FC<SceneProps>; ambience:
     ambience: 'space',
     about: 'Earth cut in half along the polar axis (radius 10 = 6,371 km), true-scale PREM layers on the cut face, tunnel = vertical axis, glowing dot = the faller. params: s (story seconds), labels 0..1, spin, trail, mark (1 crust,2 upper mantle,3 TZ,4 lower mantle,5 outer core,6 inner core), dot. Good camera: [0,0,34] look origin fov 40',
     component: ({ t, p, cam }) => <EarthCutScene t={t} cam={cam} s={p.s} labels={p.labels} spin={p.spin} trail={p.trail} mark={p.mark} dot={p.dot} />,
+  },
+  rooftop: {
+    ambience: 'rooftop',
+    about: 'Rooftop bar at dusk 28 m above a river, low-poly skyline on the far bank. Deck y=0 x -12..12, parapet z=-8.1 (rail 1.07), fire pit (1.5,0,-1), bar x≈-8.6 z -2..6, red-brick wall x>12.5, woman at the railing (-0.6,0,-7.3). River y=-28 z -22..-68. params: fire, lights, flicker, clutch (hands to heads, staggered), river (0 water, 0.5 white froth, 1 drained), haze (sepia), dusk, bloom, focus, aperture',
+    component: ({ t, p, cam }) => <RooftopScene t={t} cam={cam} fire={p.fire} lights={p.lights} flicker={p.flicker} clutch={p.clutch} river={p.river} haze={p.haze} dusk={p.dusk} bloom={p.bloom} focus={p.focus} aperture={p.aperture} />,
   },
   northpole: {
     ambience: 'wind',
