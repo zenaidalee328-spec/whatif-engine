@@ -177,7 +177,7 @@ export const RooftopScene: React.FC<RooftopProps> = ({ t, cam, fire = 1, lights 
       gl.shadowMap.type = THREE.PCFSoftShadowMap;
     }}>
       <CameraRig {...c} />
-      <Env path="hdr/venice_sunset_1k.hdr" intensity={0.35 * (1 - 0.5 * dusk)} />
+      <Env path="hdr/pedestrian_overpass_1k.hdr" intensity={0.35 * (1 - 0.5 * dusk)} />
       <SkyDome top={top} bottom={bottom} stars={0} radius={1500} />
       <fog attach="fog" args={[fogCol.getStyle(), 40 - 30 * haze, 330 - 250 * haze]} />
       <hemisphereLight args={['#c8b6e0', '#5a4038', 0.55 * (1 - 0.4 * dusk)]} />

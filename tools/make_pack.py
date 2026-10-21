@@ -22,6 +22,19 @@ audio = tl['meta'].get('audio', f'audio/{cid}.wav')
 
 subprocess.run([sys.executable, 'audio/build_audio.py', tl_path], check=True)
 
+# assets the user's PC is known to have (docs/HANDOFF.md section 3). Anything else that a shipped file
+# references is added to the pack automatically, so a render never fails on a missing file.
+import re
+PC_ASSETS = {'models/man.glb', 'models/Xbot.glb', 'models/car.glb', 'hdr/pedestrian_overpass_1k.hdr', 'hdr/quarry_01_1k.hdr',
+             'tex/waternormals.jpg', 'tex/smoke1.png', 'tex/earth_day_4096.jpg', 'tex/earth_clouds_2048.png', 'tex/moon_1024.jpg',
+             'tex/kloofendal_48d_partly_cloudy.jpg'}
+for f in list(extra):
+    if f.endswith(('.ts', '.tsx')):
+        for a in set(re.findall(r"(?:hdr|tex|models)/[A-Za-z0-9_./-]+\.(?:hdr|jpg|png|glb)", open(f).read())):
+            if a not in PC_ASSETS and os.path.exists('public/' + a) and 'public/' + a not in extra:
+                print('pack: adding asset the PC may not have:', a)
+                extra.append('public/' + a)
+
 bat = rf"""@echo off
 setlocal
 cd /d "%~dp0"
