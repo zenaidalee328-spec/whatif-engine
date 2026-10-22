@@ -176,8 +176,8 @@ export const SCENES: Record<string, { component: React.FC<SceneProps>; ambience:
   },
   rooftop: {
     ambience: 'rooftop',
-    about: 'Rooftop bar at dusk 28 m above a river, low-poly skyline on the far bank. Deck y=0 x -12..12, parapet z=-8.1 (rail 1.07), fire pit (1.5,0,-1), bar x≈-8.6 z -2..6, red-brick wall x>12.5, woman at the railing (-0.6,0,-7.3). River y=-28 z -22..-68. params: fire, lights, flicker, clutch (hands to heads, staggered), river (0 water, 0.5 white froth, 1 drained), haze (sepia), dusk, bloom, focus, aperture, glass (panes/drinks to dust), crumble (skyline collapses), fireZ + fireball (hydrogen fire front), spark (ignition at (0,-16,-60)), debris (rocks at the lens)',
-    component: ({ t, p, cam }) => <RooftopScene t={t} cam={cam} fire={p.fire} lights={p.lights} flicker={p.flicker} clutch={p.clutch} river={p.river} haze={p.haze} dusk={p.dusk} bloom={p.bloom} focus={p.focus} aperture={p.aperture} glass={p.glass} crumble={p.crumble} fireZ={p.fireZ} fireball={p.fireball} spark={p.spark} debris={p.debris} />,
+    about: 'Rooftop bar at dusk 28 m above a river, low-poly skyline on the far bank. Deck y=0 x -12..12, parapet z=-8.1 (rail 1.07), fire pit (1.5,0,-1), bar x≈-8.6 z -2..6, red-brick wall x>12.5, woman at the railing (-0.6,0,-7.3). River y=-28 z -22..-68. params: fire, lights, flicker, clutch (hands to heads, staggered), river (0 water, 0.5 white froth, 1 drained), haze (sepia), dusk, bloom, focus, aperture, glass (panes/drinks to dust), crumble (concrete towers collapse into dust, steel towers keep a skeleton), sink (m, the roof falls: world rises), tilt (rad), fireZ + fireball (hydrogen fire front), spark (ignition at (0,-16,-60)), debris (rocks at the lens)',
+    component: ({ t, p, cam }) => <RooftopScene t={t} cam={cam} fire={p.fire} lights={p.lights} flicker={p.flicker} clutch={p.clutch} river={p.river} haze={p.haze} dusk={p.dusk} bloom={p.bloom} focus={p.focus} aperture={p.aperture} glass={p.glass} crumble={p.crumble} sink={p.sink} tilt={p.tilt} fireZ={p.fireZ} fireball={p.fireball} spark={p.spark} debris={p.debris} />,
   },
   northpole: {
     ambience: 'wind',

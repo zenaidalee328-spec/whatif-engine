@@ -337,6 +337,45 @@ export const floatHero = (h: Hero, t: number, panic = 0) => {
   rot(h.bones.Neck, side, -0.1 + 0.05 * w3);
 };
 
+/**
+ * Standing idle pose built from the aligned T-pose: arms down at the sides, slight breathing sway.
+ * clutch 0..1 raises both hands to the sides of the head (ears popping / dizziness).
+ */
+export const standHero = (h: Hero, t: number, clutch = 0, seed = 0) => {
+  const rest = bakedCache?.restLocal;
+  if (!rest) return;
+  h.mixer.stopAllAction();
+  for (const n of BONES) if (rest[n]) h.bones[n].quaternion.copy(rest[n]);
+  h.root.updateMatrixWorld(true);
+  const rq = wq(h.root);
+  const fwd = new THREE.Vector3(0, 0, 1).applyQuaternion(rq);
+  const side = new THREE.Vector3(1, 0, 0).applyQuaternion(rq);
+  const up = new THREE.Vector3(0, 1, 0).applyQuaternion(rq);
+  const rot = (b: THREE.Object3D, axis: THREE.Vector3, a: number) => {
+    const pw = wq(b.parent!);
+    const r = new THREE.Quaternion().setFromAxisAngle(axis, a);
+    b.quaternion.copy(pw.clone().invert().multiply(r).multiply(pw).multiply(b.quaternion));
+    b.updateMatrixWorld(true);
+  };
+  const c = Math.min(1, Math.max(0, clutch));
+  const br = Math.sin(t * 1.6 + seed) * 0.03;
+  // upper arms: down at the sides (-1.3 rad) -> raised out and up toward the head (+0.55)
+  const la = -1.3 + (0.55 + 1.3) * c + br;
+  rot(h.bones.LeftArm, fwd, la);
+  rot(h.bones.RightArm, fwd, -la);
+  rot(h.bones.LeftArm, up, -0.15 - 0.55 * c); // elbows a little forward
+  rot(h.bones.RightArm, up, 0.15 + 0.55 * c);
+  // forearms: slight bend at rest, folded in so the palms reach the ears when clutching
+  rot(h.bones.LeftForeArm, fwd, 0.15 + 2.1 * c);
+  rot(h.bones.RightForeArm, fwd, -0.15 - 2.1 * c);
+  rot(h.bones.LeftForeArm, up, -0.25 * (1 - c));
+  rot(h.bones.RightForeArm, up, 0.25 * (1 - c));
+  // head drops a little, shoulders hunch
+  rot(h.bones.Neck, side, 0.25 * c + 0.03 * Math.sin(t * 0.7 + seed));
+  rot(h.bones.Spine1, side, 0.12 * c);
+  rot(h.bones.Spine, up, 0.05 * Math.sin(t * 0.5 + seed * 2));
+};
+
 /** glow the hero (meteor stage): 0 = normal, 1 = white-hot */
 export const heatHero = (h: Hero, heat: number, t = 0) => {
   h.heat.uHeat.value = heat;

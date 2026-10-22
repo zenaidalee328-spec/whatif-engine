@@ -23,7 +23,7 @@ import { MachCone, Aura, FeetFire } from './runner';
 */
 
 // ---------- facades: reflective glass windows, floor ledges, shop fronts ----------
-const facadeMat = (() => {
+export const facadeMat = (() => {
   let m: THREE.MeshStandardMaterial | null = null;
   return () => {
     if (m) return m;

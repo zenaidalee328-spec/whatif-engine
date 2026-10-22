@@ -4,7 +4,7 @@ Physics (all computed here):
   air: 101.325 kPa, O2 20.95 % by volume -> 80.1 kPa (11.6 psi, -21 %), the pressure ~2.0 km up (scale height 8.4 km)
   window glass (soda-lime) ~47 % O by mass; concrete ~49 %; water 88.8 %
   1 L of water -> 55.5 mol H2 -> 1,660 L of gas at 80 kPa, 15 C
-  burning it back (LHV 241.8 kJ/mol): 13.4 GJ per m3 of water = 3.2 t TNT; the river in view (46 m x 600 m x 5 m) ~443 kt
+  burning it back (LHV 241.8 kJ/mol): 13.4 GJ per m3 of water = 3.2 t TNT; the river in view (120 m x 600 m x 5 m) ~1.2 Mt
   hydrogen fire front ~15 m/s (turbulent deflagration), from the far bank (~104 m) to you in ~7 s
 The 5 story seconds play in 10x slow motion (HUD shows story time).
 usage: python3 tools/gen/oxygen5s.py [--until SECONDS]"""
@@ -14,7 +14,7 @@ P0 = 101.325; P1 = P0 * (1 - 0.2095); PSI = 6.894757
 alt = 8.4 * math.log(P0 / P1)
 R, T15 = 8.314, 288.15
 L_H2 = 1000 / 18.015 * R * T15 / (P1 * 1000) * 1000  # litres of H2 per litre of water
-river_m3 = 46 * 600 * 5
+river_m3 = 120 * 600 * 5
 h2_m3 = river_m3 * L_H2
 E = river_m3 * 55508 * 241.8e3
 HIRO = E / 4.184e12 / 15
@@ -41,6 +41,17 @@ def sub(text, a=0.15, b=None, d=None):
     return {'from': a, 'to': b if b is not None else d - 0.1, 'text': text, 'style': 'subtle'}
 
 AFTER = {'fire': 0, 'lights': 1, 'clutch': 1}
+
+# our own building gives way at video 30 s (story 2.5 s): free fall in slow motion, lands after 28 m
+COLLAPSE_T, ROOF_H = 30.0, 28.0
+def story(T): return (T - EVENT) * SLOW if T <= RETURN else 5.0 + (T - RETURN)
+def sink(T):
+    s = max(0.0, story(T) - story(COLLAPSE_T))
+    return min(ROOF_H, 0.5 * 9.81 * s * s)
+LAND_T = next(EVENT + x / 100 for x in range(0, 10000) if sink(EVENT + x / 100) >= ROOF_H)
+def tilt(T): return 0.13 * min(1.0, sink(T) / ROOF_H) ** 0.6
+def fall(a, b):
+    return {'sink': fk(sink, a, b, 12), 'tilt': fk(tilt, a, b, 6)}
 
 # ---------- before ----------
 shot('rail', 0.0, 3.2, camera=cam([0.4, 1.62, -3.6], [0.0, 1.6, -4.9], [-1.2, 1.0, -30], [-0.8, 0.6, -30], 3.2),
@@ -73,23 +84,23 @@ shot('drinks', 16.6, 18.6, camera=cam([-3.9, 1.45, -0.45], [-3.7, 1.4, -0.2], [-
      params={**AFTER, 'glass': [[0, 0], [0.3, 0], [1.1, 1]]}, transitionIn='whip', effects={'vignette': 0.4},
      captions=[sub('So is your glass. And your drink.', d=2.0)])
 # ---------- the river ----------
-shot('river1', 18.6, 21.8, camera=cam([2.2, 1.8, -6.0], [1.2, 3.4, -8.9], [-0.1, 1.3, -7.4], [-0.6, -28, -42], 2.0, 50),
+shot('river1', 18.6, 21.8, camera=cam([2.2, 1.8, -6.0], [1.2, 3.4, -8.9], [-0.1, 1.3, -7.4], [-0.6, -28, -60], 2.0, 50),
      params={**AFTER, 'glass': 1, 'river': [[0, 0], [2.2, 0], [3.2, 0.22]]}, transitionIn='whip', effects={'vignette': 0.4},
      captions=[sub(f'The river below is {16 / 18 * 100:.0f}% oxygen.', d=3.2)], sfx=[{'at': 2.2, 'type': 'rumble', 'dur': 3, 'gain': 0.6}])
-shot('river2', 21.8, 25.2, camera=cam([1.4, 2.4, -7.6], [1.0, 2.6, -7.9], [0, -16, -45], [-8, -12, -50], 3.4, 52),
+shot('river2', 21.8, 25.2, camera=cam([1.4, 2.4, -7.6], [1.0, 2.6, -7.9], [0, -16, -70], [-8, -12, -80], 3.4, 52),
      params={**AFTER, 'glass': 1, 'river': [[0, 0.22], [3.4, 0.72]]}, effects={'vignette': 0.45, 'shake': 0.35},
      captions=[sub(f'Every litre becomes {round(L_H2, -1):,.0f} litres|of hydrogen gas.', d=3.4)], ambience='roar')
-shot('river3', 25.2, 28.4, camera=cam([0.0, 4.0, -9.0], [-1.0, 3.8, -9.2], [-15, -27, -40], [-20, -27.5, -38], 3.2, 55),
+shot('river3', 25.2, 28.4, camera=cam([0.0, 4.0, -9.0], [-1.0, 3.8, -9.2], [-15, -27, -50], [-22, -27.5, -48], 3.2, 55),
      params={**AFTER, 'glass': 1, 'river': [[0, 0.72], [1.6, 1.0]]}, transitionIn='whip', effects={'vignette': 0.45},
      captions=[sub('In one second, the river is gone.', d=3.2)])
 # ---------- the city ----------
-shot('crumble1', 28.4, 32.0, camera=cam([0.5, 1.8, -7.2], [0.3, 1.85, -7.6], [0, 6, -150], [0, 4, -150], 3.6, 46),
+shot('crumble1', 28.4, 32.0, camera=cam([2.8, 1.8, -7.2], [2.6, 1.85, -7.6], [0, 6, -220], [0, 4, -220], 3.6, 46),
      params={**AFTER, 'glass': 1, 'river': 1, 'crumble': [[0, 0], [3.6, 0.45]], 'haze': [[0, 0], [3.6, 0.3]]}, transitionIn='whip',
      effects={'vignette': 0.4, 'shake': 0.2}, captions=[sub('Concrete is about half oxygen.', d=3.6)],
      sfx=[{'at': 0.3, 'type': 'rumble', 'dur': 3.4, 'gain': 0.8}], ambience='roar')
-shot('crumble2', 32.0, 35.6, camera=cam([-5.8, 1.75, -7.2], [-5.4, 1.8, -7.4], [12, 3, -160], [8, 3, -160], 3.6, 50),
+shot('crumble2', 32.0, 35.6, camera=cam([-7.6, 1.75, -7.2], [-7.2, 1.8, -7.4], [12, 3, -200], [8, 3, -200], 3.6, 50),
      params={**AFTER, 'glass': 1, 'river': 1, 'crumble': [[0, 0.45], [3.6, 0.85]], 'haze': [[0, 0.3], [3.6, 0.6]]}, transitionIn='whip',
-     effects={'vignette': 0.4, 'shake': 0.3}, captions=[sub('Every building in the city|is turning to dust.', d=3.6)],
+     effects={'vignette': 0.4, 'shake': 0.3}, captions=[sub('Concrete crumbles.|Only the steel frames are left.', d=3.6)],
      sfx=[{'at': 0.0, 'type': 'rumble', 'dur': 3.6, 'gain': 0.9}], ambience='roar')
 shot('ours', 35.6, 39.2, camera=cam([2.6, 1.05, -2.2], [2.3, 1.0, -2.6], [0, 1.3, -6.5], [-0.3, 1.2, -6.8], 3.6, 50, roll=[[0, 0], [3.6, 0.06]]),
      params={**AFTER, 'glass': 1, 'river': 1, 'crumble': 0.9, 'haze': [[0, 0.6], [3.6, 0.7]]}, transitionIn='whip',
@@ -98,7 +109,7 @@ shot('ours', 35.6, 39.2, camera=cam([2.6, 1.05, -2.2], [2.3, 1.0, -2.6], [0, 1.3
 shot('dust', 39.2, 43.0, camera=cam([2.8, 1.75, -5.4], [2.4, 1.75, -5.8], [-0.6, 1.3, -7.4], [-0.9, 1.0, -12], 3.8, 46),
      params={**AFTER, 'glass': 1, 'river': 1, 'crumble': 0.92, 'haze': [[0, 0.7], [3.8, 0.85]]}, transitionIn='whip',
      effects={'vignette': 0.5, 'shake': 0.15}, captions=[sub('The air fills with metal|and silicon dust.', d=3.8)])
-shot('energy', 43.0, 47.2, camera=cam([0.8, 2.6, -7.8], [0.6, 2.8, -8.2], [-4, -24, -45], [-4, -20, -60], 4.2, 50),
+shot('energy', 43.0, 47.2, camera=cam([0.8, 2.6, -7.8], [0.6, 2.8, -8.2], [-4, -24, -60], [-4, -18, -90], 4.2, 50),
      params={**AFTER, 'glass': 1, 'river': 1, 'crumble': 0.93, 'haze': 0.6}, transitionIn='whip', effects={'vignette': 0.5},
      captions=[sub('The hydrogen from the river you can see', d=2.1), sub(f'holds the energy of {HIRO:.0f} Hiroshima bombs.', a=2.1, d=4.2)])
 shot('yet', 47.2, 51.2, camera=cam([0.3, 1.62, -3.8], [0.1, 1.6, -4.6], [-0.9, 1.0, -30], [-0.8, 0.8, -30], 4.0),
@@ -106,7 +117,7 @@ shot('yet', 47.2, 51.2, camera=cam([0.3, 1.62, -3.8], [0.1, 1.6, -4.6], [-0.9, 1
      captions=[sub('Nothing is burning. Yet.', a=0.6, d=4.0)])
 shot('return', 51.2, 55.0, camera=cam([3.0, 1.7, -6.9], [3.0, 1.72, -7.4], [-1, -6, -80], [-1, -5, -80], 3.8),
      params={**AFTER, 'glass': 1, 'river': 1, 'crumble': 0.95, 'haze': 0.85}, effects={'vignette': 0.5},
-     captions=[sub('Then the oxygen comes back.', a=0.6, d=3.8)], sfx=[{'at': 1.0, 'type': 'riser', 'dur': 2.8, 'gain': 0.5}])
+     captions=[sub('Then the oxygen comes back.', a=0.6, d=3.8)], sfx=[{'at': 1.0, 'type': 'riser', 'dur': 2.8, 'gain': 0.5}, {'at': round(LAND_T - 51.2, 2), 'type': 'crash', 'gain': 0.9}, {'at': round(LAND_T - 51.2, 2), 'type': 'thud', 'gain': 0.9}])
 # ---------- oxygen returns: the hydrogen burns ----------
 FIRE = {**AFTER, 'glass': 1, 'river': 1, 'crumble': 0.95, 'haze': 0.65}
 def fire_params(a, b, **extra):
@@ -136,6 +147,9 @@ shot('rain', 66.0, 70.0, camera=cam([3.8, 0.35, -5.0], [3.8, 0.34, -5.0], [5, 4,
 shot('end', 70.0, 76.0, scene='black', params={'color': '#111111'},
      hud={'endcard': {'title': 'What if oxygen disappeared|for 5 seconds?', 'lines': ['Every oxygen atom gone, except inside living things.', 'Part 2: what if nitrogen disappeared?'], 'cta': 'Comment your guess · Follow for more What Ifs'}})
 
+for sg in segs:
+    if sg['scene'] == 'rooftop' and sg['to'] > COLLAPSE_T:
+        sg.setdefault('params', {}).update(fall(sg['from'], sg['to']))
 end = segs[-1]['to']
 story_end = 5 - (min(end, RETURN) - EVENT) * SLOW
 tl = {
@@ -151,4 +165,4 @@ tl = {
     'segments': segs,
 }
 json.dump(tl, open('src/timelines/oxygen-5s.json', 'w'), indent=1)
-print(f'wrote oxygen-5s.json {end}s, {len(segs)} shots | P1 {P1 / PSI:.2f} psi, alt {alt:.2f} km, H2 {L_H2:.0f} L/L, river H2 {h2_m3:.2e} m3, {HIRO:.1f} Hiroshimas, fire speed {(CAMZ - FIRE_Z0) / (FIRE_T1 - FIRE_T0):.1f} m/s')
+print(f'roof lands at {LAND_T:.2f}s');print(f'wrote oxygen-5s.json {end}s, {len(segs)} shots | P1 {P1 / PSI:.2f} psi, alt {alt:.2f} km, H2 {L_H2:.0f} L/L, river H2 {h2_m3:.2e} m3, {HIRO:.1f} Hiroshimas, fire speed {(CAMZ - FIRE_Z0) / (FIRE_T1 - FIRE_T0):.1f} m/s')
