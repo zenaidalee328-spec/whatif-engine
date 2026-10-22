@@ -236,3 +236,17 @@ Project root: `whatif-engine/`.
 - The user's cloud credit is limited: avoid frame-by-frame video reviews; use 1 fps sheets and few stills.
 - Current: EarthHoleShort 11 s demo (tools/gen/earthhole_short.py) sent as a pack; waiting for the user's OK.
   Plan: full 60 s short, then the long YouTube version in the same style.
+
+## 9. Session 22 Oct 2026 — later
+
+- Packs are also committed to `packs/` so the user can download them from GitHub (chat file cards sometimes do not show).
+  GitHub releases cannot be created from the cloud session.
+- New scene `rooftop` (src/scenes/Rooftop.tsx): dusk rooftop bar, low-poly skyline over a river. Params: fire, lights, flicker, clutch,
+  river, haze, dusk, glass, crumble, fireZ/fireball, spark, debris. Person has `clutch` (hands to the head).
+- `meta.autoWhoosh: false` turns off automatic whoosh/impact sounds on cuts. The user said whooshes were overused: keep them off.
+- `effects.drops` = water drops on the lens. Clock `subKeys` changes the sub line over time.
+- make_pack.py ships any public asset a shipped file references that the PC may not have (the PC lacked venice_sunset_1k.hdr -> 404).
+- Oxygen5s (tools/gen/oxygen5s.py): full 76 s "What if oxygen disappeared for 5 seconds?" built as a capability test after the user
+  disliked the EarthHoleShort demo ("ajeeb"). Rule on screen: every oxygen atom vanishes except inside living things. Pack sent;
+  waiting for the user's render + feedback. Weak spots: river spray looks like pebbles; 41-47 s very hazy.
+- Note to future sessions: this topic copies the reference channel; for publishing pick a fresh topic.
