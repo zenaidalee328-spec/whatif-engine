@@ -250,3 +250,6 @@ Project root: `whatif-engine/`.
   disliked the EarthHoleShort demo ("ajeeb"). Rule on screen: every oxygen atom vanishes except inside living things. Pack sent;
   waiting for the user's render + feedback. Weak spots: river spray looks like pebbles; 41-47 s very hazy.
 - Note to future sessions: this topic copies the reference channel; for publishing pick a fresh topic.
+- Oxygen5s v2 (latest pack in packs/): user said v1 was not realistic (water, buildings and our roof did not fall). v2 = physical Sky,
+  three.js Water river (120 m wide), City2 facadeMat towers that collapse (concrete) or keep a steel skeleton (frameMat), realistic
+  hero clones with standHero (hero.tsx, clutch = hands on head), roof free-fall from video 30 s (lands 53.9 s). Waiting for feedback.
