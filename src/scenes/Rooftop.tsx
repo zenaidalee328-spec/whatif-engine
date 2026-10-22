@@ -3,7 +3,7 @@ import * as THREE from 'three';
 import { ThreeCanvas } from '@remotion/three';
 import { useVideoConfig } from 'remotion';
 import { CamProps, CameraRig, Person, SkyDome, clamp01, hash, mixHex } from './common3d';
-import { Env, Post, Redraw } from './fx3d';
+import { Env, Post, Redraw, useTex } from './fx3d';
 
 /*
   Rooftop bar at dusk, ~28 m above a river; a downtown skyline on the far bank. Original low-poly look.
@@ -11,7 +11,9 @@ import { Env, Post, Redraw } from './fx3d';
   Red-brick neighbour x>12.5. River y=-28, z -22..-68. Far bank skyline z -72..-240.
   params: fire 0..1 (flames), lights 0..1 (string bulbs), flicker 0..1 (bulbs drop out at random),
           clutch 0..1 (people press hands to their heads, staggered), river 0..1 (water froths white -> drains, brown bed shows),
-          haze 0..1 (sepia dust), dusk 0..1 (sky darkness), bloom, focus (m), aperture.
+          haze 0..1 (sepia dust), dusk 0..1 (sky darkness), bloom, focus (m), aperture,
+          glass 0..1 (window panes + drinking glasses turn to falling dust), crumble 0..1 (far-bank skyline collapses into dust),
+          fireZ (z of the hydrogen fire front) + fireball 0..1, spark 0..1 (ignition point over the river), debris 0..1 (rocks thrown at the lens).
 */
 
 const canvasTex = (w: number, h: number, draw: (g: CanvasRenderingContext2D) => void, repeat?: [number, number]) => {
@@ -110,9 +112,25 @@ export type RooftopProps = {
   bloom?: number;
   focus?: number;
   aperture?: number;
+  glass?: number;
+  crumble?: number;
+  fireZ?: number;
+  fireball?: number;
+  spark?: number;
+  debris?: number;
 };
 
-export const RooftopScene: React.FC<RooftopProps> = ({ t, cam, fire = 1, lights = 1, flicker = 0, clutch = 0, river = 0, haze = 0, dusk = 0, bloom = 0.55, focus = 8, aperture = 0 }) => {
+export const RooftopScene: React.FC<RooftopProps> = ({ t, cam, fire = 1, lights = 1, flicker = 0, clutch = 0, river = 0, haze = 0, dusk = 0, bloom = 0.55, focus = 8, aperture = 0, glass = 0, crumble = 0, fireZ = -110, fireball = 0, spark = 0, debris = 0 }) => {
+  const smokeTex = useTex('tex/smoke1.png');
+  const puffMats = useMemo(
+    () => [0, 1, 2].map((i) => new THREE.SpriteMaterial({ color: ['#ff7a1f', '#ffb347', '#ffe0a0'][i], transparent: true, blending: THREE.AdditiveBlending, depthWrite: false, fog: false })),
+    [],
+  );
+  const dustMat = useMemo(() => new THREE.SpriteMaterial({ color: '#b5946c', transparent: true, depthWrite: false }), []);
+  if (smokeTex) {
+    puffMats.forEach((m) => (m.map = smokeTex));
+    dustMat.map = smokeTex;
+  }
   const { width, height } = useVideoConfig();
   const c = cam ?? { pos: [0, 1.7, 6] as [number, number, number], look: [0, 1.4, -8] as [number, number, number], fov: 50 };
 
@@ -226,10 +244,25 @@ export const RooftopScene: React.FC<RooftopProps> = ({ t, cam, fire = 1, lights 
         const fl = Math.floor(i / 6), col = i % 6;
         const lit = hash(i * 3.3) < 0.45;
         return (
-          <mesh key={i} position={[12.48, 2.2 + fl * 3.4, -6 + col * 2.9]} rotation={[0, -Math.PI / 2, 0]}>
-            <planeGeometry args={[1.1, 1.7]} />
-            <meshStandardMaterial color={lit ? '#ffd79a' : '#141820'} emissive={lit ? '#ffb85c' : '#000'} emissiveIntensity={lit ? 0.8 * lights : 0} />
-          </mesh>
+          <group key={i}>
+            <mesh position={[12.48, 2.2 + fl * 3.4, -6 + col * 2.9]} rotation={[0, -Math.PI / 2, 0]}>
+              <planeGeometry args={[1.1, 1.7]} />
+              <meshStandardMaterial color={lit ? '#ffd79a' : '#141820'} emissive={lit ? '#ffb85c' : '#000'} emissiveIntensity={lit ? 0.8 * lights : 0} />
+            </mesh>
+            {glass < 0.35 && (
+              <mesh position={[12.4, 2.2 + fl * 3.4, -6 + col * 2.9]} rotation={[0, -Math.PI / 2, 0]}>
+                <planeGeometry args={[1.12, 1.72]} />
+                <meshStandardMaterial color="#cfe3f0" transparent opacity={0.35 * (1 - glass / 0.35)} metalness={0.6} roughness={0.05} />
+              </mesh>
+            )}
+            {glass > 0 && glass < 1 &&
+              Array.from({ length: 10 }, (_, j) => (
+                <mesh key={j} position={[12.3 - glass * hash(i * 10 + j) * 0.8, 2.2 + fl * 3.4 + (hash(i * 31 + j) - 0.5) * 1.5 - glass * glass * 7, -6 + col * 2.9 + (hash(i * 17 + j) - 0.5) * 1.0]}>
+                  <boxGeometry args={[0.05, 0.05, 0.05]} />
+                  <meshBasicMaterial color="#e8eef2" transparent opacity={Math.sin(Math.PI * glass)} />
+                </mesh>
+              ))}
+          </group>
         );
       })}
 
@@ -268,7 +301,7 @@ export const RooftopScene: React.FC<RooftopProps> = ({ t, cam, fire = 1, lights 
           {[-0.15, 0.15].map((gx) => (
             <mesh key={gx} position={[gx, 1.16, 0.05]}>
               <cylinderGeometry args={[0.04, 0.035, 0.13, 8]} />
-              <meshStandardMaterial color="#e8eef2" transparent opacity={0.5} roughness={0.1} />
+              <meshStandardMaterial color="#e8eef2" transparent opacity={0.5 * (1 - clamp01(glass * 3))} roughness={0.1} />
             </mesh>
           ))}
         </group>
@@ -334,11 +367,94 @@ export const RooftopScene: React.FC<RooftopProps> = ({ t, cam, fire = 1, lights 
         );
       })}
 
+      {/* ignition point + hydrogen fire front rolling toward the camera */}
+      {spark > 0 && (
+        <group position={[0, -16, -60]}>
+          <mesh>
+            <sphereGeometry args={[0.6 + 1.6 * spark, 12, 10]} />
+            <meshBasicMaterial color="#fff4dc" toneMapped={false} />
+          </mesh>
+          <sprite scale={[14 * spark, 14 * spark, 1]} material={puffMats[2]} />
+          <pointLight intensity={4000 * spark} distance={200} color="#ffd9a0" />
+        </group>
+      )}
+      {fireball > 0 &&
+        Array.from({ length: 90 }, (_, i) => {
+          const m = puffMats[i % 3].clone();
+          m.opacity = clamp01(fireball * 1.4) * (0.35 + 0.4 * hash(i * 2.9));
+          const sc = 9 + 18 * hash(i * 4.4) + 6 * Math.sin(t * 3 + i);
+          const x = (hash(i * 1.3) - 0.5) * 220;
+          const y = -26 + hash(i * 7.7) ** 0.7 * (40 + 50 * fireball);
+          const z = fireZ - hash(i * 9.9) * 40 + Math.sin(t * 2 + i) * 3;
+          return <sprite key={i} position={[x, y, z]} scale={[sc, sc, 1]} material={m} />;
+        })}
+      {fireball > 0 && <pointLight position={[0, 6, fireZ + 8]} intensity={9000 * fireball} distance={260} color="#ff9a4a" />}
+      {debris > 0 &&
+        Array.from({ length: 46 }, (_, i) => {
+          const f = (hash(i * 6.6) + t * (0.35 + hash(i) * 0.35)) % 1;
+          const z = THREE.MathUtils.lerp(fireZ, c.pos[2] + 2, f);
+          const x = c.pos[0] + (hash(i * 2.7) - 0.5) * 30 * (1 - f) + (hash(i * 3.1) - 0.5) * 3;
+          const y = c.pos[1] + (hash(i * 4.9) - 0.5) * 18 * (1 - f) + 6 * Math.sin(Math.PI * f) * (hash(i) - 0.3);
+          return (
+            <mesh key={i} position={[x, y, z]} rotation={[t * 3 + i, t * 2 + i, 0]} scale={debris * (0.15 + hash(i * 8.8) * 0.4)}>
+              <icosahedronGeometry args={[1, 0]} />
+              <meshStandardMaterial color="#2a1a12" roughness={1} flatShading />
+            </mesh>
+          );
+        })}
+
       {/* river + far bank */}
-      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -28 - 2.5 * wDry, -45]}>
-        <planeGeometry args={[600, 46]} />
-        <meshStandardMaterial color={waterCol} metalness={0.55 - 0.5 * wDry} roughness={0.25 + 0.6 * Math.max(wHot * 0.6, wDry)} />
-      </mesh>
+      {river < 0.98 && (
+        <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -28 - 2.5 * wDry, -45]}>
+          <planeGeometry args={[600, 46]} />
+          <meshStandardMaterial color={waterCol} metalness={0.55 - 0.5 * wDry} roughness={0.25 + 0.6 * Math.max(wHot * 0.6, wDry)} transparent opacity={1 - wDry} />
+        </mesh>
+      )}
+      {/* the water turning to gas: violent spray thrown up, then falling back as mud */}
+      {river > 0.02 && river < 0.95 &&
+        Array.from({ length: 160 }, (_, i) => {
+          const u = clamp01(river / 0.9);
+          const up = (8 + hash(i * 2.2) * 22) * Math.sin(Math.PI * u);
+          return (
+            <mesh key={i} position={[(hash(i * 5.1) - 0.5) * 160, -28 + up, -24 - hash(i * 7.3) * 42]}>
+              <icosahedronGeometry args={[0.25 + hash(i) * 0.6, 0]} />
+              <meshStandardMaterial color={mixHex('#e9eef2', '#6a5034', u)} transparent opacity={0.85 * Math.sin(Math.PI * u)} />
+            </mesh>
+          );
+        })}
+      {river > 0.05 && (
+        <mesh position={[0, -28 + 12 * river, -45]} rotation={[-Math.PI / 2, 0, 0]}>
+          <planeGeometry args={[600, 50]} />
+          <meshBasicMaterial color="#f4f1ea" transparent opacity={0.12 * Math.sin(Math.PI * Math.min(1, river))} depthWrite={false} />
+        </mesh>
+      )}
+      {/* exposed riverbed: boulders, mud ridges, stranded debris */}
+      {wDry > 0 &&
+        Array.from({ length: 120 }, (_, i) => (
+          <mesh key={'rb' + i} position={[(hash(i * 3.9) - 0.5) * 220, -28.55, -23 - hash(i * 6.1) * 44]} rotation={[hash(i) * 3, hash(i * 2) * 3, 0]} scale={[1 + hash(i * 5) * 2.5, 0.35 + hash(i * 7) * 0.6, 1 + hash(i * 8) * 2]}>
+            <icosahedronGeometry args={[0.6, 0]} />
+            <meshStandardMaterial color={i % 4 ? '#4a3626' : '#6e5a44'} roughness={1} flatShading />
+          </mesh>
+        ))}
+      {wDry > 0 &&
+        Array.from({ length: 14 }, (_, i) => (
+          <mesh key={'mr' + i} position={[(hash(i * 9.3) - 0.5) * 200, -28.5, -26 - i * 3]} rotation={[-Math.PI / 2, 0, hash(i) * 0.3]}>
+            <planeGeometry args={[60 + hash(i * 4) * 80, 0.8]} />
+            <meshStandardMaterial color="#3a2a1c" roughness={1} />
+          </mesh>
+        ))}
+      {[[-30, -35], [24, -52]].map(([x, z], i) => (
+        <group key={i} position={[x, -27.6 - 2.6 * wDry, z]} rotation={[0, 0.4 + i, wDry * 0.25 * (i ? 1 : -1)]}>
+          <mesh>
+            <boxGeometry args={[7, 1.2, 2.4]} />
+            <meshStandardMaterial color={i ? '#d8d2c8' : '#7a2a24'} roughness={0.7} />
+          </mesh>
+          <mesh position={[-0.8, 1.1, 0]}>
+            <boxGeometry args={[2.6, 1.1, 1.8]} />
+            <meshStandardMaterial color="#e8e4dc" roughness={0.6} />
+          </mesh>
+        </group>
+      ))}
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -28.6, -45]}>
         <planeGeometry args={[600, 46]} />
         <meshStandardMaterial color="#5c4630" roughness={1} />
@@ -351,13 +467,28 @@ export const RooftopScene: React.FC<RooftopProps> = ({ t, cam, fire = 1, lights 
         <planeGeometry args={[600, 190]} />
         <meshStandardMaterial color="#6b6f78" roughness={1} />
       </mesh>
-      {skyline.map((b, i) => (
-        <mesh key={i} position={[b.x, -28 + b.h / 2, b.z]} material={b.mat}>
-          <boxGeometry args={[b.w, b.h, b.d]} />
-        </mesh>
-      ))}
+      {skyline.map((b, i) => {
+        const k = clamp01((crumble - hash(i * 3.7) * 0.5) / 0.5);
+        const sink = b.h * 0.75 * k * k;
+        return (
+          <mesh key={i} position={[b.x, -28 + b.h / 2 - sink, b.z]} rotation={[0, 0, (hash(i * 8.1) - 0.5) * 0.25 * k]} material={b.mat}>
+            <boxGeometry args={[b.w, b.h, b.d]} />
+          </mesh>
+        );
+      })}
+      {/* collapse dust */}
+      {crumble > 0 &&
+        skyline.map((b, i) => {
+          if (i % 2) return null;
+          const k = clamp01((crumble - hash(i * 3.7) * 0.5) / 0.5);
+          if (k <= 0) return null;
+          const m = dustMat.clone();
+          m.opacity = 0.55 * Math.min(1, k * 3);
+          const sc = b.w * (1.2 + 2.2 * k);
+          return <sprite key={'d' + i} position={[b.x, -28 + sc * 0.35, b.z + 6]} scale={[sc, sc * 0.7, 1]} material={m} />;
+        })}
 
-      <Redraw deps={[deckTex]} />
+      <Redraw deps={[deckTex, smokeTex]} />
       <Post bloom={bloom} bloomThreshold={0.85} focus={focus} aperture={aperture} maxblur={0.01} />
     </ThreeCanvas>
   );

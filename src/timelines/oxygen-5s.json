@@ -6,6 +6,7 @@
   "width": 1080,
   "height": 1920,
   "fovScale": 1.25,
+  "autoWhoosh": false,
   "music": {
    "keys": [
     [
@@ -22,11 +23,55 @@
     ],
     [
      6.0,
+     0.4
+    ],
+    [
+     18,
      0.45
     ],
     [
-     12.0,
-     0.65
+     28,
+     0.6
+    ],
+    [
+     43,
+     0.7
+    ],
+    [
+     51,
+     0.5
+    ],
+    [
+     54.8,
+     0.75
+    ],
+    [
+     55.0,
+     0.1
+    ],
+    [
+     56,
+     0.6
+    ],
+    [
+     62.4,
+     0.95
+    ],
+    [
+     62.5,
+     0.1
+    ],
+    [
+     66,
+     0.3
+    ],
+    [
+     70,
+     0.2
+    ],
+    [
+     76.0,
+     0.2
     ]
    ],
    "root": 52
@@ -49,8 +94,8 @@
      5.0
     ],
     [
-     12.0,
-     4.3
+     55.0,
+     0.0
     ]
    ],
    "format": "countdown",
@@ -78,11 +123,19 @@
     [
      5.0,
      "AIR PRESSURE 11.6 PSI \u00b7 -21%"
+    ],
+    [
+     21.8,
+     "HYDROGEN: 229 MILLION M\u00b3"
+    ],
+    [
+     28.4,
+     "AIR PRESSURE 11.6 PSI \u00b7 -21%"
     ]
    ]
   },
   "start": 0,
-  "end": 1000000000.0
+  "end": 54.999
  },
  "segments": [
   {
@@ -201,8 +254,8 @@
    },
    "captions": [
     {
-     "from": 0.1,
-     "to": 1.8,
+     "from": 0.15,
+     "to": 1.7,
      "text": "You are on a rooftop bar downtown.",
      "style": "subtle"
     }
@@ -212,7 +265,7 @@
      "at": 0.6,
      "type": "riser",
      "dur": 1.2,
-     "gain": 0.45
+     "gain": 0.35
     }
    ]
   },
@@ -298,7 +351,7 @@
    "captions": [
     {
      "from": 0.5,
-     "to": 1.8,
+     "to": 1.7,
      "text": "Every flame on Earth goes out.",
      "style": "subtle"
     }
@@ -386,7 +439,7 @@
    "captions": [
     {
      "from": 0.2,
-     "to": 1.8,
+     "to": 1.7,
      "text": "Everyone's ears pop at once.",
      "style": "subtle"
     }
@@ -461,17 +514,261 @@
    },
    "captions": [
     {
-     "from": 0.1,
-     "to": 1.8,
+     "from": 0.15,
+     "to": 1.7,
      "text": "Like being lifted 2,000 m|in a blink.",
      "style": "subtle"
     }
    ]
   },
   {
-   "id": "river",
+   "id": "rule",
    "from": 10.4,
-   "to": 12.0,
+   "to": 13.4,
+   "scene": "rooftop",
+   "camera": {
+    "path": "keys",
+    "pos": [
+     [
+      0,
+      [
+       0.5,
+       1.6,
+       -1.5
+      ]
+     ],
+     [
+      3.0,
+      [
+       0.4,
+       1.5,
+       -1.9
+      ]
+     ]
+    ],
+    "look": [
+     [
+      0,
+      [
+       1.5,
+       1.6,
+       -7
+      ]
+     ],
+     [
+      3.0,
+      [
+       1.2,
+       9,
+       -12
+      ]
+     ]
+    ],
+    "fov": 50
+   },
+   "params": {
+    "fire": 0,
+    "lights": 1,
+    "clutch": 1
+   },
+   "transitionIn": "whip",
+   "effects": {
+    "vignette": 0.45,
+    "blur": [
+     [
+      0,
+      0
+     ],
+     [
+      1.5,
+      0
+     ],
+     [
+      3.0,
+      1.5
+     ]
+    ]
+   },
+   "captions": [
+    {
+     "from": 0.15,
+     "to": 2.9,
+     "text": "The rule: every oxygen atom vanishes,|except the ones inside living things.",
+     "style": "subtle"
+    }
+   ]
+  },
+  {
+   "id": "glass",
+   "from": 13.4,
+   "to": 16.6,
+   "scene": "rooftop",
+   "camera": {
+    "path": "keys",
+    "pos": [
+     [
+      0,
+      [
+       7.4,
+       1.7,
+       -3.2
+      ]
+     ],
+     [
+      3.2,
+      [
+       8.3,
+       1.8,
+       -2.4
+      ]
+     ]
+    ],
+    "look": [
+     [
+      0,
+      [
+       12.5,
+       4.6,
+       -0.6
+      ]
+     ],
+     [
+      3.2,
+      [
+       12.5,
+       3.6,
+       0.2
+      ]
+     ]
+    ],
+    "fov": 46
+   },
+   "params": {
+    "fire": 0,
+    "lights": 1,
+    "clutch": 1,
+    "glass": [
+     [
+      0,
+      0
+     ],
+     [
+      0.4,
+      0
+     ],
+     [
+      2.2,
+      1
+     ]
+    ]
+   },
+   "transitionIn": "whip",
+   "effects": {
+    "vignette": 0.4
+   },
+   "captions": [
+    {
+     "from": 0.15,
+     "to": 1.5,
+     "text": "Window glass is 47% oxygen.",
+     "style": "subtle"
+    },
+    {
+     "from": 1.6,
+     "to": 3.1,
+     "text": "Every pane falls as dust.",
+     "style": "subtle"
+    }
+   ],
+   "sfx": [
+    {
+     "at": 0.4,
+     "type": "crack",
+     "gain": 0.45
+    }
+   ]
+  },
+  {
+   "id": "drinks",
+   "from": 16.6,
+   "to": 18.6,
+   "scene": "rooftop",
+   "camera": {
+    "path": "keys",
+    "pos": [
+     [
+      0,
+      [
+       -3.9,
+       1.45,
+       -0.45
+      ]
+     ],
+     [
+      2.0,
+      [
+       -3.7,
+       1.4,
+       -0.2
+      ]
+     ]
+    ],
+    "look": [
+     [
+      0,
+      [
+       -3.3,
+       1.1,
+       0.7
+      ]
+     ],
+     [
+      2.0,
+      [
+       -3.3,
+       1.12,
+       0.7
+      ]
+     ]
+    ],
+    "fov": 42
+   },
+   "params": {
+    "fire": 0,
+    "lights": 1,
+    "clutch": 1,
+    "glass": [
+     [
+      0,
+      0
+     ],
+     [
+      0.3,
+      0
+     ],
+     [
+      1.1,
+      1
+     ]
+    ]
+   },
+   "transitionIn": "whip",
+   "effects": {
+    "vignette": 0.4
+   },
+   "captions": [
+    {
+     "from": 0.15,
+     "to": 1.9,
+     "text": "So is your glass. And your drink.",
+     "style": "subtle"
+    }
+   ]
+  },
+  {
+   "id": "river1",
+   "from": 18.6,
+   "to": 21.8,
    "scene": "rooftop",
    "camera": {
     "path": "keys",
@@ -485,7 +782,7 @@
       ]
      ],
      [
-      1.6,
+      2.0,
       [
        1.2,
        3.4,
@@ -503,7 +800,7 @@
       ]
      ],
      [
-      1.6,
+      2.0,
       [
        -0.6,
        -28,
@@ -516,7 +813,22 @@
    "params": {
     "fire": 0,
     "lights": 1,
-    "clutch": 1
+    "clutch": 1,
+    "glass": 1,
+    "river": [
+     [
+      0,
+      0
+     ],
+     [
+      2.2,
+      0
+     ],
+     [
+      3.2,
+      0.22
+     ]
+    ]
    },
    "transitionIn": "whip",
    "effects": {
@@ -525,19 +837,1755 @@
    "captions": [
     {
      "from": 0.15,
-     "to": 1.6,
+     "to": 3.1,
      "text": "The river below is 89% oxygen.",
      "style": "subtle"
     }
    ],
    "sfx": [
     {
+     "at": 2.2,
+     "type": "rumble",
+     "dur": 3,
+     "gain": 0.6
+    }
+   ]
+  },
+  {
+   "id": "river2",
+   "from": 21.8,
+   "to": 25.2,
+   "scene": "rooftop",
+   "camera": {
+    "path": "keys",
+    "pos": [
+     [
+      0,
+      [
+       1.4,
+       2.4,
+       -7.6
+      ]
+     ],
+     [
+      3.4,
+      [
+       1.0,
+       2.6,
+       -7.9
+      ]
+     ]
+    ],
+    "look": [
+     [
+      0,
+      [
+       0,
+       -16,
+       -45
+      ]
+     ],
+     [
+      3.4,
+      [
+       -8,
+       -12,
+       -50
+      ]
+     ]
+    ],
+    "fov": 52
+   },
+   "params": {
+    "fire": 0,
+    "lights": 1,
+    "clutch": 1,
+    "glass": 1,
+    "river": [
+     [
+      0,
+      0.22
+     ],
+     [
+      3.4,
+      0.72
+     ]
+    ]
+   },
+   "effects": {
+    "vignette": 0.45,
+    "shake": 0.35
+   },
+   "captions": [
+    {
+     "from": 0.15,
+     "to": 3.3,
+     "text": "Every litre becomes 1,660 litres|of hydrogen gas.",
+     "style": "subtle"
+    }
+   ],
+   "ambience": "roar"
+  },
+  {
+   "id": "river3",
+   "from": 25.2,
+   "to": 28.4,
+   "scene": "rooftop",
+   "camera": {
+    "path": "keys",
+    "pos": [
+     [
+      0,
+      [
+       0.0,
+       4.0,
+       -9.0
+      ]
+     ],
+     [
+      3.2,
+      [
+       -1.0,
+       3.8,
+       -9.2
+      ]
+     ]
+    ],
+    "look": [
+     [
+      0,
+      [
+       -15,
+       -27,
+       -40
+      ]
+     ],
+     [
+      3.2,
+      [
+       -20,
+       -27.5,
+       -38
+      ]
+     ]
+    ],
+    "fov": 55
+   },
+   "params": {
+    "fire": 0,
+    "lights": 1,
+    "clutch": 1,
+    "glass": 1,
+    "river": [
+     [
+      0,
+      0.72
+     ],
+     [
+      1.6,
+      1.0
+     ]
+    ]
+   },
+   "transitionIn": "whip",
+   "effects": {
+    "vignette": 0.45
+   },
+   "captions": [
+    {
+     "from": 0.15,
+     "to": 3.1,
+     "text": "In one second, the river is gone.",
+     "style": "subtle"
+    }
+   ]
+  },
+  {
+   "id": "crumble1",
+   "from": 28.4,
+   "to": 32.0,
+   "scene": "rooftop",
+   "camera": {
+    "path": "keys",
+    "pos": [
+     [
+      0,
+      [
+       0.5,
+       1.8,
+       -7.2
+      ]
+     ],
+     [
+      3.6,
+      [
+       0.3,
+       1.85,
+       -7.6
+      ]
+     ]
+    ],
+    "look": [
+     [
+      0,
+      [
+       0,
+       6,
+       -150
+      ]
+     ],
+     [
+      3.6,
+      [
+       0,
+       4,
+       -150
+      ]
+     ]
+    ],
+    "fov": 46
+   },
+   "params": {
+    "fire": 0,
+    "lights": 1,
+    "clutch": 1,
+    "glass": 1,
+    "river": 1,
+    "crumble": [
+     [
+      0,
+      0
+     ],
+     [
+      3.6,
+      0.45
+     ]
+    ],
+    "haze": [
+     [
+      0,
+      0
+     ],
+     [
+      3.6,
+      0.3
+     ]
+    ]
+   },
+   "transitionIn": "whip",
+   "effects": {
+    "vignette": 0.4,
+    "shake": 0.2
+   },
+   "captions": [
+    {
+     "from": 0.15,
+     "to": 3.5,
+     "text": "Concrete is about half oxygen.",
+     "style": "subtle"
+    }
+   ],
+   "sfx": [
+    {
+     "at": 0.3,
+     "type": "rumble",
+     "dur": 3.4,
+     "gain": 0.8
+    }
+   ],
+   "ambience": "roar"
+  },
+  {
+   "id": "crumble2",
+   "from": 32.0,
+   "to": 35.6,
+   "scene": "rooftop",
+   "camera": {
+    "path": "keys",
+    "pos": [
+     [
+      0,
+      [
+       -5.8,
+       1.75,
+       -7.2
+      ]
+     ],
+     [
+      3.6,
+      [
+       -5.4,
+       1.8,
+       -7.4
+      ]
+     ]
+    ],
+    "look": [
+     [
+      0,
+      [
+       12,
+       3,
+       -160
+      ]
+     ],
+     [
+      3.6,
+      [
+       8,
+       3,
+       -160
+      ]
+     ]
+    ],
+    "fov": 50
+   },
+   "params": {
+    "fire": 0,
+    "lights": 1,
+    "clutch": 1,
+    "glass": 1,
+    "river": 1,
+    "crumble": [
+     [
+      0,
+      0.45
+     ],
+     [
+      3.6,
+      0.85
+     ]
+    ],
+    "haze": [
+     [
+      0,
+      0.3
+     ],
+     [
+      3.6,
+      0.6
+     ]
+    ]
+   },
+   "transitionIn": "whip",
+   "effects": {
+    "vignette": 0.4,
+    "shake": 0.3
+   },
+   "captions": [
+    {
+     "from": 0.15,
+     "to": 3.5,
+     "text": "Every building in the city|is turning to dust.",
+     "style": "subtle"
+    }
+   ],
+   "sfx": [
+    {
+     "at": 0.0,
+     "type": "rumble",
+     "dur": 3.6,
+     "gain": 0.9
+    }
+   ],
+   "ambience": "roar"
+  },
+  {
+   "id": "ours",
+   "from": 35.6,
+   "to": 39.2,
+   "scene": "rooftop",
+   "camera": {
+    "path": "keys",
+    "pos": [
+     [
+      0,
+      [
+       2.6,
+       1.05,
+       -2.2
+      ]
+     ],
+     [
+      3.6,
+      [
+       2.3,
+       1.0,
+       -2.6
+      ]
+     ]
+    ],
+    "look": [
+     [
+      0,
+      [
+       0,
+       1.3,
+       -6.5
+      ]
+     ],
+     [
+      3.6,
+      [
+       -0.3,
+       1.2,
+       -6.8
+      ]
+     ]
+    ],
+    "fov": 50,
+    "roll": [
+     [
+      0,
+      0
+     ],
+     [
+      3.6,
+      0.06
+     ]
+    ]
+   },
+   "params": {
+    "fire": 0,
+    "lights": 1,
+    "clutch": 1,
+    "glass": 1,
+    "river": 1,
+    "crumble": 0.9,
+    "haze": [
+     [
+      0,
+      0.6
+     ],
+     [
+      3.6,
+      0.7
+     ]
+    ]
+   },
+   "transitionIn": "whip",
+   "effects": {
+    "vignette": 0.5,
+    "shake": [
+     [
+      0,
+      0.3
+     ],
+     [
+      3.6,
+      0.75
+     ]
+    ]
+   },
+   "captions": [
+    {
+     "from": 0.15,
+     "to": 3.5,
+     "text": "So is the one you're standing on.",
+     "style": "subtle"
+    }
+   ],
+   "sfx": [
+    {
      "at": 0.2,
+     "type": "rumble",
+     "dur": 3.4,
+     "gain": 1.0
+    },
+    {
+     "at": 1.4,
+     "type": "crash",
+     "gain": 0.5
+    }
+   ],
+   "ambience": "roar"
+  },
+  {
+   "id": "dust",
+   "from": 39.2,
+   "to": 43.0,
+   "scene": "rooftop",
+   "camera": {
+    "path": "keys",
+    "pos": [
+     [
+      0,
+      [
+       2.8,
+       1.75,
+       -5.4
+      ]
+     ],
+     [
+      3.8,
+      [
+       2.4,
+       1.75,
+       -5.8
+      ]
+     ]
+    ],
+    "look": [
+     [
+      0,
+      [
+       -0.6,
+       1.3,
+       -7.4
+      ]
+     ],
+     [
+      3.8,
+      [
+       -0.9,
+       1.0,
+       -12
+      ]
+     ]
+    ],
+    "fov": 46
+   },
+   "params": {
+    "fire": 0,
+    "lights": 1,
+    "clutch": 1,
+    "glass": 1,
+    "river": 1,
+    "crumble": 0.92,
+    "haze": [
+     [
+      0,
+      0.7
+     ],
+     [
+      3.8,
+      0.85
+     ]
+    ]
+   },
+   "transitionIn": "whip",
+   "effects": {
+    "vignette": 0.5,
+    "shake": 0.15
+   },
+   "captions": [
+    {
+     "from": 0.15,
+     "to": 3.6999999999999997,
+     "text": "The air fills with metal|and silicon dust.",
+     "style": "subtle"
+    }
+   ]
+  },
+  {
+   "id": "energy",
+   "from": 43.0,
+   "to": 47.2,
+   "scene": "rooftop",
+   "camera": {
+    "path": "keys",
+    "pos": [
+     [
+      0,
+      [
+       0.8,
+       2.6,
+       -7.8
+      ]
+     ],
+     [
+      4.2,
+      [
+       0.6,
+       2.8,
+       -8.2
+      ]
+     ]
+    ],
+    "look": [
+     [
+      0,
+      [
+       -4,
+       -24,
+       -45
+      ]
+     ],
+     [
+      4.2,
+      [
+       -4,
+       -20,
+       -60
+      ]
+     ]
+    ],
+    "fov": 50
+   },
+   "params": {
+    "fire": 0,
+    "lights": 1,
+    "clutch": 1,
+    "glass": 1,
+    "river": 1,
+    "crumble": 0.93,
+    "haze": 0.6
+   },
+   "transitionIn": "whip",
+   "effects": {
+    "vignette": 0.5
+   },
+   "captions": [
+    {
+     "from": 0.15,
+     "to": 2.0,
+     "text": "The hydrogen from the river you can see",
+     "style": "subtle"
+    },
+    {
+     "from": 2.1,
+     "to": 4.1000000000000005,
+     "text": "holds the energy of 30 Hiroshima bombs.",
+     "style": "subtle"
+    }
+   ]
+  },
+  {
+   "id": "yet",
+   "from": 47.2,
+   "to": 51.2,
+   "scene": "rooftop",
+   "camera": {
+    "path": "keys",
+    "pos": [
+     [
+      0,
+      [
+       0.3,
+       1.62,
+       -3.8
+      ]
+     ],
+     [
+      4.0,
+      [
+       0.1,
+       1.6,
+       -4.6
+      ]
+     ]
+    ],
+    "look": [
+     [
+      0,
+      [
+       -0.9,
+       1.0,
+       -30
+      ]
+     ],
+     [
+      4.0,
+      [
+       -0.8,
+       0.8,
+       -30
+      ]
+     ]
+    ],
+    "fov": 48
+   },
+   "params": {
+    "fire": 0,
+    "lights": 1,
+    "clutch": 1,
+    "glass": 1,
+    "river": 1,
+    "crumble": 0.94,
+    "haze": 0.85
+   },
+   "transitionIn": "whip",
+   "effects": {
+    "vignette": 0.5
+   },
+   "captions": [
+    {
+     "from": 0.6,
+     "to": 3.9,
+     "text": "Nothing is burning. Yet.",
+     "style": "subtle"
+    }
+   ]
+  },
+  {
+   "id": "return",
+   "from": 51.2,
+   "to": 55.0,
+   "scene": "rooftop",
+   "camera": {
+    "path": "keys",
+    "pos": [
+     [
+      0,
+      [
+       3.0,
+       1.7,
+       -6.9
+      ]
+     ],
+     [
+      3.8,
+      [
+       3.0,
+       1.72,
+       -7.4
+      ]
+     ]
+    ],
+    "look": [
+     [
+      0,
+      [
+       -1,
+       -6,
+       -80
+      ]
+     ],
+     [
+      3.8,
+      [
+       -1,
+       -5,
+       -80
+      ]
+     ]
+    ],
+    "fov": 48
+   },
+   "params": {
+    "fire": 0,
+    "lights": 1,
+    "clutch": 1,
+    "glass": 1,
+    "river": 1,
+    "crumble": 0.95,
+    "haze": 0.85
+   },
+   "effects": {
+    "vignette": 0.5
+   },
+   "captions": [
+    {
+     "from": 0.6,
+     "to": 3.6999999999999997,
+     "text": "Then the oxygen comes back.",
+     "style": "subtle"
+    }
+   ],
+   "sfx": [
+    {
+     "at": 1.0,
      "type": "riser",
-     "dur": 1.4,
+     "dur": 2.8,
      "gain": 0.5
     }
    ]
+  },
+  {
+   "id": "spark",
+   "from": 55.0,
+   "to": 56.8,
+   "scene": "rooftop",
+   "camera": {
+    "path": "keys",
+    "pos": [
+     [
+      0,
+      [
+       3.0,
+       1.72,
+       -7.4
+      ]
+     ],
+     [
+      1.8,
+      [
+       3.0,
+       1.72,
+       -7.4
+      ]
+     ]
+    ],
+    "look": [
+     [
+      0,
+      [
+       -1,
+       -5,
+       -80
+      ]
+     ],
+     [
+      1.8,
+      [
+       -1,
+       -5.5,
+       -80
+      ]
+     ]
+    ],
+    "fov": 48
+   },
+   "params": {
+    "fire": 0,
+    "lights": 1,
+    "clutch": 1,
+    "glass": 1,
+    "river": 1,
+    "crumble": 0.95,
+    "haze": 0.65,
+    "spark": [
+     [
+      0.0,
+      0
+     ],
+     [
+      0.225,
+      0.3
+     ],
+     [
+      0.45,
+      1
+     ],
+     [
+      0.675,
+      1
+     ],
+     [
+      0.9,
+      1
+     ],
+     [
+      1.125,
+      1
+     ],
+     [
+      1.35,
+      1
+     ],
+     [
+      1.575,
+      1
+     ],
+     [
+      1.8,
+      1
+     ]
+    ],
+    "fireZ": [
+     [
+      0.0,
+      -110.0
+     ],
+     [
+      0.225,
+      -110.0
+     ],
+     [
+      0.45,
+      -110.0
+     ],
+     [
+      0.675,
+      -107.435
+     ],
+     [
+      0.9,
+      -104.137
+     ],
+     [
+      1.125,
+      -100.839
+     ],
+     [
+      1.35,
+      -97.541
+     ],
+     [
+      1.575,
+      -94.244
+     ],
+     [
+      1.8,
+      -90.946
+     ]
+    ],
+    "fireball": [
+     [
+      0.0,
+      0
+     ],
+     [
+      0.225,
+      0
+     ],
+     [
+      0.45,
+      0
+     ],
+     [
+      0.675,
+      0.025
+     ],
+     [
+      0.9,
+      0.1
+     ],
+     [
+      1.125,
+      0.175
+     ],
+     [
+      1.35,
+      0.25
+     ],
+     [
+      1.575,
+      0.325
+     ],
+     [
+      1.8,
+      0.4
+     ]
+    ]
+   },
+   "effects": {
+    "vignette": 0.5
+   },
+   "hud": {
+    "counter": {
+     "label": "THE FIRE",
+     "value": [
+      [
+       0.0,
+       102.6
+      ],
+      [
+       0.225,
+       102.6
+      ],
+      [
+       0.45,
+       102.6
+      ],
+      [
+       0.675,
+       100.035
+      ],
+      [
+       0.9,
+       96.737
+      ],
+      [
+       1.125,
+       93.439
+      ],
+      [
+       1.35,
+       90.141
+      ],
+      [
+       1.575,
+       86.844
+      ],
+      [
+       1.8,
+       83.546
+      ]
+     ],
+     "unit": " m",
+     "sub": "HYDROGEN + OXYGEN"
+    }
+   },
+   "captions": [
+    {
+     "from": 0.4,
+     "to": 1.7,
+     "text": "Hydrogen. Oxygen. One spark.",
+     "style": "subtle"
+    }
+   ],
+   "sfx": [
+    {
+     "at": 0.18,
+     "type": "impact",
+     "gain": 0.7
+    }
+   ],
+   "ambience": "fire"
+  },
+  {
+   "id": "front1",
+   "from": 56.8,
+   "to": 59.6,
+   "scene": "rooftop",
+   "camera": {
+    "path": "keys",
+    "pos": [
+     [
+      0,
+      [
+       3.0,
+       1.72,
+       -7.4
+      ]
+     ],
+     [
+      2.8,
+      [
+       3.0,
+       1.7,
+       -7.3
+      ]
+     ]
+    ],
+    "look": [
+     [
+      0,
+      [
+       -1,
+       -5,
+       -80
+      ]
+     ],
+     [
+      2.8,
+      [
+       -1,
+       -2,
+       -80
+      ]
+     ]
+    ],
+    "fov": 48
+   },
+   "params": {
+    "fire": 0,
+    "lights": 1,
+    "clutch": 1,
+    "glass": 1,
+    "river": 1,
+    "crumble": 0.95,
+    "haze": 0.65,
+    "spark": [
+     [
+      0.0,
+      1
+     ],
+     [
+      0.35,
+      0.925
+     ],
+     [
+      0.7,
+      0.75
+     ],
+     [
+      1.05,
+      0.575
+     ],
+     [
+      1.4,
+      0.4
+     ],
+     [
+      1.75,
+      0.225
+     ],
+     [
+      2.1,
+      0.05
+     ],
+     [
+      2.45,
+      0
+     ],
+     [
+      2.8,
+      0
+     ]
+    ],
+    "fireZ": [
+     [
+      0.0,
+      -90.946
+     ],
+     [
+      0.35,
+      -85.816
+     ],
+     [
+      0.7,
+      -80.686
+     ],
+     [
+      1.05,
+      -75.556
+     ],
+     [
+      1.4,
+      -70.426
+     ],
+     [
+      1.75,
+      -65.296
+     ],
+     [
+      2.1,
+      -60.166
+     ],
+     [
+      2.45,
+      -55.036
+     ],
+     [
+      2.8,
+      -49.906
+     ]
+    ],
+    "fireball": [
+     [
+      0.0,
+      0.4
+     ],
+     [
+      0.35,
+      0.517
+     ],
+     [
+      0.7,
+      0.633
+     ],
+     [
+      1.05,
+      0.75
+     ],
+     [
+      1.4,
+      0.867
+     ],
+     [
+      1.75,
+      0.983
+     ],
+     [
+      2.1,
+      1
+     ],
+     [
+      2.45,
+      1
+     ],
+     [
+      2.8,
+      1
+     ]
+    ]
+   },
+   "effects": {
+    "vignette": 0.5,
+    "shake": [
+     [
+      0,
+      0.2
+     ],
+     [
+      2.8,
+      0.45
+     ]
+    ]
+   },
+   "hud": {
+    "counter": {
+     "label": "THE FIRE",
+     "value": [
+      [
+       0.0,
+       83.546
+      ],
+      [
+       0.35,
+       78.416
+      ],
+      [
+       0.7,
+       73.286
+      ],
+      [
+       1.05,
+       68.156
+      ],
+      [
+       1.4,
+       63.026
+      ],
+      [
+       1.75,
+       57.896
+      ],
+      [
+       2.1,
+       52.766
+      ],
+      [
+       2.45,
+       47.636
+      ],
+      [
+       2.8,
+       42.506
+      ]
+     ],
+     "unit": " m",
+     "sub": "HYDROGEN + OXYGEN"
+    }
+   },
+   "captions": [
+    {
+     "from": 0.15,
+     "to": 2.6999999999999997,
+     "text": "The hydrogen is still here.",
+     "style": "subtle"
+    }
+   ],
+   "ambience": "fire"
+  },
+  {
+   "id": "front2",
+   "from": 59.6,
+   "to": 62.5,
+   "scene": "rooftop",
+   "camera": {
+    "path": "keys",
+    "pos": [
+     [
+      0,
+      [
+       3.0,
+       1.7,
+       -7.3
+      ]
+     ],
+     [
+      2.9,
+      [
+       3.0,
+       1.66,
+       -7.1
+      ]
+     ]
+    ],
+    "look": [
+     [
+      0,
+      [
+       -1,
+       -2,
+       -80
+      ]
+     ],
+     [
+      2.9,
+      [
+       -1,
+       1,
+       -80
+      ]
+     ]
+    ],
+    "fov": 48
+   },
+   "params": {
+    "fire": 0,
+    "lights": 1,
+    "clutch": 1,
+    "glass": 1,
+    "river": 1,
+    "crumble": 0.95,
+    "haze": 0.65,
+    "spark": [
+     [
+      0.0,
+      0
+     ],
+     [
+      0.362,
+      0
+     ],
+     [
+      0.725,
+      0
+     ],
+     [
+      1.087,
+      0
+     ],
+     [
+      1.45,
+      0
+     ],
+     [
+      1.812,
+      0
+     ],
+     [
+      2.175,
+      0
+     ],
+     [
+      2.537,
+      0
+     ],
+     [
+      2.9,
+      0
+     ]
+    ],
+    "fireZ": [
+     [
+      0.0,
+      -49.906
+     ],
+     [
+      0.362,
+      -44.593
+     ],
+     [
+      0.725,
+      -39.279
+     ],
+     [
+      1.087,
+      -33.966
+     ],
+     [
+      1.45,
+      -28.653
+     ],
+     [
+      1.812,
+      -23.34
+     ],
+     [
+      2.175,
+      -18.026
+     ],
+     [
+      2.537,
+      -12.713
+     ],
+     [
+      2.9,
+      -7.4
+     ]
+    ],
+    "fireball": [
+     [
+      0.0,
+      1
+     ],
+     [
+      0.362,
+      1
+     ],
+     [
+      0.725,
+      1
+     ],
+     [
+      1.087,
+      1
+     ],
+     [
+      1.45,
+      1
+     ],
+     [
+      1.812,
+      1
+     ],
+     [
+      2.175,
+      1
+     ],
+     [
+      2.537,
+      1
+     ],
+     [
+      2.9,
+      1
+     ]
+    ],
+    "debris": 1
+   },
+   "effects": {
+    "vignette": 0.55,
+    "shake": [
+     [
+      0,
+      0.45
+     ],
+     [
+      2.9,
+      0.9
+     ]
+    ]
+   },
+   "hud": {
+    "counter": {
+     "label": "THE FIRE",
+     "value": [
+      [
+       0.0,
+       42.506
+      ],
+      [
+       0.362,
+       37.193
+      ],
+      [
+       0.725,
+       31.879
+      ],
+      [
+       1.087,
+       26.566
+      ],
+      [
+       1.45,
+       21.253
+      ],
+      [
+       1.812,
+       15.94
+      ],
+      [
+       2.175,
+       10.626
+      ],
+      [
+       2.537,
+       5.313
+      ],
+      [
+       2.9,
+       0.0
+      ]
+     ],
+     "unit": " m",
+     "sub": "HYDROGEN + OXYGEN"
+    }
+   },
+   "captions": [
+    {
+     "from": 0.15,
+     "to": 2.8,
+     "text": "And now it has oxygen to burn.",
+     "style": "subtle"
+    }
+   ],
+   "ambience": "fire"
+  },
+  {
+   "id": "hit",
+   "from": 62.5,
+   "to": 66.0,
+   "scene": "rooftop",
+   "camera": {
+    "path": "keys",
+    "pos": [
+     [
+      0,
+      [
+       3.0,
+       1.66,
+       -7.1
+      ]
+     ],
+     [
+      3.5,
+      [
+       3.8,
+       0.35,
+       -5.0
+      ]
+     ]
+    ],
+    "look": [
+     [
+      0,
+      [
+       -1,
+       1,
+       -80
+      ]
+     ],
+     [
+      3.5,
+      [
+       5,
+       4,
+       -40
+      ]
+     ]
+    ],
+    "fov": 54,
+    "roll": [
+     [
+      0,
+      0
+     ],
+     [
+      0.4,
+      0.5
+     ],
+     [
+      3.5,
+      0.95
+     ]
+    ]
+   },
+   "params": {
+    "fire": 0,
+    "lights": 1,
+    "clutch": 1,
+    "glass": 1,
+    "river": 1,
+    "crumble": 0.95,
+    "haze": 0.95,
+    "fireball": 0.6,
+    "fireZ": -40
+   },
+   "effects": {
+    "vignette": 0.6,
+    "flash": [
+     {
+      "at": 0.0,
+      "dur": 0.35,
+      "color": "#fff8ea"
+     }
+    ],
+    "crack": [
+     {
+      "at": 0.02,
+      "x": 0.55,
+      "y": 0.32
+     }
+    ],
+    "shake": [
+     [
+      0,
+      1.0
+     ],
+     [
+      1.2,
+      0.4
+     ],
+     [
+      3.5,
+      0.1
+     ]
+    ],
+    "tint": {
+     "color": "#c98a4a",
+     "amount": 0.35
+    }
+   },
+   "hud": {
+    "counter": {
+     "label": "THE FIRE",
+     "value": 0,
+     "format": "text",
+     "text": "HERE",
+     "sub": "HYDROGEN + OXYGEN = WATER"
+    }
+   },
+   "captions": [
+    {
+     "from": 1.0,
+     "to": 3.4,
+     "text": "The fire turns back into water.",
+     "style": "subtle"
+    }
+   ],
+   "sfx": [
+    {
+     "at": 0.0,
+     "type": "impact",
+     "gain": 1.0
+    },
+    {
+     "at": 0.0,
+     "type": "boom",
+     "gain": 0.8
+    }
+   ],
+   "ambience": "fire"
+  },
+  {
+   "id": "rain",
+   "from": 66.0,
+   "to": 70.0,
+   "scene": "rooftop",
+   "camera": {
+    "path": "keys",
+    "pos": [
+     [
+      0,
+      [
+       3.8,
+       0.35,
+       -5.0
+      ]
+     ],
+     [
+      4.0,
+      [
+       3.8,
+       0.34,
+       -5.0
+      ]
+     ]
+    ],
+    "look": [
+     [
+      0,
+      [
+       5,
+       4,
+       -40
+      ]
+     ],
+     [
+      4.0,
+      [
+       4.5,
+       8,
+       -30
+      ]
+     ]
+    ],
+    "fov": 54,
+    "roll": [
+     [
+      0,
+      0.95
+     ],
+     [
+      4.0,
+      0.95
+     ]
+    ]
+   },
+   "params": {
+    "fire": 0,
+    "lights": 1,
+    "clutch": 1,
+    "glass": 1,
+    "river": 1,
+    "crumble": 0.95,
+    "haze": [
+     [
+      0,
+      0.95
+     ],
+     [
+      4.0,
+      0.7
+     ]
+    ],
+    "fireball": 0,
+    "dusk": 0.4
+   },
+   "effects": {
+    "vignette": 0.6,
+    "crack": [
+     {
+      "at": -1,
+      "x": 0.55,
+      "y": 0.32
+     }
+    ],
+    "drops": [
+     [
+      0,
+      0
+     ],
+     [
+      3.5,
+      1
+     ]
+    ],
+    "tint": {
+     "color": "#8a7a6a",
+     "amount": 0.25
+    },
+    "fade": {
+     "color": "#000000",
+     "amount": [
+      [
+       0,
+       0
+      ],
+      [
+       3.2,
+       0
+      ],
+      [
+       4.0,
+       1
+      ]
+     ]
+    }
+   },
+   "hud": {
+    "counter": {
+     "label": "OXYGEN",
+     "value": 0,
+     "format": "text",
+     "text": "BACK",
+     "sub": "MINUTES LATER"
+    }
+   },
+   "captions": [
+    {
+     "from": 0.6,
+     "to": 3.5,
+     "text": "Minutes later, it rains.",
+     "style": "subtle"
+    }
+   ],
+   "ambience": "rain"
+  },
+  {
+   "id": "end",
+   "from": 70.0,
+   "to": 76.0,
+   "scene": "black",
+   "params": {
+    "color": "#111111"
+   },
+   "hud": {
+    "endcard": {
+     "title": "What if oxygen disappeared|for 5 seconds?",
+     "lines": [
+      "Every oxygen atom gone, except inside living things.",
+      "Part 2: what if nitrogen disappeared?"
+     ],
+     "cta": "Comment your guess \u00b7 Follow for more What Ifs"
+    }
+   }
   }
  ]
 }

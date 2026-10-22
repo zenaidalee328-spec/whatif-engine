@@ -61,6 +61,7 @@ export type Effects = {
   fade?: { color: string; amount: Val }; // full-frame colour overlay, e.g. a slow white-out between worlds
   speedLines?: Val; // 0..1 radial anime speed lines
   crack?: { at: number; x?: number; y?: number }[]; // glass-crack overlay on the lens from `at` (x,y = centre, 0..1 of frame)
+  drops?: Val; // 0..1 water drops on the lens
   phone?: { from: number; to: number; title: string; body?: string; time?: string }; // POV hands holding a phone with an emergency alert
   impact?: { at: number; dur?: number }[]; // manga 'impact frames': 2-4 frames of black/white high-contrast with radial lines
 };
@@ -168,6 +169,7 @@ export type Timeline = {
     audio?: string; // file in public/, default "audio/<id>.wav"
     fovScale?: number; // multiplies every camera fov (vertical videos: ~1.3 keeps scenes from feeling cropped)
     music?: { keys: [number, number][]; root?: number }; // intensity 0..1 over absolute time
+    autoWhoosh?: boolean; // false: no automatic whoosh/impact sounds on whip/glitch/flash cuts
   };
   hud?: { clock?: ClockSpec; start?: number; end?: number; telemetry?: TelemetrySpec };
   segments: Segment[];

@@ -5,7 +5,7 @@ import { evalCamera } from './camera';
 import { FxOverlay, FxScene, fxState } from './Effects';
 import { Captions, ClockPanel, SegmentHudView, nextText } from './Hud';
 import { Telemetry } from './Telemetry';
-import { Crack, EndCard, Phone } from './Overlays';
+import { Crack, Drops, EndCard, Phone } from './Overlays';
 import { SCENES } from './scenes';
 import { evalParams, v } from './val';
 
@@ -59,6 +59,7 @@ const SegmentView: React.FC<{ seg: Segment; tl: Timeline }> = ({ seg, tl }) => {
       {tl.hud?.telemetry && !seg.hud?.hidden && seg.hud?.telemetry !== false && T >= (tl.hud.telemetry.start ?? 0) && T <= (tl.hud.telemetry.end ?? 1e9) && (
         <Telemetry s={v(tl.hud.telemetry.keys, T, 0)} opacity={interpolate(T, [tl.hud.telemetry.start ?? 0, (tl.hud.telemetry.start ?? 0) + 0.5], [0, 1], clamp)} />
       )}
+      {fx?.drops !== undefined && <Drops amount={v(fx.drops, t, 0)} t={t} />}
       {fx?.crack && <Crack cracks={fx.crack} t={t} />}
       {fx?.phone && <Phone ph={fx.phone} t={t} />}
       {seg.hud?.endcard && <EndCard e={seg.hud.endcard} t={t} />}

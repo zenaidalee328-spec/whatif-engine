@@ -82,6 +82,12 @@ def main(path):
         hit = lp(noise(d), 1800) * np.exp(-kk * 14)
         return sub * 1.2 + hit * 0.9
 
+    def rumble(d=4.0, **_):
+        # collapsing buildings: long low rumble with crackle
+        kk = k(d)
+        env = np.minimum(1, kk / 0.4) * np.exp(-kk * 0.5)
+        return (lp(noise(d), 120) * 1.4 + bp(noise(d), 300, 900) * 0.15 * (rng.random(len(kk)) < 0.05)) * env
+
     def subdrop(d=1.5, **_):
         kk = k(d)
         return np.sin(2 * np.pi * np.cumsum(90 * np.exp(-kk * 2.5) + 25) / SR) * np.exp(-kk * 1.8)
@@ -186,7 +192,7 @@ def main(path):
 
     SFX = dict(footsteps=footsteps, cart=cart, whoosh=whoosh, boom=boom, heartbeat=heartbeat, screech=screech,
                horn=horn, beep=beep, scan=beep, glitch=glitch, riser=riser, tick=tick, thud=thud, crash=crash,
-               whisper=whisper, warble=warble, hum=hum, crack=crack, alert=alert, impact=impact, subdrop=subdrop)
+               whisper=whisper, warble=warble, hum=hum, crack=crack, alert=alert, impact=impact, subdrop=subdrop, rumble=rumble)
 
     # ---------- ambience per segment ----------
     def ambience(kind, d):
@@ -216,6 +222,11 @@ def main(path):
             kk = k(d)
             murmur = bp(x, 250, 1100) * (0.6 + 0.4 * lp(np.abs(noise(d)), 3) * 6)
             return lp(x, 300) * 0.12 + murmur * 0.05
+        if kind == 'rain':
+            return bp(x, 1500, 7000) * 0.06 + lp(x, 400) * 0.05
+        if kind == 'fire':  # roaring wall of flame
+            kk = k(d)
+            return lp(x, 220) * (0.5 + 0.3 * np.sin(2 * np.pi * 0.7 * kk)) + bp(x, 600, 2500) * 0.06
         if kind == 'slowmo':
             return lp(x, 120) * 0.2
         if kind == 'office':
@@ -232,9 +243,10 @@ def main(path):
         add(amb * fade[: len(amb)], a, 1.0)
         tr = seg.get('transitionIn', 'cut')
         cues = seg.get('sfx', [])
-        if tr in ('whip', 'glitch') and not any(c['at'] < 0.1 for c in cues):
+        auto = meta.get('autoWhoosh', True)
+        if auto and tr in ('whip', 'glitch') and not any(c['at'] < 0.1 for c in cues):
             add((whoosh() if tr == 'whip' else glitch()), a, 0.7)
-        if tr == 'flash' and not any(c['at'] < 0.1 for c in cues):
+        if auto and tr == 'flash' and not any(c['at'] < 0.1 for c in cues):
             add(impact(), a, 0.8)
         fxd = seg.get('effects', {})
         for c in fxd.get('crack', []):

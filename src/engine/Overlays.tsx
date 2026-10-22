@@ -115,3 +115,21 @@ export const EndCard: React.FC<{ e: { title: string; lines?: string[]; cta?: str
     </AbsoluteFill>
   );
 };
+
+/** Water drops landing on the lens: `amount` 0..1 = how many of the drops are present; each runs down slowly. */
+export const Drops: React.FC<{ amount: number; t: number }> = ({ amount, t }) => {
+  const { width, height } = useVideoConfig();
+  const n = Math.round(60 * Math.min(1, Math.max(0, amount)));
+  return (
+    <AbsoluteFill style={{ pointerEvents: 'none' }}>
+      {Array.from({ length: n }, (_, i) => {
+        const r = (6 + rnd(i * 3) * 22) * (width / 1080);
+        const x = rnd(i * 7) * width;
+        const y = ((rnd(i * 11) * height + t * (10 + rnd(i * 5) * 50)) % (height + 60)) - 30;
+        return (
+          <div key={i} style={{ position: 'absolute', left: x, top: y, width: r, height: r * 1.25, borderRadius: '50%', background: 'radial-gradient(circle at 35% 30%, rgba(255,255,255,0.55), rgba(255,255,255,0.08) 45%, rgba(0,0,0,0.18) 75%, rgba(255,255,255,0.25))', backdropFilter: 'blur(2px)' }} />
+        );
+      })}
+    </AbsoluteFill>
+  );
+};
