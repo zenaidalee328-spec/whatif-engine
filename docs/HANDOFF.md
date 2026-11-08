@@ -259,3 +259,8 @@ Project root: `whatif-engine/`.
 - The engine lives in **github.com/zenaidalee328-spec/whatif-engine**. A new session clones it (no zip needed) and pushes its changes back when a video is done.
 - Not stored in git (regenerated or delivered in packs): `node_modules/`, `build/`, `out/`, `packs/`, `public/audio/*.wav` (made by `audio/build_audio.py` inside `tools/make_pack.py`), `tools/physics/prem_fall.json`.
 - Generators: `tools/gen/run2x.py`, `earthhole.py`, `earthhole_short.py`, `oxygen5s.py`, `friction*.py`. Physics: `tools/physics/prem_fall.py` (PREM fall through Earth).
+
+## Update 9 Nov 2026: "How a [small thing] Becomes [big thing]" format
+- New: scene `build` (cut-away diorama, `src/scenes/Build.tsx`, re-skin with `env`), karaoke caption style (`style:'karaoke'`), voiceover (`meta.vo`, mixed by build_audio.py), generator `tools/gen/tankroom.py` (Kokoro TTS: kokoro-onnx + model files from github.com/thewh1teagle/kokoro-onnx releases model-files-v1.0, put in /tmp/tts).
+- The user now WANTS voiceover for this format; every short gets a different location and story object.
+- Reference notes: docs/ref3-*.md. Demo `TankRoomDemo` (9 s) delivered as a pack; waiting for feedback.

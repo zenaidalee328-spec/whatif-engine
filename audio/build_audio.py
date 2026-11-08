@@ -20,7 +20,7 @@ SCENE_AMBIENCE = {
     'street': 'street', 'room': 'room', 'city': 'city', 'brain': 'brain',
     'supermarket': 'supermarket', 'black': 'none',
     'northpole': 'wind', 'tunnel': 'roar', 'earthcut': 'space', 'planet': 'space',
-    'city2': 'city', 'rooftop': 'rooftop', 'land2': 'wind',
+    'city2': 'city', 'rooftop': 'rooftop', 'land2': 'wind', 'build': 'wind',
 }
 
 
@@ -289,6 +289,27 @@ def main(path):
 
     L *= duck
     R *= duck
+    # ---------- voiceover (meta.vo): mixed on top, bed ducked while someone speaks ----------
+    vo = meta.get('vo', [])
+    if vo:
+        from scipy.signal import resample_poly
+        voL = np.zeros(n)
+        for c in vo:
+            sr, w = wavfile.read(os.path.join('public', c['file']))
+            w = w.astype(np.float64) / 32768.0
+            if w.ndim > 1:
+                w = w.mean(1)
+            w = resample_poly(w, SR, sr)
+            i0 = int(c['at'] * SR)
+            i1 = min(n, i0 + len(w))
+            voL[i0:i1] += w[: i1 - i0] * c.get('gain', 1.0)
+        env_ = lp(np.abs(voL), 6, 1)
+        env_ = np.clip(env_ / (env_.max() * 0.25 + 1e-9), 0, 1)
+        bed = 1.0 - 0.55 * env_
+        L *= bed
+        R *= bed
+        L += voL * 0.9
+        R += voL * 0.9
     fade = np.interp(t, [0, 0.05, dur - 0.25, dur], [0, 1, 1, 0])
     L *= fade
     R *= fade

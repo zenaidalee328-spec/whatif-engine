@@ -21,6 +21,7 @@ import { Land2Scene } from '../scenes/Land2';
 import { TunnelScene } from '../scenes/Tunnel';
 import { EarthCutScene } from '../scenes/EarthCut';
 import { NorthPoleScene } from '../scenes/NorthPole';
+import { BuildScene } from '../scenes/Build';
 
 /** Every scene gets local time, duration, evaluated params and the camera (null = scene default). */
 export type SceneProps = { t: number; dur: number; p: Record<string, any>; cam: Cam | null; warp: number };
@@ -183,6 +184,11 @@ export const SCENES: Record<string, { component: React.FC<SceneProps>; ambience:
     ambience: 'wind',
     about: 'North Pole sea ice in polar summer with the 7 m steel-rimmed tunnel shaft at the origin. Hero walks toward -z to the rim (walk 0..1, z 7 -> 3.8), then steps off (drop = seconds since, free fall). params: walk, drop, sunElev, bloom',
     component: ({ t, p, cam }) => <NorthPoleScene t={t} cam={cam} walk={p.walk} drop={p.drop} sunElev={p.sunElev} bloom={p.bloom} showHero={p.showHero} />,
+  },
+  build: {
+    ambience: 'wind',
+    about: 'Cut-away diorama (block of earth with a cross-section front face, camera from +z). Re-skin per video with env field|beach|desert|snow|forest. Surface y=0, block x -5..5 z -5..3. Story object = steel tank along z (r 1.7, centre cy; cy 1.7 = on the ground, -2.2 = buried). params: env, tank 0..1 pop, cy, pit 0..1 (dig 0->1, refill 1->0), hatch 0..1 cut / 1..2 lid opens, vent 0..1, lamp, bed 0..1, props 0..1, hero{x,y,z,rotY,walk,show}, bloom',
+    component: ({ t, p, cam }) => <BuildScene t={t} cam={cam} p={{ ...p, hero: evo(p.hero, t) }} />,
   },
   herotest: { ambience: 'none', about: 'dev: hero turntable', component: ({ t, p }) => <HeroTestScene t={t} p={p} /> },
   black: {

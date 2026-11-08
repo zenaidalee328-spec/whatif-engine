@@ -67,13 +67,18 @@ exit /b 1
 bat_name = f'RENDER-{cid}.bat'
 open(bat_name, 'w', newline='\r\n').write(bat)
 
+demo_name = f'RENDER-{cid}-10s-DEMO.bat'
+demo = bat.replace(f'out\\{cid}.mp4', f'out\\{cid}-10s-DEMO.mp4').replace('--gl=angle %*', '--gl=angle --frames=0-299 %*').replace('Render {0}'.format(cid), 'Render {0} 10s demo'.format(cid))
+open(demo_name, 'w', newline='\r\n').write(demo)
 os.makedirs('out/packs', exist_ok=True)
 dst = f'out/packs/{cid}-pack.zip'
 with zipfile.ZipFile(dst, 'w', zipfile.ZIP_DEFLATED) as z:
     z.write(tl_path, tl_path.replace('\\', '/'))
     z.write(os.path.join('public', audio), 'public/' + audio)
     z.write(bat_name, bat_name)
+    z.write(demo_name, demo_name)
     for f in extra:
         z.write(f, f.replace('\\', '/'))
-os.remove(bat_name)  # the .bat lives only in the pack
+os.remove(bat_name)
+os.remove(demo_name)  # the .bat lives only in the pack
 print('pack:', dst, f'{os.path.getsize(dst) / 1e6:.1f} MB')

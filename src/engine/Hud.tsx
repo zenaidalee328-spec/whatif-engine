@@ -243,15 +243,37 @@ export const Captions: React.FC<{ caps: Caption[] | undefined; t: number }> = ({
   const { width, height } = useVideoConfig();
   const vert = height > width;
   const active = (caps ?? []).filter((x) => t >= x.from && t < x.to);
+  const kara = active.find((x) => x.style === 'karaoke');
   const subtle = active.filter((x) => x.style === 'subtle' || x.style === 'top');
-  const c = active.find((x) => x.style !== 'subtle' && x.style !== 'top');
+  const c = active.find((x) => x.style !== 'subtle' && x.style !== 'top' && x.style !== 'karaoke');
   return (
     <>
       {subtle.map((x, i) => (
         <SubtleCaption key={i} c={x} t={t} vert={vert} />
       ))}
       {c && <BoldCaption c={c} t={t} vert={vert} />}
+      {kara && <KaraokeCaption c={kara} t={t} vert={vert} />}
     </>
+  );
+};
+
+/** reference-short style: 2-word chunk, earlier word white, newest word coloured, heavy rounded caps with outline, pops in */
+const KaraokeCaption: React.FC<{ c: Caption; t: number; vert: boolean }> = ({ c, t, vert }) => {
+  const local = t - c.from;
+  const words = c.text.toUpperCase().split(' ');
+  const pop = interpolate(local, [0, 0.12], [0.82, 1], { ...clamp, easing: Easing.out(Easing.back(2.2)) });
+  const chars = words.join(' ').length;
+  const size = Math.min(vert ? 96 : 84, ((vert ? 900 : 1500) / Math.max(6, chars)) * 1.45);
+  return (
+    <AbsoluteFill style={{ justifyContent: 'center', alignItems: 'center', fontFamily: '"Arial Rounded MT Bold","Nunito","Baloo 2",Inter,sans-serif', top: `${((c.y ?? 0.5) - 0.5) * 100}%` }}>
+      <div style={{ transform: `scale(${pop})`, display: 'flex', gap: 22, fontSize: size, fontWeight: 900, letterSpacing: 2, whiteSpace: 'nowrap', WebkitTextStroke: `${Math.round(size / 11)}px #000`, paintOrder: 'stroke fill', textShadow: '0 6px 0 rgba(0,0,0,0.55)' }}>
+        {words.map((w, i) => (
+          <span key={i} style={{ color: i === words.length - 1 ? c.color ?? '#32e36b' : 'white' }}>
+            {w}
+          </span>
+        ))}
+      </div>
+    </AbsoluteFill>
   );
 };
 

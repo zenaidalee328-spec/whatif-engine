@@ -66,7 +66,7 @@ export type Effects = {
   impact?: { at: number; dur?: number }[]; // manga 'impact frames': 2-4 frames of black/white high-contrast with radial lines
 };
 
-export type Caption = { from: number; to: number; text: string; hl?: string[]; style?: 'bottom' | 'center' | 'big' | 'subtle' | 'top' }; // subtle/top = small cinematic serif, can overlap others
+export type Caption = { from: number; to: number; text: string; hl?: string[]; style?: 'bottom' | 'center' | 'big' | 'subtle' | 'top' | 'karaoke'; color?: string; y?: number /* karaoke: vertical position 0..1 of frame height */ }; // subtle/top = small cinematic serif, can overlap others
 
 export type HudStat = {
   from: number;
@@ -167,6 +167,7 @@ export type Timeline = {
     width?: number;
     height?: number;
     audio?: string; // file in public/, default "audio/<id>.wav"
+    vo?: { file: string; at: number; gain?: number }[]; // voiceover clips (public/ paths, absolute seconds) mixed into the audio by build_audio.py
     fovScale?: number; // multiplies every camera fov (vertical videos: ~1.3 keeps scenes from feeling cropped)
     music?: { keys: [number, number][]; root?: number }; // intensity 0..1 over absolute time
     autoWhoosh?: boolean; // false: no automatic whoosh/impact sounds on whip/glitch/flash cuts
