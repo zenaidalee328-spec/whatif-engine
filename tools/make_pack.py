@@ -50,7 +50,7 @@ if not exist node_modules (
 
 echo [2/2] Rendering video...
 if not exist out mkdir out
-call npx remotion render src/index.ts {cid} out\{cid}.mp4 --gl=angle %* || goto :fail
+call npx remotion render src/index.ts {cid} out\{cid}.mp4 --gl=angle %* || (echo. & echo Retrying once, the first launch can time out... & call npx remotion render src/index.ts {cid} out\{cid}.mp4 --gl=angle %*) || goto :fail
 
 echo.
 echo DONE: out\{cid}.mp4

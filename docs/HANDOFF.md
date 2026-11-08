@@ -253,3 +253,9 @@ Project root: `whatif-engine/`.
 - Oxygen5s v2 (latest pack in packs/): user said v1 was not realistic (water, buildings and our roof did not fall). v2 = physical Sky,
   three.js Water river (120 m wide), City2 facadeMat towers that collapse (concrete) or keep a steel skeleton (frameMat), realistic
   hero clones with standHero (hero.tsx, clutch = hands on head), roof free-fall from video 30 s (lands 53.9 s). Waiting for feedback.
+
+## 8. GitHub repo (source of truth)
+
+- The engine lives in **github.com/zenaidalee328-spec/whatif-engine**. A new session clones it (no zip needed) and pushes its changes back when a video is done.
+- Not stored in git (regenerated or delivered in packs): `node_modules/`, `build/`, `out/`, `packs/`, `public/audio/*.wav` (made by `audio/build_audio.py` inside `tools/make_pack.py`), `tools/physics/prem_fall.json`.
+- Generators: `tools/gen/run2x.py`, `earthhole.py`, `earthhole_short.py`, `oxygen5s.py`, `friction*.py`. Physics: `tools/physics/prem_fall.py` (PREM fall through Earth).
