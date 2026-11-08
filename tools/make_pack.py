@@ -68,7 +68,7 @@ bat_name = f'RENDER-{cid}.bat'
 open(bat_name, 'w', newline='\r\n').write(bat)
 
 demo_name = f'RENDER-{cid}-10s-DEMO.bat'
-demo = bat.replace(f'out\\{cid}.mp4', f'out\\{cid}-10s-DEMO.mp4').replace('--gl=angle %*', '--gl=angle --frames=0-299 %*').replace('Render {0}'.format(cid), 'Render {0} 10s demo'.format(cid))
+demo = bat.replace(f'out\\{cid}.mp4', f'out\\{cid}-10s-DEMO.mp4').replace('--gl=angle %*', f'--gl=angle --frames=0-{min(299, int(round(max(x["to"] for x in tl["segments"]) * tl["meta"].get("fps", 30))) - 1)} %*').replace('Render {0}'.format(cid), 'Render {0} 10s demo'.format(cid))
 open(demo_name, 'w', newline='\r\n').write(demo)
 os.makedirs('out/packs', exist_ok=True)
 dst = f'out/packs/{cid}-pack.zip'
