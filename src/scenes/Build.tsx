@@ -116,6 +116,33 @@ const Prop: React.FC<{ kind: string; leaf: string; x: number; z: number; s: numb
   );
 };
 
+const makeTools = () => {
+  const g = new THREE.Group();
+  const shovel = new THREE.Group();
+  shovel.name = 'shovel';
+  const wood = new THREE.MeshStandardMaterial({ color: '#8a6a3f', roughness: 0.8 });
+  const steelM = new THREE.MeshStandardMaterial({ color: '#aeb7c0', metalness: 0.8, roughness: 0.35 });
+  const h = new THREE.Mesh(new THREE.CylinderGeometry(0.028, 0.028, 1.5, 8), wood);
+  h.position.y = -0.75;
+  const grip = new THREE.Mesh(new THREE.TorusGeometry(0.07, 0.022, 6, 12), wood);
+  grip.position.y = 0.02;
+  const blade = new THREE.Mesh(new THREE.BoxGeometry(0.24, 0.3, 0.025), steelM);
+  blade.position.y = -1.62;
+  shovel.add(h, grip, blade);
+  const weld = new THREE.Group();
+  weld.name = 'weld';
+  const body = new THREE.Mesh(new THREE.BoxGeometry(0.11, 0.3, 0.09), new THREE.MeshStandardMaterial({ color: '#d1452b', roughness: 0.5 }));
+  body.position.y = -0.05;
+  const nozzle = new THREE.Mesh(new THREE.CylinderGeometry(0.018, 0.03, 0.28, 8), new THREE.MeshStandardMaterial({ color: '#b87333', metalness: 0.7, roughness: 0.4 }));
+  nozzle.position.y = 0.24;
+  const tipGlow = new THREE.Mesh(new THREE.SphereGeometry(0.03, 8, 8), new THREE.MeshBasicMaterial({ color: '#dff3ff' }));
+  tipGlow.position.y = 0.4;
+  tipGlow.name = 'tipGlow';
+  weld.add(body, nozzle, tipGlow);
+  g.add(shovel, weld);
+  return g;
+};
+
 type BuildProps = { t: number; cam: CamProps | null; p: Record<string, any> };
 
 export const BuildScene: React.FC<BuildProps> = ({ t, cam, p }) => {
@@ -145,15 +172,56 @@ export const BuildScene: React.FC<BuildProps> = ({ t, cam, p }) => {
 
   const factory = useHeroFactory();
   const hero = useMemo<Hero | null>(() => (factory ? factory('#2c3f66') : null), [factory]);
+  const tools = useMemo(() => makeTools(), []);
+  const toolTip = new THREE.Vector3();
+  const toolKind = Math.round(H.tool ?? 0);
+  const sp: number = H.sp ?? 1;
+  const strikePh = (((t * sp) % 1) + 1) % 1;
   if (hero && H.show !== 0) {
     hero.root.position.set(H.x ?? 3.3, (H.y ?? 0) + (H.dy ?? 0), H.z ?? 1.2);
-    hero.root.rotation.set(0, H.rotY ?? -0.5, H.tilt ?? 0);
     const act = Math.round(H.act ?? 0);
+    const rock = act === 10 ? 0.035 * Math.sin(t * 8) : 0;
+    hero.root.rotation.set(0, H.rotY ?? -0.5, (H.tilt ?? 0) + rock);
     if (act === 5) poseHero(hero, t * 0.7, 0, 0, 0.12);
-    else if (act > 0) actHero(hero, t, act, clamp01(H.k ?? 1), 1);
+    else if (act > 0) actHero(hero, t, act, clamp01(H.k ?? 1), 0, sp);
     else if ((H.walk ?? 0) > 0.5) poseHero(hero, t * 0.85, 0, 0, 0);
     else standHero(hero, t, 0, 1);
+    hero.root.updateMatrixWorld(true);
+    const rh = new THREE.Vector3();
+    const lh = new THREE.Vector3();
+    hero.bones.RightHand.getWorldPosition(rh);
+    hero.bones.LeftHand.getWorldPosition(lh);
+    const hq = hero.root.getWorldQuaternion(new THREE.Quaternion());
+    const shovelG = tools.getObjectByName('shovel')!;
+    const weldG = tools.getObjectByName('weld')!;
+    const tk = pop(H.toolK ?? 1);
+    shovelG.visible = toolKind === 1;
+    weldG.visible = toolKind === 2;
+    if (toolKind === 1) {
+      // shaft angle follows the dig phase: blade up/back while lifting, down/forward at the strike
+      const ph = strikePh;
+      const a = ph < 0.4 ? -0.55 + 1.0 * (ph / 0.4) * 0.35 : ph < 0.55 ? -0.4 + 1.2 * ((ph - 0.4) / 0.15) : 0.8 - 1.35 * ((ph - 0.55) / 0.45);
+      const dir = new THREE.Vector3(0, -Math.cos(a), Math.sin(a)).applyQuaternion(hq).normalize();
+      shovelG.quaternion.setFromUnitVectors(new THREE.Vector3(0, -1, 0), dir);
+      shovelG.position.copy(rh).add(lh).multiplyScalar(0.5).addScaledVector(dir, -0.45);
+      shovelG.scale.setScalar(tk);
+      toolTip.copy(shovelG.position).addScaledVector(dir, 1.62 * tk);
+    } else if (toolKind === 2) {
+      // torch aimed at the door rim; the arc point creeps around the seam
+      const hatchTop0 = Math.max(R + 0.4, 0.6 - cy);
+      const door = new THREE.Vector3(0, cy + hatchTop0 + 0.1, 0);
+      const ang = -2.36 + 0.5 * Math.sin(t * 1.6);
+      const rim = door.clone().add(new THREE.Vector3(Math.sin(ang + Math.PI) * 0.64, 0, Math.cos(ang + Math.PI) * 0.64));
+      const dir = rim.clone().sub(rh).normalize();
+      weldG.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), dir);
+      weldG.position.copy(rh).addScaledVector(dir, -0.08);
+      weldG.scale.setScalar(tk);
+      toolTip.copy(rim);
+    }
   }
+  const crateK = pop(p.crate ?? 0);
+  const mound = clamp01(p.mound ?? 0);
+  const soilCol = env.soil[0];
 
   const uni = useMemo(() => ({ uNB: { value: 0 }, uHW: { value: HW }, uC: { value: new THREE.Vector3(0, 0, R) } }), []);
   uni.uNB.value = notchBottom;
@@ -335,6 +403,37 @@ export const BuildScene: React.FC<BuildProps> = ({ t, cam, p }) => {
           );
         })}
 
+      {/* crate the hero places and stands on */}
+      {crateK > 0.001 && (
+        <mesh position={[0, cy - 0.94 + 0.5 * crateK, 0.9]} scale={crateK} castShadow receiveShadow><boxGeometry args={[0.9, 1.0, 0.9]} /><meshStandardMaterial color="#b9894f" roughness={0.9} /></mesh>
+      )}
+      {/* soil pile thrown by the shovel */}
+      {mound > 0.01 && (
+        <mesh position={[4.3, 0.05, 0.4]} scale={[1.0 * mound, 0.55 * mound, 0.9 * mound]} castShadow><sphereGeometry args={[1, 14, 10]} /><meshStandardMaterial color={soilCol} roughness={1} /></mesh>
+      )}
+      {/* tools in the hero's hands */}
+      {hero && H.show !== 0 && toolKind > 0 && <primitive object={tools} />}
+      {/* shovel: soil chips fly off at each strike */}
+      {toolKind === 1 &&
+        Array.from({ length: 10 }, (_, i) => {
+          const u = (((strikePh - 0.5) % 1) + 1) % 1; // 0 at the strike, grows after
+          const life = Math.min(1, u / 0.5);
+          const vx = 1.2 + hash(i * 3.1) * 2.2, vy = 1.6 + hash(i * 5.7) * 2.2, vz = (hash(i * 7.3) - 0.5) * 1.2;
+          const tt = life * 0.45;
+          return <mesh key={'c' + i} position={[toolTip.x + vx * tt, toolTip.y + vy * tt - 4.9 * tt * tt, toolTip.z + vz * tt]} scale={life < 1 ? 0.05 + 0.04 * hash(i) : 0.0001}><boxGeometry args={[1, 0.7, 1]} /><meshStandardMaterial color={soilCol} roughness={1} /></mesh>;
+        })}
+      {/* welding gun: white-blue sparks + arc glow at the tip */}
+      {toolKind === 2 && (
+        <group>
+          {Array.from({ length: 18 }, (_, i) => {
+            const ph = (t * 5 + hash(i * 2.3)) % 1;
+            const a = i * 2.4 + t * 3, r = ph * (0.25 + 0.35 * hash(i));
+            return <mesh key={'w' + i} position={[toolTip.x + Math.cos(a) * r, toolTip.y + 0.12 * (1 - ph) - 1.6 * ph * ph + 0.3 * ph, toolTip.z + Math.sin(a) * r]} scale={0.035 * (1 - ph) + 0.004}><sphereGeometry args={[1, 6, 6]} /><meshBasicMaterial color={i % 3 ? '#e8f6ff' : '#ffb347'} /></mesh>;
+          })}
+          <mesh position={[toolTip.x, toolTip.y, toolTip.z]} scale={0.1 + 0.04 * Math.sin(t * 60)}><sphereGeometry args={[1, 10, 10]} /><meshBasicMaterial color="#f4fbff" /></mesh>
+          <pointLight position={[toolTip.x, toolTip.y + 0.1, toolTip.z + 0.2]} color="#bfe0ff" intensity={9 + 5 * Math.sin(t * 55)} distance={6} />
+        </group>
+      )}
       {hero && H.show !== 0 && <primitive object={hero.root} />}
       <Redraw deps={[hero, strataTex, grassTex]} />
       <Post bloom={p.bloom ?? 0.25} bloomThreshold={0.9} />

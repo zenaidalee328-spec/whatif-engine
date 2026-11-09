@@ -380,7 +380,7 @@ export const standHero = (h: Hero, t: number, clutch = 0, seed = 0) => {
 
 /** Acting poses on top of the T-pose rest: 1 dig, 2 leap, 3 brace (crouch, arms over head), 4 stumble, 6 work overhead.
  *  Angles: rot about `fwd` swings arms up/down, about `side` bends forward (+) / arms forward (-). k = intensity 0..1. */
-export const actHero = (h: Hero, t: number, act: number, k = 1, seed = 0) => {
+export const actHero = (h: Hero, t: number, act: number, k = 1, seed = 0, sp = 1) => {
   const rest = bakedCache?.restLocal;
   if (!rest) return;
   h.mixer.stopAllAction();
@@ -445,6 +445,56 @@ export const actHero = (h: Hero, t: number, act: number, k = 1, seed = 0) => {
     rot(B.LeftForeArm, fwd, 0.5 * k);
     rot(B.RightForeArm, fwd, -0.5 * k);
     rot(B.Neck, side, -0.35 * k);
+  } else if (act === 7) {
+    // SHOVEL DIG loop: lift (0-.4) -> strike (.4-.55) -> scoop/pull (.55-1); sp = cycles per second
+    const ph = (((t * sp + seed) % 1) + 1) % 1;
+    const sm = (x: number) => x * x * (3 - 2 * x);
+    const raise = ph < 0.4 ? sm(ph / 0.4) : ph < 0.55 ? 1 - sm((ph - 0.4) / 0.15) : 0.15 * sm((ph - 0.55) / 0.45);
+    rot(B.Spine, side, (0.22 + 0.4 * (1 - raise)) * k);
+    rot(B.Spine1, side, (0.12 + 0.2 * (1 - raise)) * k);
+    arms(-1.25);
+    rot(B.LeftArm, side, (-0.3 - 1.0 * raise) * k);
+    rot(B.RightArm, side, (-0.3 - 1.0 * raise) * k);
+    rot(B.LeftForeArm, side, (-0.45 - 0.3 * raise) * k);
+    rot(B.RightForeArm, side, (-0.45 - 0.3 * raise) * k);
+    rot(B.Neck, side, (0.15 + 0.1 * (1 - raise)) * k);
+    rot(B.LeftUpLeg, side, -0.3 * k);
+    rot(B.RightUpLeg, side, -0.18 * k);
+    rot(B.LeftLeg, side, 0.5 * k);
+    rot(B.RightLeg, side, 0.3 * k);
+  } else if (act === 8) {
+    // WELD DOWN: bent over the work, both arms forward-down, gun hand creeps along the seam, tiny tremble
+    const sway = 0.08 * Math.sin(t * 2.4 + seed);
+    const tr = 0.02 * Math.sin(t * 31);
+    rot(B.Spine, side, 0.5 * k);
+    rot(B.Spine1, side, 0.22 * k);
+    arms(-1.25);
+    rot(B.LeftArm, side, (-0.85 + sway + tr) * k);
+    rot(B.RightArm, side, (-0.95 - sway - tr) * k);
+    rot(B.LeftForeArm, side, -0.45 * k);
+    rot(B.RightForeArm, side, -0.35 * k);
+    rot(B.Neck, side, 0.3 * k);
+    rot(B.LeftUpLeg, side, -0.25 * k);
+    rot(B.RightUpLeg, side, -0.15 * k);
+    rot(B.LeftLeg, side, 0.45 * k);
+    rot(B.RightLeg, side, 0.28 * k);
+  } else if (act === 10) {
+    // V CHEER: arms up and out, hands open, shoulders shrug, small pulse
+    const w = Math.sin(t * 6 + seed);
+    arms(0.1 + 0.07 * w, 0.1 - 0.07 * w);
+    rot(B.LeftForeArm, fwd, 0.35 * k);
+    rot(B.RightForeArm, fwd, -0.35 * k);
+    rot(B.Spine, side, -0.07 * k);
+    rot(B.Neck, side, -0.2 * k);
+  } else if (act === 11) {
+    // PRESENT: right arm out, palm up, wrist turning; left hand relaxed
+    const w = Math.sin(t * 4 + seed);
+    rot(B.LeftArm, fwd, -1.3 * k);
+    rot(B.RightArm, fwd, 1.3 * k - 1.3 * (1 - k) - 0.55);
+    rot(B.RightArm, side, (-0.85 + 0.1 * w) * k);
+    rot(B.RightForeArm, side, -0.35 * k);
+    rot(B.RightHand, fwd, 0.5 * w * k);
+    rot(B.Neck, side, (0.06 + 0.05 * Math.sin(t * 2)) * k);
   }
 };
 

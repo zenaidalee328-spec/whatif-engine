@@ -264,3 +264,7 @@ Project root: `whatif-engine/`.
 - New: scene `build` (cut-away diorama, `src/scenes/Build.tsx`, re-skin with `env`), karaoke caption style (`style:'karaoke'`), voiceover (`meta.vo`, mixed by build_audio.py), generator `tools/gen/tankroom.py` (Kokoro TTS: kokoro-onnx + model files from github.com/thewh1teagle/kokoro-onnx releases model-files-v1.0, put in /tmp/tts).
 - The user now WANTS voiceover for this format; every short gets a different location and story object.
 - Reference notes: docs/ref3-*.md. Demo `TankRoomDemo` (9 s) delivered as a pack; waiting for feedback.
+
+## TankRoomDemo v4 (builder hero)
+- Hero is the BUILDER: shovel dig loop (act 7, 8 strikes, pit/mound grow, soil chips), tool pops in hand, climbs out, welds the door with torch (act 8, sparks + light), presents (11), V-cheer (10). Notes: docs/ref3-character-motion.md.
+- Camera at weld/cheer raised so hero is visible above the flood. Re-skin to soldier look still TODO. Pack: out/packs/TankRoomDemo-pack.zip.

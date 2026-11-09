@@ -84,30 +84,47 @@ def seq(*kv):
 s1, s2, s3, s4 = S
 e1, e2, e3, e4 = E_
 d1 = e1 - s1
-dig_a, dig_b, drop_b, fill_b = s1 + 0.05, s1 + 0.30 * d1, s1 + 0.46 * d1, s1 + 0.80 * d1
+# --- BUILDER beats: the hero uses the right tool for each job and his work CAUSES the change ---
+N_STRIKES = 8
+dig_a, dig_b, drop_b, fill_b = s1 + 0.05, s1 + 0.40 * d1, s1 + 0.60 * d1, s1 + 0.88 * d1
+per = (dig_b - dig_a) / N_STRIKES          # one shovel cycle (~6 frames, like the reference dig loop)
+leap0 = drop_b - 0.6
 gust = s2 + 0.85
-leap0 = drop_b - 0.9
+pit_k, mound_k = [(0, 0), (dig_a, 0)], [(0, 0), (dig_a, 0)]
+for i in range(N_STRIKES):
+    ts = dig_a + (i + 0.5) * per           # strike lands mid-cycle: the hole deepens right then
+    pit_k += [(ts, i / N_STRIKES), (ts + 0.07, (i + 1) / N_STRIKES)]
+    mound_k += [(ts, i / N_STRIKES), (ts + 0.07, (i + 1) / N_STRIKES)]
+pit_k += [(drop_b, 1), (fill_b, 0), (T, 0)]
+mound_k += [(fill_b, 1), (fill_b + 0.5, 0), (T, 0)]
+weld0 = s3 - 0.1
+up0 = gust + 1.5   # climbs out of the tank after the flood scare
 params = dict(
     env=ENV,
     tank=seq((0, 1)),
     props=seq((0, 1)),
     hatch=1.6,
     cy=seq((0, 1.7), (dig_b, 1.7), (drop_b, -2.2), (T, -2.2)),
-    pit=seq((0, 0), (dig_a, 0), (dig_b, 1), (drop_b, 1), (fill_b, 0), (T, 0)),
+    pit=seq(*pit_k),
+    mound=seq(*mound_k),
     storm=seq((0, 0), (s1 + 0.5 * d1, 0), (e1 + 0.2, 1), (e3, 1), (T, 0.55)),
     flash=seq((0, 0), (gust - 0.06, 0), (gust, 1), (gust + 0.1, 0.1), (gust + 0.18, 0.8), (gust + 0.4, 0), (T, 0)),
     tornado=dict(vis=seq((0, 0), (s1 + 0.5 * d1, 0.01), (e1 + 0.3, 1), (T, 1)), x=seq((0, 7), (s1 + 0.5 * d1, 7), (T, 0.5)), z=seq((0, -20), (T, -16))),
     lidFly=seq((0, 0), (gust, 0), (gust + 0.9, 1), (T, 1)),
     water=seq((0, 0), (gust + 0.5, 0), (e2 + 0.3, 1), (T, 1)),
-    door=seq((0, 0), (s3 + 0.5, 0), (e3 + 0.1, 1), (T, 1)),
+    door=seq((0, 0), (weld0 + 0.3, 0), (e3 + 0.1, 1), (T, 1)),
     lamp=seq((0, 0), (s4 - 0.1, 0), (s4 + 0.2, 1), (T, 1)),
     bloom=0.22,
     hero=dict(
-        x=seq((0, 3.6), (leap0, 3.6), (leap0 + 0.7, 0.0), (T, 0.0)),
-        y=seq((0, 0), (leap0, 0), (leap0 + 0.35, 1.0), (leap0 + 0.7, 0.4), (drop_b + 0.25, -3.14), (T, -3.14)),
+        x=seq((0, 3.0), (leap0, 3.0), (leap0 + 0.7, 0.0), (up0, 0.0), (weld0 - 0.3, 0.9), (T, 0.9)),
+        y=seq((0, 0), (leap0, 0), (leap0 + 0.35, 1.0), (leap0 + 0.7, 0.4), (drop_b + 0.25, -3.14), (up0, -3.14), (weld0 - 0.3, 0.0), (T, 0.0)),
         z=seq((0, 1.4), (leap0, 1.4), (drop_b + 0.25, 0.9), (T, 0.9)),
-        rotY=seq((0, -1.0), (leap0, -1.0), (drop_b + 0.25, 0.2), (T, 0.2)),
-        act=step((0, 1), (leap0, 2), (drop_b + 0.3, 0), (gust - 0.25, 3), (gust + 0.35, 4), (gust + 1.3, 5), (s3 + 0.35, 6), (e3 + 0.3, 0)),
+        rotY=seq((0, -1.0), (leap0, -1.0), (drop_b + 0.25, 0.2), (up0, 0.2), (weld0 - 0.2, -2.36), (T, -2.36)),
+        # 7 shovel dig -> 0 drop tool -> 2 leap -> 3 brace -> 4 stumble -> 5 idle -> 6 climb out -> 8 weld the door -> 11 present -> 10 cheer
+        act=step((0, 7), (dig_b + 0.05, 0), (leap0, 2), (drop_b + 0.3, 0), (gust - 0.25, 3), (gust + 0.35, 4), (gust + 1.3, 5), (up0, 6), (weld0 - 0.25, 0), (weld0, 8), (e3 + 0.25, 0), (e3 + 0.3, 11), (s4 + 0.95, 10)),
+        tool=step((0, 1), (dig_b + 0.05, 0), (weld0 - 0.05, 2), (e3 + 0.25, 0)),
+        toolK=seq((0, 1), (weld0 - 0.05, 0.01), (weld0 + 0.12, 1), (T, 1)),
+        sp=round(1.0 / per, 3),
         dy=seq((0, 0), (gust - 0.3, 0), (gust - 0.15, -0.55), (gust + 0.35, -0.55), (gust + 0.5, -0.15), (gust + 1.3, 0), (T, 0)),
         tilt=seq((0, 0), (gust + 0.35, 0), (gust + 0.6, 0.28), (gust + 0.85, -0.22), (gust + 1.1, 0.14), (gust + 1.3, 0), (T, 0)),
         k=1,
@@ -116,18 +133,20 @@ params = dict(
 )
 cam = dict(
     path='keys',
-    pos=seq((0, [8.5, 4.0, 29]), (dig_b, [6.5, 3.2, 25]), (e1, [4.5, 2.4, 21]), (gust - 0.2, [3.5, 2.0, 18]), (e2, [3.0, 1.4, 15]), (s3, [2.2, 1.4, 11]), (e3, [1.6, 1.0, 9.5]), (T, [1.0, 2.2, 22])),
-    look=seq((0, [0, -0.8, 0]), (e1, [0, -0.6, 0]), (e2, [0, -1.0, 0]), (s3, [0, -0.2, 0]), (e3, [0, 0.1, 0]), (T, [0, 0.2, 0])),
+    pos=seq((0, [8.5, 4.0, 29]), (dig_b, [6.5, 3.2, 25]), (e1, [4.5, 2.4, 21]), (gust - 0.2, [3.5, 2.0, 18]), (e2, [3.0, 1.4, 15]), (s3, [2.6, 2.2, 9.5]), (e3, [2.0, 2.0, 8.0]), (T, [1.0, 2.2, 22])),
+    look=seq((0, [0, -0.8, 0]), (e1, [0, -0.6, 0]), (e2, [0, -1.0, 0]), (s3, [0.3, 0.5, 0]), (e3, [0.3, 0.7, 0]), (T, [0, 0.2, 0])),
     fov=40,
 )
 sfx = [
-    dict(at=dig_a, type='rumble', dur=dig_b - dig_a + 0.4, gain=0.45),
+    dict(at=dig_a, type='rumble', dur=dig_b - dig_a + 0.4, gain=0.3),
+    *[dict(at=dig_a + (i + 0.5) * per, type='thud', gain=0.35) for i in range(N_STRIKES)],
+    dict(at=weld0 + 0.1, type='riser', dur=e3 - weld0, gain=0.25),
     dict(at=drop_b, type='thud', gain=1.0),
     dict(at=s1 + 0.55 * d1, type='subdrop', gain=0.7),
     dict(at=gust, type='crack', gain=0.9),
     dict(at=gust, type='whoosh', gain=0.8),
     dict(at=gust + 0.18, type='crack', gain=0.7),
-    dict(at=s3 + 0.5, type='riser', dur=1.2, gain=0.35),
+    dict(at=weld0 + 0.3, type='riser', dur=1.2, gain=0.35),
     dict(at=e3 + 0.1, type='thud', gain=1.0),
     dict(at=s4 + 0.2, type='beep', gain=0.4),
 ]
