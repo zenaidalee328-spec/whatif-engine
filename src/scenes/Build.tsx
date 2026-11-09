@@ -4,7 +4,7 @@ import { ThreeCanvas } from '@remotion/three';
 import { useVideoConfig } from 'remotion';
 import { CamProps, CameraRig, SkyDome, clamp01, hash } from './common3d';
 import { Env, Post, Redraw } from './fx3d';
-import { Hero, poseHero, standHero, useHeroFactory } from './hero';
+import { Hero, actHero, poseHero, standHero, useHeroFactory } from './hero';
 
 /*
   "BUILD" diorama: a chunk of earth with a CUT-AWAY front face (the reference-short look), re-skinnable per video via `env`.
@@ -146,9 +146,12 @@ export const BuildScene: React.FC<BuildProps> = ({ t, cam, p }) => {
   const factory = useHeroFactory();
   const hero = useMemo<Hero | null>(() => (factory ? factory('#2c3f66') : null), [factory]);
   if (hero && H.show !== 0) {
-    hero.root.position.set(H.x ?? 3.3, H.y ?? 0, H.z ?? 1.2);
-    hero.root.rotation.set(0, H.rotY ?? -0.5, 0);
-    if ((H.walk ?? 0) > 0.5) poseHero(hero, t * 0.85, 0, 0, 0);
+    hero.root.position.set(H.x ?? 3.3, (H.y ?? 0) + (H.dy ?? 0), H.z ?? 1.2);
+    hero.root.rotation.set(0, H.rotY ?? -0.5, H.tilt ?? 0);
+    const act = Math.round(H.act ?? 0);
+    if (act === 5) poseHero(hero, t * 0.7, 0, 0, 0.12);
+    else if (act > 0) actHero(hero, t, act, clamp01(H.k ?? 1), 1);
+    else if ((H.walk ?? 0) > 0.5) poseHero(hero, t * 0.85, 0, 0, 0);
     else standHero(hero, t, 0, 1);
   }
 

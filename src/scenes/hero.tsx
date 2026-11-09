@@ -377,6 +377,77 @@ export const standHero = (h: Hero, t: number, clutch = 0, seed = 0) => {
 };
 
 /** glow the hero (meteor stage): 0 = normal, 1 = white-hot */
+
+/** Acting poses on top of the T-pose rest: 1 dig, 2 leap, 3 brace (crouch, arms over head), 4 stumble, 6 work overhead.
+ *  Angles: rot about `fwd` swings arms up/down, about `side` bends forward (+) / arms forward (-). k = intensity 0..1. */
+export const actHero = (h: Hero, t: number, act: number, k = 1, seed = 0) => {
+  const rest = bakedCache?.restLocal;
+  if (!rest) return;
+  h.mixer.stopAllAction();
+  for (const n of BONES) if (rest[n]) h.bones[n].quaternion.copy(rest[n]);
+  h.root.updateMatrixWorld(true);
+  const rq = wq(h.root);
+  const fwd = new THREE.Vector3(0, 0, 1).applyQuaternion(rq);
+  const side = new THREE.Vector3(1, 0, 0).applyQuaternion(rq);
+  const rot = (b: THREE.Object3D, axis: THREE.Vector3, a: number) => {
+    const pw = wq(b.parent!);
+    const r = new THREE.Quaternion().setFromAxisAngle(axis, a);
+    b.quaternion.copy(pw.clone().invert().multiply(r).multiply(pw).multiply(b.quaternion));
+    b.updateMatrixWorld(true);
+  };
+  const B = h.bones;
+  const arms = (a: number, b = a) => {
+    rot(B.LeftArm, fwd, a);
+    rot(B.RightArm, fwd, -b);
+  };
+  if (act === 1) {
+    const w = Math.sin(t * 7 + seed);
+    rot(B.Spine, side, (0.45 + 0.12 * w) * k);
+    rot(B.Spine1, side, 0.2 * k);
+    arms(-1.25);
+    rot(B.LeftArm, side, (-0.8 - 0.55 * w) * k);
+    rot(B.RightArm, side, (-0.8 - 0.55 * w) * k);
+    rot(B.LeftForeArm, side, -0.5 * k);
+    rot(B.RightForeArm, side, -0.5 * k);
+    rot(B.Neck, side, 0.2 * k);
+  } else if (act === 2) {
+    arms(0.5 * k - 1.3 * (1 - k));
+    rot(B.LeftUpLeg, side, -0.7 * k);
+    rot(B.RightUpLeg, side, -0.4 * k);
+    rot(B.LeftLeg, side, 1.0 * k);
+    rot(B.RightLeg, side, 0.7 * k);
+    rot(B.Spine, side, 0.1 * k);
+  } else if (act === 3) {
+    arms(0.55 * k - 1.3 * (1 - k));
+    rot(B.LeftForeArm, fwd, 2.1 * k);
+    rot(B.RightForeArm, fwd, -2.1 * k);
+    rot(B.Spine, side, (0.55 + 0.03 * Math.sin(t * 20)) * k);
+    rot(B.Spine1, side, 0.3 * k);
+    rot(B.Neck, side, 0.3 * k);
+    rot(B.LeftUpLeg, side, -0.85 * k);
+    rot(B.RightUpLeg, side, -0.85 * k);
+    rot(B.LeftLeg, side, 1.35 * k);
+    rot(B.RightLeg, side, 1.35 * k);
+  } else if (act === 4) {
+    const w = Math.sin(t * 9 + seed);
+    arms(-0.5 + 0.45 * w, -0.5 - 0.45 * w);
+    rot(B.LeftForeArm, fwd, 0.5 * w);
+    rot(B.RightForeArm, fwd, 0.5 * w);
+    rot(B.Spine, side, -0.3 * k);
+    rot(B.Neck, side, -0.15 * k);
+    rot(B.LeftUpLeg, side, (-0.55 + 0.25 * w) * k);
+    rot(B.RightUpLeg, side, (0.35 - 0.25 * w) * k);
+    rot(B.LeftLeg, side, 0.7 * k);
+    rot(B.RightLeg, side, 0.3 * k);
+  } else if (act === 6) {
+    const w = Math.sin(t * 5 + seed);
+    arms(0.35 + 0.06 * w, 0.35 - 0.06 * w);
+    rot(B.LeftForeArm, fwd, 0.5 * k);
+    rot(B.RightForeArm, fwd, -0.5 * k);
+    rot(B.Neck, side, -0.35 * k);
+  }
+};
+
 export const heatHero = (h: Hero, heat: number, t = 0) => {
   h.heat.uHeat.value = heat;
   h.heat.uTime.value = t;

@@ -68,6 +68,16 @@ for c in caps:
     c['from'] = c.pop('from_')
 
 # ---------------- visual beats (absolute seconds, one continuous Build segment) ----------------
+def step(*kv):
+    out = []
+    for i, (a, b) in enumerate(kv):
+        if i:
+            out.append([round(a - 0.01, 3), kv[i - 1][1]])
+        out.append([round(a, 3), b])
+    out.append([round(T, 3), kv[-1][1]])
+    return out
+
+
 def seq(*kv):
     return [[round(a, 3), b] for a, b in kv]
 
@@ -76,6 +86,7 @@ e1, e2, e3, e4 = E_
 d1 = e1 - s1
 dig_a, dig_b, drop_b, fill_b = s1 + 0.05, s1 + 0.30 * d1, s1 + 0.46 * d1, s1 + 0.80 * d1
 gust = s2 + 0.85
+leap0 = drop_b - 0.9
 params = dict(
     env=ENV,
     tank=seq((0, 1)),
@@ -92,10 +103,14 @@ params = dict(
     lamp=seq((0, 0), (s4 - 0.1, 0), (s4 + 0.2, 1), (T, 1)),
     bloom=0.22,
     hero=dict(
-        x=seq((0, 3.6), (drop_b - 0.01, 3.6), (drop_b, 0.6), (T, 0.6)),
-        y=seq((0, 0), (drop_b - 0.01, 0), (drop_b, -3.14), (T, -3.14)),
-        z=seq((0, 1.4), (drop_b - 0.01, 1.4), (drop_b, 0.9), (T, 0.9)),
-        rotY=seq((0, -1.0), (drop_b - 0.01, -1.0), (drop_b, 0.2), (T, 0.2)),
+        x=seq((0, 3.6), (leap0, 3.6), (leap0 + 0.7, 0.0), (T, 0.0)),
+        y=seq((0, 0), (leap0, 0), (leap0 + 0.35, 1.0), (leap0 + 0.7, 0.4), (drop_b + 0.25, -3.14), (T, -3.14)),
+        z=seq((0, 1.4), (leap0, 1.4), (drop_b + 0.25, 0.9), (T, 0.9)),
+        rotY=seq((0, -1.0), (leap0, -1.0), (drop_b + 0.25, 0.2), (T, 0.2)),
+        act=step((0, 1), (leap0, 2), (drop_b + 0.3, 0), (gust - 0.25, 3), (gust + 0.35, 4), (gust + 1.3, 5), (s3 + 0.35, 6), (e3 + 0.3, 0)),
+        dy=seq((0, 0), (gust - 0.3, 0), (gust - 0.15, -0.55), (gust + 0.35, -0.55), (gust + 0.5, -0.15), (gust + 1.3, 0), (T, 0)),
+        tilt=seq((0, 0), (gust + 0.35, 0), (gust + 0.6, 0.28), (gust + 0.85, -0.22), (gust + 1.1, 0.14), (gust + 1.3, 0), (T, 0)),
+        k=1,
         walk=0,
     ),
 )
