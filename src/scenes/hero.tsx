@@ -194,7 +194,7 @@ export type Hero = {
   heat: HeatU;
 };
 
-export const makeHero = (man: THREE.Object3D, baked: Baked, suit = SUIT): Hero => {
+export const makeHero = (man: THREE.Object3D, baked: Baked, suit = SUIT, soldier?: { top: THREE.Color; bottom: THREE.Color }): Hero => {
   const root = cloneSkinned(man);
   let headwear: THREE.Object3D | null = null;
   const mats: THREE.MeshStandardMaterial[] = [];
@@ -208,7 +208,7 @@ export const makeHero = (man: THREE.Object3D, baked: Baked, suit = SUIT): Hero =
     const m = (o.material as THREE.MeshStandardMaterial).clone();
     const isSuit = m.name === 'Wolf3D_Outfit_Top' || m.name === 'Wolf3D_Outfit_Bottom';
     if (o.name === 'Wolf3D_Headwear') headwear = o;
-    patchMat(m, heat, { suit: isSuit ? { tint: suit, all: m.name === 'Wolf3D_Outfit_Bottom' } : undefined, hat: o.name === 'Wolf3D_Headwear' ? hatMode : undefined });
+    patchMat(m, heat, { suit: isSuit ? { tint: soldier ? (m.name === 'Wolf3D_Outfit_Bottom' ? soldier.bottom : soldier.top) : suit, all: soldier ? true : m.name === 'Wolf3D_Outfit_Bottom' } : undefined, hat: o.name === 'Wolf3D_Headwear' ? hatMode : undefined });
     o.material = m;
     mats.push(m);
   });
@@ -535,6 +535,6 @@ export const useHeroFactory = () => {
     if (!man || !bot) return null;
     if (!bakedCache) bakedCache = bake(man.scene, bot.scene, bot.animations);
     const b = bakedCache;
-    return (suit?: string) => makeHero(man.scene, b, suit ? new THREE.Color(suit) : SUIT);
+    return (suit?: string, soldier?: { top: string; bottom: string }) => makeHero(man.scene, b, suit ? new THREE.Color(suit) : SUIT, soldier ? { top: new THREE.Color(soldier.top), bottom: new THREE.Color(soldier.bottom) } : undefined);
   }, [man, bot]);
 };

@@ -23,11 +23,114 @@ const CONC = '#a9adb2';
 
 type R = [number, number, number, number]; // x0,x1,y0,y1 in the front plane
 
-const Cell: React.FC<{ x0: number; x1: number; y0: number; y1: number; z?: number; col: string }> = ({ x0, x1, y0, y1, z = 3, col }) => (
-  <mesh position={[(x0 + x1) / 2, (y0 + y1) / 2, z]} receiveShadow><boxGeometry args={[x1 - x0, y1 - y0, 0.04]} /><meshStandardMaterial color={col} roughness={1} /></mesh>
-);
 
-const FrontFace: React.FC<{ rects: R[] }> = ({ rects }) => {
+const cTex = (w: number, h: number, draw: (g: CanvasRenderingContext2D) => void, repeat = true) => {
+  const c = document.createElement('canvas');
+  c.width = w;
+  c.height = h;
+  draw(c.getContext('2d')!);
+  const t = new THREE.CanvasTexture(c);
+  t.colorSpace = THREE.SRGBColorSpace;
+  t.anisotropy = 8;
+  if (repeat) t.wrapS = t.wrapT = THREE.RepeatWrapping;
+  return t;
+};
+const sandTexture = (base: string, rip: number) =>
+  cTex(512, 512, (g) => {
+    g.fillStyle = base;
+    g.fillRect(0, 0, 512, 512);
+    for (let i = 0; i < 26; i++) {
+      const y = (i / 26) * 512 + hash(i) * 8;
+      g.strokeStyle = `rgba(120,80,30,${0.1 + rip * 0.1})`;
+      g.lineWidth = 2 + hash(i * 3) * 3;
+      g.beginPath();
+      for (let x = 0; x <= 512; x += 16) g.lineTo(x, y + Math.sin(x * 0.03 + i) * 4 * rip + Math.sin(x * 0.011 + i * 2) * 6 * rip);
+      g.stroke();
+      g.strokeStyle = 'rgba(255,240,200,0.12)';
+      g.beginPath();
+      for (let x = 0; x <= 512; x += 16) g.lineTo(x, y + 6 + Math.sin(x * 0.03 + i) * 4 * rip);
+      g.stroke();
+    }
+    for (let i = 0; i < 5000; i++) {
+      g.fillStyle = hash(i) > 0.5 ? 'rgba(255,245,210,0.18)' : 'rgba(90,60,20,0.16)';
+      g.fillRect(hash(i * 1.7) * 512, hash(i * 2.9) * 512, 1 + hash(i * 5) * 2, 1 + hash(i * 7) * 2);
+    }
+  });
+const concreteTexture = () =>
+  cTex(512, 512, (g) => {
+    g.fillStyle = '#a4a8ac';
+    g.fillRect(0, 0, 512, 512);
+    for (let i = 0; i < 9000; i++) {
+      g.fillStyle = hash(i) > 0.5 ? 'rgba(255,255,255,0.10)' : 'rgba(60,60,60,0.12)';
+      g.fillRect(hash(i * 1.3) * 512, hash(i * 2.1) * 512, 1 + hash(i * 3) * 4, 1 + hash(i * 4) * 4);
+    }
+    for (let i = 0; i < 40; i++) {
+      g.fillStyle = `rgba(70,70,75,${0.05 + hash(i) * 0.08})`;
+      g.beginPath();
+      g.ellipse(hash(i * 5) * 512, hash(i * 9) * 512, 20 + hash(i) * 50, 14 + hash(i * 2) * 30, 0, 0, 6.3);
+      g.fill();
+    }
+    for (let x = 64; x < 512; x += 128) for (let y = 64; y < 512; y += 128) {
+      g.fillStyle = '#4b4846';
+      g.beginPath();
+      g.arc(x, y, 5, 0, 6.3);
+      g.fill();
+    }
+  });
+const plankTexture = () =>
+  cTex(256, 256, (g) => {
+    for (let i = 0; i < 8; i++) {
+      g.fillStyle = ['#b98a52', '#a97a45', '#c19659', '#b3834a'][i % 4];
+      g.fillRect(i * 32, 0, 32, 256);
+      g.fillStyle = 'rgba(70,40,15,0.5)';
+      g.fillRect(i * 32, 0, 2, 256);
+      for (let k = 0; k < 40; k++) {
+        g.fillStyle = 'rgba(90,55,20,0.2)';
+        g.fillRect(i * 32 + 4 + hash(i * 40 + k) * 24, hash(k * 3 + i) * 256, 1, 10 + hash(k) * 30);
+      }
+    }
+  });
+const skyTexture = () =>
+  cTex(1024, 512, (g) => {
+    g.translate(0, 512);
+    g.scale(1, -1);
+    const gr = g.createLinearGradient(0, 0, 0, 512);
+    gr.addColorStop(0, '#1b66c0');
+    gr.addColorStop(0.3, '#2f84d6');
+    gr.addColorStop(0.43, '#5fa8e4');
+    gr.addColorStop(0.5, '#cfe6f5');
+    gr.addColorStop(1, '#cfe6f5');
+    g.fillStyle = gr;
+    g.fillRect(0, 0, 1024, 512);
+    for (let i = 0; i < 140; i++) {
+      const x = hash(i * 3.1) * 1024, y = 90 + hash(i * 5.3) * 150, r = 24 + hash(i * 7) * 60;
+      const rg = g.createRadialGradient(x, y, 0, x, y, r);
+      rg.addColorStop(0, 'rgba(255,255,255,0.8)');
+      rg.addColorStop(1, 'rgba(255,255,255,0)');
+      g.fillStyle = rg;
+      g.save();
+      g.translate(x, y);
+      g.scale(2.4, 0.7);
+      g.translate(-x, -y);
+      g.beginPath();
+      g.arc(x, y, r, 0, 6.3);
+      g.fill();
+      g.restore();
+    }
+  }, false);
+const uvPlane = (w: number, h: number, u0: number, v0: number, scale: number) => {
+  const gm = new THREE.PlaneGeometry(w, h);
+  const uv = gm.attributes.uv;
+  for (let i = 0; i < uv.count; i++) uv.setXY(i, u0 / scale + uv.getX(i) * (w / scale), v0 / scale + uv.getY(i) * (h / scale));
+  return gm;
+};
+
+const Cell: React.FC<{ x0: number; x1: number; y0: number; y1: number; z?: number; mat: THREE.Material }> = ({ x0, x1, y0, y1, z = 3, mat }) => {
+  const gm = useMemo(() => uvPlane(x1 - x0, y1 - y0, x0, y0, 7), [x0, x1, y0, y1]);
+  return <mesh position={[(x0 + x1) / 2, (y0 + y1) / 2, z]} geometry={gm} material={mat} receiveShadow />;
+};
+
+const FrontFace: React.FC<{ rects: R[]; mats: THREE.Material[] }> = ({ rects, mats }) => {
   const xs = Array.from(new Set([-12, 26, ...rects.flatMap((r) => [r[0], r[1]])])).sort((a, b) => a - b);
   const ys = Array.from(new Set([-4.2, 0, -0.5, -1.6, -3, ...rects.flatMap((r) => [r[2], r[3]])])).sort((a, b) => a - b);
   const out: React.ReactNode[] = [];
@@ -35,8 +138,8 @@ const FrontFace: React.FC<{ rects: R[] }> = ({ rects }) => {
     for (let j = 0; j < ys.length - 1; j++) {
       const cx = (xs[i] + xs[i + 1]) / 2, cy = (ys[j] + ys[j + 1]) / 2;
       if (rects.some((r) => cx > r[0] && cx < r[1] && cy > r[2] && cy < r[3])) continue;
-      const col = cy > -0.5 ? SAND[0] : cy > -1.6 ? SAND[1] : cy > -3 ? SAND[2] : SAND[3];
-      out.push(<Cell key={i + '_' + j} x0={xs[i]} x1={xs[i + 1]} y0={ys[j]} y1={ys[j + 1]} col={col} />);
+      const mi = cy > -0.5 ? 0 : cy > -1.6 ? 1 : cy > -3 ? 2 : 3;
+      out.push(<Cell key={i + '_' + j} x0={xs[i]} x1={xs[i + 1]} y0={ys[j]} y1={ys[j + 1]} mat={mats[mi]} />);
     }
   return <group>{out}</group>;
 };
@@ -68,22 +171,40 @@ const Burst: React.FC<{ p: number; pos: [number, number, number]; s?: number; se
   );
 };
 
-const Ship: React.FC<{ pos: [number, number, number]; s: number; t: number; flash?: number }> = ({ pos, s, t, flash = 0 }) => (
-  <group position={pos} scale={s}>
-    <mesh position={[0, 0.35, 0]}><boxGeometry args={[7, 0.7, 1.3]} /><meshStandardMaterial color="#7d8791" roughness={0.8} /></mesh>
-    <mesh position={[3.9, 0.35, 0]} rotation={[0, 0, -Math.PI / 2]}><coneGeometry args={[0.65, 1.6, 4]} /><meshStandardMaterial color="#7d8791" roughness={0.8} /></mesh>
-    <mesh position={[0, 1.0, 0]}><boxGeometry args={[2.6, 0.7, 0.9]} /><meshStandardMaterial color="#aab2ba" roughness={0.8} /></mesh>
-    {[-0.8, 0.5].map((x) => <mesh key={x} position={[x, 1.6, 0]}><cylinderGeometry args={[0.2, 0.26, 0.8, 8]} /><meshStandardMaterial color="#5c646c" /></mesh>)}
-    <mesh position={[-2.4, 0.9, 0]}><boxGeometry args={[0.8, 0.3, 0.5]} /><meshStandardMaterial color="#6a737c" /></mesh>
-    <mesh position={[-2.9, 0.95, 0]} rotation={[0, 0, 0.3]}><cylinderGeometry args={[0.05, 0.05, 1.0, 6]} /><meshStandardMaterial color="#444" /></mesh>
-    <mesh position={[2.4, 0.9, 0]}><boxGeometry args={[0.8, 0.3, 0.5]} /><meshStandardMaterial color="#6a737c" /></mesh>
-    {Array.from({ length: 7 }, (_, i) => {
-      const ph = (t * 0.45 + i / 7) % 1;
-      return <mesh key={i} position={[-0.8 - ph * 5, 1.9 + ph * 1.2, 0]} scale={S(0.35 + ph * 0.7)}><icosahedronGeometry args={[1, 1]} /><meshStandardMaterial color="#2b2b2b" transparent opacity={0.8 * (1 - ph * 0.7)} roughness={1} /></mesh>;
-    })}
-    {flash > 0.01 && <mesh position={[-3.5, 1.0, 0.7]} scale={S(0.6 * Math.sin(Math.PI * clamp01(flash)))}><circleGeometry args={[1, 16]} /><meshBasicMaterial color="#ff8a1e" /></mesh>}
-  </group>
-);
+const Ship: React.FC<{ pos: [number, number, number]; s: number; t: number; flash?: number }> = ({ pos, s, t, flash = 0 }) => {
+  const hull = '#5f6c79', deck = '#8f9aa5', sup = '#aab4bd', dark = '#3b434b';
+  return (
+    <group position={pos} scale={s}>
+      <mesh position={[0, 0.3, 0]}><boxGeometry args={[7.2, 0.6, 1.2]} /><meshStandardMaterial color={hull} roughness={0.7} /></mesh>
+      <mesh position={[0, 0.02, 0]}><boxGeometry args={[7.1, 0.12, 1.05]} /><meshStandardMaterial color="#7a2f2a" roughness={0.8} /></mesh>
+      <mesh position={[3.95, 0.34, 0]} rotation={[0, 0, -Math.PI / 2]}><coneGeometry args={[0.6, 1.7, 4]} /><meshStandardMaterial color={hull} roughness={0.7} /></mesh>
+      <mesh position={[0, 0.62, 0]}><boxGeometry args={[7.0, 0.06, 1.1]} /><meshStandardMaterial color={deck} roughness={0.8} /></mesh>
+      <mesh position={[-0.2, 0.95, 0]}><boxGeometry args={[2.8, 0.55, 0.8]} /><meshStandardMaterial color={sup} roughness={0.8} /></mesh>
+      <mesh position={[0.5, 1.4, 0]}><boxGeometry args={[1.4, 0.4, 0.62]} /><meshStandardMaterial color={sup} roughness={0.8} /></mesh>
+      <mesh position={[0.7, 1.75, 0]}><boxGeometry args={[0.7, 0.3, 0.5]} /><meshStandardMaterial color="#c7cfd6" roughness={0.8} /></mesh>
+      <mesh position={[0.7, 2.5, 0]}><cylinderGeometry args={[0.03, 0.04, 1.4, 6]} /><meshStandardMaterial color={dark} /></mesh>
+      <mesh position={[0.7, 2.9, 0]}><boxGeometry args={[0.05, 0.05, 0.7]} /><meshStandardMaterial color={dark} /></mesh>
+      {[-0.9, 0.0, -1.7].map((x, i) => (
+        <group key={i} position={[x, 1.55 + (i === 2 ? 0 : 0), 0]}>
+          <mesh position={[0, 0.2, 0]}><cylinderGeometry args={[0.2, 0.25, 0.9, 10]} /><meshStandardMaterial color="#6d7882" roughness={0.8} /></mesh>
+          <mesh position={[0, 0.7, 0]}><cylinderGeometry args={[0.21, 0.2, 0.14, 10]} /><meshStandardMaterial color="#17191b" roughness={0.9} /></mesh>
+        </group>
+      ))}
+      {[2.5, -2.9].map((x, i) => (
+        <group key={i} position={[x, 0.85, 0]}>
+          <mesh position={[0, 0, 0]}><cylinderGeometry args={[0.38, 0.42, 0.28, 12]} /><meshStandardMaterial color="#76818c" roughness={0.8} /></mesh>
+          {[-0.12, 0.12].map((z) => <mesh key={z} position={[(i ? -1 : 1) * 0.65, 0.05, z]} rotation={[0, 0, Math.PI / 2]}><cylinderGeometry args={[0.045, 0.05, 1.1, 8]} /><meshStandardMaterial color="#2a2f34" /></mesh>)}
+        </group>
+      ))}
+      <mesh position={[0, 0.0, 0]} scale={[1, 1, 1]}><boxGeometry args={[8.4, 0.03, 1.8]} /><meshStandardMaterial color="#ffffff" transparent opacity={0.55} /></mesh>
+      {Array.from({ length: 8 }, (_, i) => {
+        const ph = (t * 0.4 + i / 8) % 1;
+        return <mesh key={i} position={[-0.9 - ph * 6, 2.1 + ph * 1.5, 0]} scale={S(0.4 + ph * 0.9)}><icosahedronGeometry args={[1, 1]} /><meshStandardMaterial color="#25272a" transparent opacity={0.85 * (1 - ph * 0.7)} roughness={1} /></mesh>;
+      })}
+      {flash > 0.01 && <mesh position={[-4.2, 0.95, 0.7]} scale={S(0.6 * Math.sin(Math.PI * clamp01(flash)))}><circleGeometry args={[1, 16]} /><meshBasicMaterial color="#ff8a1e" /></mesh>}
+    </group>
+  );
+};
 
 const Tank: React.FC<{ s?: number }> = ({ s = 1 }) => (
   <group scale={s}>
@@ -222,11 +343,11 @@ export const BunkerScene: React.FC<BP> = ({ t, cam, p }) => {
   if (tunnel > 0.9) rects.push([21.2, 22.1, -1.9, 0.001]);
 
   const factory = useHeroFactory();
-  const hero = useMemo<Hero | null>(() => (factory ? factory('#2c3f66') : null), [factory]);
+  const hero = useMemo<Hero | null>(() => (factory ? factory('#2c3f66', { top: '#26335a', bottom: '#6b6f73' }) : null), [factory]);
   const tools = useMemo(() => makeTools(), []);
   const helmet = useMemo(() => {
-    const m = new THREE.Mesh(new THREE.SphereGeometry(0.15, 14, 10, 0, Math.PI * 2, 0, Math.PI * 0.62), new THREE.MeshStandardMaterial({ color: '#5e6a3a', roughness: 0.8 }));
-    const rim = new THREE.Mesh(new THREE.TorusGeometry(0.152, 0.018, 6, 20), new THREE.MeshStandardMaterial({ color: '#4a552d', roughness: 0.8 }));
+    const m = new THREE.Mesh(new THREE.SphereGeometry(0.15, 14, 10, 0, Math.PI * 2, 0, Math.PI * 0.62), new THREE.MeshStandardMaterial({ color: '#4e5a32', roughness: 0.75 }));
+    const rim = new THREE.Mesh(new THREE.TorusGeometry(0.152, 0.018, 6, 20), new THREE.MeshStandardMaterial({ color: '#3c4626', roughness: 0.8 }));
     rim.rotation.x = Math.PI / 2;
     rim.position.y = -0.03;
     const gr = new THREE.Group();
@@ -288,19 +409,45 @@ export const BunkerScene: React.FC<BP> = ({ t, cam, p }) => {
   const strikeSoil = toolKind === 1 || toolKind === 4 || toolKind === 3;
   const wm = tide * 2.2;
 
+  const frontMats = useMemo(() => [sandTexture('#e6c487', 0.4), sandTexture('#d2a763', 0.7), sandTexture('#b78845', 0.6), sandTexture('#8f6634', 0.5)].map((t) => new THREE.MeshStandardMaterial({ map: t, roughness: 1 })), []);
+  const topTex = useMemo(() => { const t = sandTexture('#ebcb8e', 1); t.repeat.set(7, 2); return t; }, []);
+  const concTex = useMemo(() => { const t = concreteTexture(); t.repeat.set(2, 2); return t; }, []);
+  const concMat = useMemo(() => new THREE.MeshStandardMaterial({ map: concTex, roughness: 0.95 }), [concTex]);
+  const plankTex = useMemo(() => plankTexture(), []);
+  const plankMat = useMemo(() => new THREE.MeshStandardMaterial({ map: plankTex, roughness: 0.95 }), [plankTex]);
+  const cloudTex = useMemo(() => cTex(256, 128, (g) => {
+    for (let i = 0; i < 14; i++) {
+      const x = 40 + hash(i * 3) * 176, y = 50 + hash(i * 5) * 30, r = 22 + hash(i * 7) * 26;
+      const rg = g.createRadialGradient(x, y, 0, x, y, r);
+      rg.addColorStop(0, 'rgba(255,255,255,0.95)');
+      rg.addColorStop(1, 'rgba(255,255,255,0)');
+      g.fillStyle = rg;
+      g.beginPath();
+      g.arc(x, y, r, 0, 6.3);
+      g.fill();
+    }
+  }, false), []);
   return (
     <ThreeCanvas width={width} height={height} shadows camera={{ fov: c.fov ?? 40, position: c.pos, near: 0.05, far: 900 }} gl={{ antialias: true }} onCreated={({ gl }) => {
       gl.toneMapping = THREE.ACESFilmicToneMapping;
       gl.shadowMap.type = THREE.PCFSoftShadowMap;
     }}>
       <CameraRig {...c} />
-      <SkyDome top={skyTop} bottom={skyBot} stars={0} />
+      <SkyDome top={new THREE.Color('#2c7fd6')} bottom={new THREE.Color('#bfe0f4')} stars={0} radius={600} />
+      {Array.from({ length: 34 }, (_, i) => {
+        const a = (i / 34) * Math.PI * 2 + hash(i) * 0.3, r = 220 + hash(i * 3) * 60;
+        return (
+          <mesh key={'cl' + i} position={[Math.sin(a) * r, 28 + hash(i * 7) * 70, -Math.cos(a) * r - 40]} rotation={[0, -a + Math.PI, 0]} scale={[60 + hash(i * 5) * 60, 14 + hash(i * 9) * 12, 1]}>
+            <planeGeometry args={[1, 1]} /><meshBasicMaterial map={cloudTex} transparent depthWrite={false} toneMapped={false} opacity={0.85} />
+          </mesh>
+        );
+      })}
       <Env path="hdr/pedestrian_overpass_1k.hdr" intensity={0.6} />
-      <hemisphereLight args={['#e8f4ff', '#8a7a5a', 0.55]} />
+      <hemisphereLight args={['#dcecff', '#9a8660', 0.38]} />
       <directionalLight color="#fff4d8" intensity={2.3} position={[10, 16, 14]} castShadow shadow-mapSize={[2048, 2048]} shadow-camera-left={-16} shadow-camera-right={26} shadow-camera-top={12} shadow-camera-bottom={-8} shadow-camera-near={1} shadow-camera-far={70} />
 
       {/* ground: cut-away front face, top pieces, hole walls, back wall */}
-      <FrontFace rects={rects} />
+      <FrontFace rects={rects} mats={frontMats} />
       <mesh position={[7, -2.1, -1.5]}><planeGeometry args={[38, 4.2]} /><meshStandardMaterial color="#9a8156" roughness={1} /></mesh>
       {rects.map((r, i) => (
         <group key={i}>
@@ -309,10 +456,10 @@ export const BunkerScene: React.FC<BP> = ({ t, cam, p }) => {
         </group>
       ))}
       {[[-12, pitW0], [pit > 0.001 ? pitW1 : pitW0, 26]].map((q, i) => (
-        <mesh key={i} position={[(q[0] + q[1]) / 2, 0, -2.5]} rotation={[-Math.PI / 2, 0, 0]} receiveShadow><planeGeometry args={[q[1] - q[0], 11]} /><meshStandardMaterial color={SAND[0]} roughness={1} /></mesh>
+        <mesh key={i} position={[(q[0] + q[1]) / 2, 0, -2.5]} rotation={[-Math.PI / 2, 0, 0]} receiveShadow><planeGeometry args={[q[1] - q[0], 11]} /><meshStandardMaterial map={topTex} roughness={1} /></mesh>
       ))}
-      {pit > 0.001 && <mesh position={[(pitW0 + pitW1) / 2, 0, -4.75]} rotation={[-Math.PI / 2, 0, 0]}><planeGeometry args={[pitW1 - pitW0, 6.5]} /><meshStandardMaterial color={SAND[0]} roughness={1} /></mesh>}
-      {pit < 0.001 && <mesh position={[(pitW0 + pitW1) / 2, 0, -2.5]} rotation={[-Math.PI / 2, 0, 0]}><planeGeometry args={[pitW1 - pitW0, 11]} /><meshStandardMaterial color={SAND[0]} roughness={1} /></mesh>}
+      {pit > 0.001 && <mesh position={[(pitW0 + pitW1) / 2, 0, -4.75]} rotation={[-Math.PI / 2, 0, 0]}><planeGeometry args={[pitW1 - pitW0, 6.5]} /><meshStandardMaterial map={topTex} roughness={1} /></mesh>}
+      {pit < 0.001 && <mesh position={[(pitW0 + pitW1) / 2, 0, -2.5]} rotation={[-Math.PI / 2, 0, 0]}><planeGeometry args={[pitW1 - pitW0, 11]} /><meshStandardMaterial map={topTex} roughness={1} /></mesh>}
       {pit > 0.001 && <mesh position={[(pitW0 + pitW1) / 2, 0, 0.75]} rotation={[-Math.PI / 2, 0, 0]} visible={false}><planeGeometry args={[1, 1]} /></mesh>}
 
       {/* sea (behind and left) + horizon */}
@@ -360,19 +507,19 @@ export const BunkerScene: React.FC<BP> = ({ t, cam, p }) => {
         <group>
           <mesh position={[10, 0.06, 0]} receiveShadow><boxGeometry args={[5.4, 0.12, 4.4]} /><meshStandardMaterial color="#9b9fa4" roughness={0.9} /></mesh>
           {[[7.3, 0, 0.2, 4.4], [12.7, 0, 0.2, 4.4], [10, -2.2, 5.4, 0.2]].map((q, i) => (
-            <mesh key={i} position={[q[0], 1.7 * pop(form), q[1] + (q[1] === 0 ? 0 : q[1])]} scale={[1, S(pop(form)), 1]}><boxGeometry args={[q[2], 3.4, q[3]]} /><meshStandardMaterial color="#b98a52" roughness={0.9} /></mesh>
+            <mesh key={i} position={[q[0], 1.7 * pop(form), q[1] + (q[1] === 0 ? 0 : q[1])]} scale={[1, S(pop(form)), 1]}><boxGeometry args={[q[2], 3.4, q[3]]} /><primitive object={plankMat} attach="material" /></mesh>
           ))}
-          {pour > 0.01 && <mesh position={[10, (3.3 * pour) / 2, 0]}><boxGeometry args={[4.9, S(3.3 * pour), 4.0]} /><meshStandardMaterial color="#8d9196" roughness={0.9} /></mesh>}
+          {pour > 0.01 && <mesh position={[10, (3.3 * pour) / 2, 0]}><boxGeometry args={[4.9, S(3.3 * pour), 4.0]} /><primitive object={concMat} attach="material" /></mesh>}
         </group>
       )}
       {bunk > 0.01 && blast < 0.02 && (
         <group position={[10, 0, 0]} scale={bunkS}>
-          <mesh position={[0, 0.1, 0]} receiveShadow castShadow><boxGeometry args={[5.4, 0.2, 4.4]} /><meshStandardMaterial color={CONC} roughness={0.9} /></mesh>
-          <mesh position={[0, 1.7, -2.0 + wallT / 2]} castShadow receiveShadow><boxGeometry args={[5.4, 3.4, wallT]} /><meshStandardMaterial color={CONC} roughness={0.9} /></mesh>
-          <mesh position={[2.7 - wallT / 2, 1.7, 0]} castShadow><boxGeometry args={[wallT, 3.4, 4.4]} /><meshStandardMaterial color={CONC} roughness={0.9} /></mesh>
-          <mesh position={[-2.7 + wallT / 2, 0.52, 0]} castShadow><boxGeometry args={[wallT, 0.64, 4.4]} /><meshStandardMaterial color={CONC} roughness={0.9} /></mesh>
-          <mesh position={[-2.7 + wallT / 2, 2.4, 0]} castShadow><boxGeometry args={[wallT, 2.0, 4.4]} /><meshStandardMaterial color={CONC} roughness={0.9} /></mesh>
-          <mesh position={[0, 3.4 + roofT / 2 - 0.05, 0]} castShadow><boxGeometry args={[5.4, roofT, 4.4]} /><meshStandardMaterial color={CONC} roughness={0.9} /></mesh>
+          <mesh position={[0, 0.1, 0]} receiveShadow castShadow><boxGeometry args={[5.4, 0.2, 4.4]} /><primitive object={concMat} attach="material" /></mesh>
+          <mesh position={[0, 1.7, -2.0 + wallT / 2]} castShadow receiveShadow><boxGeometry args={[5.4, 3.4, wallT]} /><primitive object={concMat} attach="material" /></mesh>
+          <mesh position={[2.7 - wallT / 2, 1.7, 0]} castShadow><boxGeometry args={[wallT, 3.4, 4.4]} /><primitive object={concMat} attach="material" /></mesh>
+          <mesh position={[-2.7 + wallT / 2, 0.52, 0]} castShadow><boxGeometry args={[wallT, 0.64, 4.4]} /><primitive object={concMat} attach="material" /></mesh>
+          <mesh position={[-2.7 + wallT / 2, 2.4, 0]} castShadow><boxGeometry args={[wallT, 2.0, 4.4]} /><primitive object={concMat} attach="material" /></mesh>
+          <mesh position={[0, 3.4 + roofT / 2 - 0.05, 0]} castShadow><boxGeometry args={[5.4, roofT, 4.4]} /><primitive object={concMat} attach="material" /></mesh>
           <mesh position={[-2.6, 1.05, 0]}><planeGeometry args={[0.02, 0.01]} /><meshBasicMaterial color="#cfeaff" /></mesh>
           <mesh position={[0, 1.7, -2.0 + wallT + 0.02]}><planeGeometry args={[5.0, 3.0]} /><meshStandardMaterial color="#3a4a64" roughness={1} /></mesh>
         </group>

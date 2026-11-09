@@ -273,3 +273,7 @@ Project root: `whatif-engine/`.
 - Scene `bunker` (src/scenes/Bunker.tsx), generator tools/gen/bunker.py -> src/timelines/bunker.json (id `Bunker`). Beats, camera and timing follow docs/ref3-*.md frame by frame; VO is our own wording, each sentence speed-fitted to the reference beat window (Kokoro am_michael).
 - Hero = same rig, olive helmet added, builder tools: shovel (1), torch (2), hammer (3), pick (4). 18 beats: hole, wave, concrete, blast, thick buried bunker, tank, X traps, tide, poles+mines, MG, tunnel, window lasers, turn, stove/cards/gull, plume ending.
 - TODO polish: soldier shorts/tee texture, ref-like ship models, more camera whip pans. Pack: out/packs/Bunker-pack.zip (RENDER-Bunker.bat, RENDER-Bunker-10s-DEMO.bat).
+
+### Bunker v2 look pass
+- Procedural textures (sand ripples, concrete with bolts, planks), blue sky + cloud billboards, detailed destroyer, navy-tee soldier + olive helmet, closer hero-centred camera keys.
+- Still far from the reference render quality (Blender-like soft lighting, real soldier model, wet-sand beach slope with foam, sphere-spray FX). Next: proper soldier GLB with shorts/boots/strap, beach slope + foam, wavy sand normal map, higher-fidelity ships/boats/tank.
