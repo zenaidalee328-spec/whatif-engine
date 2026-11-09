@@ -188,7 +188,7 @@ export const SCENES: Record<string, { component: React.FC<SceneProps>; ambience:
   build: {
     ambience: 'wind',
     about: 'Cut-away diorama (block of earth with a cross-section front face, camera from +z). Re-skin per video with env field|beach|desert|snow|forest. Surface y=0, block x -5..5 z -5..3. Story object = steel tank along z (r 1.7, centre cy; cy 1.7 = on the ground, -2.2 = buried). params: env, tank 0..1 pop, cy, pit 0..1 (dig 0->1, refill 1->0), hatch 0..1 cut / 1..2 lid opens, vent 0..1, lamp, bed 0..1, props 0..1, hero{x,y,z,rotY,walk,show}, bloom',
-    component: ({ t, p, cam }) => <BuildScene t={t} cam={cam} p={{ ...p, hero: evo(p.hero, t) }} />,
+    component: ({ t, p, cam }) => <BuildScene t={t} cam={cam} p={{ ...p, hero: evo(p.hero, t), tornado: evo(p.tornado, t) }} />,
   },
   herotest: { ambience: 'none', about: 'dev: hero turntable', component: ({ t, p }) => <HeroTestScene t={t} p={p} /> },
   black: {

@@ -129,6 +129,14 @@ export const BuildScene: React.FC<BuildProps> = ({ t, cam, p }) => {
   const vent: number = clamp01(p.vent ?? 0);
   const lamp: number = clamp01(p.lamp ?? 0);
   const bedK = pop(p.bed ?? 0);
+  const storm = clamp01(p.storm ?? 0);
+  const flash = clamp01(p.flash ?? 0);
+  const lidFly = clamp01(p.lidFly ?? 0);
+  const water = clamp01(p.water ?? 0);
+  const doorK = clamp01(p.door ?? 0);
+  const torn = p.tornado ?? { vis: 0, x: 8, z: -14 };
+  const skyTop = new THREE.Color(env.sky[0]).lerp(new THREE.Color('#2b323b'), storm * 0.85).lerp(new THREE.Color('#ffffff'), flash * 0.5);
+  const skyBot = new THREE.Color(env.sky[1]).lerp(new THREE.Color('#68727d'), storm * 0.85).lerp(new THREE.Color('#ffffff'), flash * 0.6);
   const propK = pop(p.props ?? 1);
   const H = p.hero ?? {};
   const R = 1.7;
@@ -186,6 +194,7 @@ export const BuildScene: React.FC<BuildProps> = ({ t, cam, p }) => {
   const hatchOpen = clamp01(hatch - 1);
   const hatchCut = clamp01(hatch);
   const sparkP = hatch > 0 && hatch < 1.05;
+  const hatchTop = Math.max(R + 0.4, 0.6 - cy);
   const ventBase = R - 0.2;
   const ventLen = Math.max(0.5, 1.3 - cy - ventBase);
 
@@ -195,10 +204,10 @@ export const BuildScene: React.FC<BuildProps> = ({ t, cam, p }) => {
       gl.shadowMap.type = THREE.PCFSoftShadowMap;
     }}>
       <CameraRig {...c} />
-      <SkyDome top={new THREE.Color(env.sky[0])} bottom={new THREE.Color(env.sky[1])} stars={0} />
+      <SkyDome top={skyTop} bottom={skyBot} stars={0} />
       <Env path="hdr/pedestrian_overpass_1k.hdr" intensity={0.55} />
-      <hemisphereLight args={[env.sky[1], '#5a4a3a', 0.5]} />
-      <directionalLight color={env.sun} intensity={2.4} position={[8, 14, 10]} castShadow shadow-mapSize={[2048, 2048]} shadow-camera-left={-9} shadow-camera-right={9} shadow-camera-top={9} shadow-camera-bottom={-9} shadow-bias={-0.0004} />
+      <hemisphereLight args={[env.sky[1], '#5a4a3a', 0.5 + flash * 2.2]} />
+      <directionalLight color={env.sun} intensity={2.4 * (1 - 0.72 * storm) + flash * 3} position={[8, 14, 10]} castShadow shadow-mapSize={[2048, 2048]} shadow-camera-left={-9} shadow-camera-right={9} shadow-camera-top={9} shadow-camera-bottom={-9} shadow-bias={-0.0004} />
 
       {/* soil block */}
       <mesh position={[0, -2.2, 3]} material={frontMat} receiveShadow><planeGeometry args={[10, 4.4]} /></mesh>
@@ -217,6 +226,34 @@ export const BuildScene: React.FC<BuildProps> = ({ t, cam, p }) => {
           <mesh position={[0, notchBottom + 0.002, -1]} rotation={[-Math.PI / 2, 0, 0]} receiveShadow><planeGeometry args={[HW * 2, 8]} /><meshStandardMaterial color={env.soil[0]} roughness={1} /></mesh>
         </group>
       )}
+
+      {/* distant terrain behind the diorama */}
+      <mesh position={[0, -0.45, -40]} rotation={[-Math.PI / 2, 0, 0]}><planeGeometry args={[220, 70]} /><meshStandardMaterial color={new THREE.Color(env.top).multiplyScalar(0.7).lerp(skyBot, 0.35 + storm * 0.2)} roughness={1} /></mesh>
+      {(torn.vis ?? 0) > 0.01 && (
+        <group position={[torn.x ?? 8, -0.45, torn.z ?? -14]} scale={Math.max(0.001, torn.vis)}>
+          {Array.from({ length: 9 }, (_, i) => {
+            const r0 = 0.35 + i * 0.5;
+            const y = i * 1.05 + 0.5;
+            const sway = Math.sin(t * 2 + i * 0.7) * 0.18 * i;
+            return (
+              <mesh key={i} position={[sway, y, Math.cos(t * 2 + i) * 0.1 * i]} rotation={[0, t * (5 - i * 0.3) + i, 0]}>
+                <cylinderGeometry args={[r0 + 0.5, r0, 1.1, 14, 1, true]} />
+                <meshStandardMaterial color={i % 2 ? '#5c636b' : '#444b53'} roughness={1} transparent opacity={0.88} side={THREE.DoubleSide} />
+              </mesh>
+            );
+          })}
+          {Array.from({ length: 16 }, (_, i) => {
+            const a = t * 3.2 + i * 0.9;
+            const rr = 1.4 + (i % 5) * 0.55;
+            return <mesh key={'d' + i} position={[Math.cos(a) * rr, 0.6 + (i * 0.53) % 7, Math.sin(a) * rr]} scale={0.14 + 0.08 * (i % 3)}><boxGeometry args={[1, 0.6, 1]} /><meshStandardMaterial color="#2c2a28" /></mesh>;
+          })}
+        </group>
+      )}
+      {storm > 0.4 &&
+        Array.from({ length: 90 }, (_, i) => {
+          const ph = (t * 1.7 + hash(i * 1.9)) % 1;
+          return <mesh key={'r' + i} position={[-11 + hash(i * 3.3) * 22 + ph * 2.2, 11 - ph * 15, -8 + hash(i * 7.1) * 16]} rotation={[0, 0, 0.18]}><boxGeometry args={[0.025, 0.7, 0.025]} /><meshBasicMaterial color="#cfe3f5" transparent opacity={0.55 * storm} /></mesh>;
+        })}
 
       {/* scenery */}
       {trees.map((q) => <Prop key={q.i} kind={env.prop} leaf={env.leaf} x={q.x} z={q.z} s={propK} i={q.i} />)}
@@ -245,12 +282,27 @@ export const BuildScene: React.FC<BuildProps> = ({ t, cam, p }) => {
         <mesh position={[0, R + 0.001, 0]} rotation={[-Math.PI / 2, 0, 0]}><circleGeometry args={[0.5 * hatchCut, 32]} /><meshStandardMaterial color="#1a1d21" metalness={0.6} roughness={0.4} /></mesh>
         {hatchCut > 0.99 && (
           <group>
-            <mesh position={[0, R + 0.2, 0]}><cylinderGeometry args={[0.55, 0.55, 0.4, 24]} /><meshStandardMaterial color="#6a7480" metalness={0.7} roughness={0.4} /></mesh>
-            <group position={[-0.55, R + 0.42, 0]} rotation={[0, 0, -hatchOpen * 1.9]}>
+            <mesh position={[0, (R + hatchTop) / 2, 0]}><cylinderGeometry args={[0.55, 0.55, hatchTop - R + 0.04, 24]} /><meshStandardMaterial color="#6a7480" metalness={0.7} roughness={0.4} /></mesh>
+            <group position={[-0.55 - lidFly * 6, hatchTop + 0.02 + lidFly * lidFly * 14 - lidFly * 2, -lidFly * 5]} rotation={[lidFly * 9, lidFly * 6, -(hatchOpen * 1.9) * (1 - lidFly) - lidFly * 3]}>
               <mesh position={[0.55, 0.03, 0]} castShadow><cylinderGeometry args={[0.58, 0.58, 0.07, 24]} /><meshStandardMaterial color="#8a95a1" metalness={0.8} roughness={0.35} /></mesh>
             </group>
           </group>
         )}
+        {/* sealed airlock door with wheel */}
+        {doorK > 0.001 && (
+          <group position={[0, hatchTop + 0.08 + (1 - pop(doorK)) * 1.2, 0]} scale={Math.max(0.001, pop(doorK))}>
+            <mesh castShadow><cylinderGeometry args={[0.66, 0.66, 0.16, 28]} /><meshStandardMaterial color="#39434d" metalness={0.8} roughness={0.35} /></mesh>
+            <mesh position={[0, 0.16, 0]} rotation={[Math.PI / 2, 0, doorK * 6]}><torusGeometry args={[0.26, 0.04, 8, 24]} /><meshStandardMaterial color="#c9a227" metalness={0.8} roughness={0.3} /></mesh>
+            {[0, 1, 2, 3].map((k) => <mesh key={k} position={[0, 0.16, 0]} rotation={[0, k * 0.785 + doorK * 6, 0]}><boxGeometry args={[0.56, 0.03, 0.03]} /><meshStandardMaterial color="#c9a227" metalness={0.8} roughness={0.3} /></mesh>)}
+            <mesh position={[0, -0.05, 0]} rotation={[Math.PI / 2, 0, 0]}><torusGeometry args={[0.64, 0.035, 8, 40]} /><meshStandardMaterial color="#ff8a2a" emissive="#ff6a00" emissiveIntensity={doorK < 0.98 ? 3.5 : 0.25} /></mesh>
+          </group>
+        )}
+        {/* flood water inside */}
+        {water > 0.01 && (() => {
+          const h = water * 1.25;
+          const half = Math.sqrt(Math.max(0.01, R * R - (-1.0 + h) * (-1.0 + h)));
+          return <mesh position={[0, -1.0 + h / 2 + 0.07, 0]}><boxGeometry args={[Math.min(2 * half - 0.12, 3.2), h, 5.8]} /><meshStandardMaterial color="#3f86c9" transparent opacity={0.62} roughness={0.1} /></mesh>;
+        })()}
         {/* vent pipe */}
         {vent > 0.001 && (
           <mesh position={[1.0, ventBase + (ventLen * vent) / 2, 0.4]} scale={[1, ventLen * vent, 1]} castShadow><cylinderGeometry args={[0.1, 0.1, 1, 12]} /><meshStandardMaterial color="#c0662f" metalness={0.5} roughness={0.5} /></mesh>
