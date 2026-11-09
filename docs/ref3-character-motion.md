@@ -562,3 +562,10 @@ The hero's motion is NOT random movement. He is the BUILDER: every new thing in 
 - No beat without a visible job: tool in hand -> action -> result appears -> hero reacts/presents it.
 - Pop-ins must be driven by his hands (prop spawns at the hand, then lands where he puts it), never spawn on their own.
 - For Water Tank -> Panic Room: he digs the cellar, hauls + welds/bolts the tank hatch, builds the bench/shelf, lights the lamp; the storm (tornado) is the enemy that interrupts him (stumble), then he finishes.
+
+## USER CLARIFICATION: TOOL PER JOB (hero uses the exact tool to build the exact thing)
+- Shovel -> digs the cellar / shaft (6 f dig loop, soil chips per strike, hole deepens).
+- Welding gun -> welds the tank hatch / airlock / steel plates (arm extended, bright white-blue spark burst + glow on the seam, seam line grows as he moves along it).
+- Hammer / drill / wrench as needed for bench, shelf, bolts; lamp wired by hand.
+- Tool pops into his hand (easeOut scale 0.2 -> 1), he uses it, the built part appears exactly where the tool touches; tool vanishes when the job is done.
+- Every beat = tool in hand -> use loop -> result -> hero presents/reacts.
