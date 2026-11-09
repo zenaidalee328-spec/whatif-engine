@@ -264,3 +264,18 @@ Character: stylised 3D soldier (olive Brodie helmet, navy tee, grey shorts, brow
 - f1002-1004: the log drops/slides to the water (tip near the heap), hero TURNS 3/4 toward it: f1003 right hand reaches down to his belt, f1004 a MALLET (black head, brown handle) appears in his hand; arm extended forward at shoulder height, the mallet head touches the pole top; log leans ~12 deg and is planted with its foot in the water (shadow on the water).
 - f1005-1007 (PLANT WOODEN, pink WOODEN): wind-up: f1005 arm raised ~45 deg, mallet slides up along the pole; f1006 arm ~80 deg, mallet above the head, head tipped back; f1007 both arms fully overhead (a V), mallet head 140 px above his helmet = the top of the wind-up. Water level at his knees now (it dropped, the camera rose slightly) and the horizon with the ship + dune is back in frame.
 - RULES FOR OUR VIDEO: (1) float -> stand uses a visible roll (3-4 f), (2) a prop falls in from off-screen top while the caption changes, (3) the tool appears in his hand in ONE frame at the end of the reach (hand at belt first), (4) swing = wind-up 3 frames over ~35 deg steps; the arm goes from forward to overhead in 3 frames, (5) the waterline gives constant "depth" reading: ghosted legs below the slab, solid torso above it.
+
+## Frames 1008-1031 (c169-c172): HAMMERING THE WOODEN POLES (PLANT WOODEN / POLES IN) - the swing cycle
+- Scene: hero side view, left third, water at his calves (water level fell, legs now visible), trap band at right horizon, 2 warships + smoke at left, dune at the right. Camera nearly static, slow push-in (~+10% over 24 f), a 2-px handheld-like drift.
+- ONE SWING CYCLE = ~10 frames (repeats 1007 -> 1017 -> 1027):
+  f0 (top): both arms fully overhead (V), mallet vertical above the helmet, rising on toes, back arched.
+  f1: mallet tipped BACK behind the head (handle ~60 deg left), elbows bent (wind-up peak).
+  f2: mallet vertical again, arms straight (reset before the strike).
+  f3: SWING DOWN: arm sweeps forward-down, mallet head reaches the pole TOP (arm ~45 deg up, torso leaning 10 deg forward).
+  f4-5: STRIKE: arm horizontal, mallet hits the pole mid-height; torso 20-40 deg forward, knees bend, heel lifts; at f5-6 mallet drops to the pole base (handle diagonal down), torso ~45 deg bent, head down, helmet tilts forward.
+  f6-7: IMPACT: 2-3 cream sphere clusters (dust/sand, 12-30 px radius, decaying scale) burst at the pole base + the pole sinks 8-12 px each hit (pole top lowers); water ring shows at the base.
+  f8-9: recover: mallet comes back up (arm 45 deg, then 80 deg), body straightens, up on toes -> top again.
+- Props: the first pole stands at the right, leaning ~10 deg; at f1012 and f1014 TWO MORE POLES FALL IN from the top right (thin, tilted ~15 deg), stick into the water beside it; by f1020 there are 3-4 poles in a row leaning together, each with its own dust spheres. Poles land with a tiny overshoot then settle.
+- Hero details: head follows the mallet (looks up on the raise, down on the strike), shadow of the hero and the mallet on the water (a dark blob moves with him), the free hand grips the handle low, the strap and belt pouch swing 3 px.
+- Captions: PLANT WOODEN (pink) 1007-1025 -> POLES IN (green IN) from f1028. The word changes right at the top of a swing.
+- RULES FOR OUR VIDEO: (1) a tool loop = a 10 frame cycle with 4 key poses (top, backswing, strike, base-bend), the body bends/knees/heels carry the weight, (2) every strike spawns cream spheres + the prop sinks a bit, (3) new props keep falling in from the top during the loop so the frame always changes, (4) the hero's shadow lies on the water.
