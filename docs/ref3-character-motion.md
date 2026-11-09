@@ -555,3 +555,10 @@ Reference = 61.6 s, 30 fps, ~1 new pose every 3-6 f, ~1 camera move every 20-60 
 7. AMBIENT: seagulls (black-tipped flat wings), wake streaks, flickering stove glow, swinging bulb, muzzle flash, smoke columns.
 8. CAPTIONS: 2-word karaoke, accent colour changes per word, single-word captions over calm shots (BUT, CONGRATULATIONS).
 9. CHARACTER LOOK: low-poly man with helmet, dark V-neck tee, shorts, satchel strap + belt, boots; the same rig can be re-skinned (hard hat / storm-cellar outfit).
+
+# ===== CORRECTION FROM USER (MOST IMPORTANT RULE) =====
+The hero's motion is NOT random movement. He is the BUILDER: every new thing in the scene is built by him, and his action CAUSES the change.
+- dig loop -> the hole/shaft grows per strike; carries/places the part -> the part appears on his hand first, then in place; sits and works -> stove/stool/cards appear because his hands made them.
+- No beat without a visible job: tool in hand -> action -> result appears -> hero reacts/presents it.
+- Pop-ins must be driven by his hands (prop spawns at the hand, then lands where he puts it), never spawn on their own.
+- For Water Tank -> Panic Room: he digs the cellar, hauls + welds/bolts the tank hatch, builds the bench/shelf, lights the lamp; the storm (tornado) is the enemy that interrupts him (stumble), then he finishes.
