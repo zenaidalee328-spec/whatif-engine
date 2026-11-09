@@ -539,3 +539,19 @@ Character: stylised 3D soldier (olive Brodie helmet, navy tee, grey shorts, brow
 - 1812-1823: very slow settle: the camera continues a gentle descend + push toward the room (diorama grows ~0.4%/f), the horizon rises; seagulls drift (2 birds, top right); the hero's arms are still V-up but the whole figure rocks side to side +-2 deg as if cheering (1815-1823 the torso tilts left/right alternately every 4 f). The shot shows the whole "reveal": surface (dune, pipe + smoke), concrete bunker (hero + stove), shaft with ladder, lower mine tunnel, a warship offshore.
 - Captions: YOU HAVE BUILT (cyan YOU, red BUILT).
 - RULES FOR OUR VIDEO: (1) the final shot = the "money shot": full diorama in a slow orbit (yaw +0.5 deg/f) while the hero keeps cheering with a +-2 deg rock every 4 f, (2) two smoke columns (cream + charcoal) leaning with the wind, (3) the horizon + a warship / background landmark pop in behind the dune as the camera rises, (4) end of cheer: arms slowly sag 4 px over 6 f, not a hard stop.
+
+## Frames 1824-1848 (c305-c309): END CARD - FULL DIORAMA, SLOW TILT-DOWN + ZOOM-IN ("A BUNKER")
+- 1824-1848 (25 f): same wide diorama, caption A BUNKER (pink BUNKER) for the whole 1 s. The camera: slow ORBIT to the right + a gentle tilt-down + zoom-in (the diorama grows ~0.5%/f, the sea/horizon slides up), more foreground appears bottom-left: tank (olive barrel + wheels), landing craft, hedgehogs on the beach. Hero: V-cheer, the whole figure rocks +-2 deg, arms sag 3 px by 1848. Stove smoke leans right; charcoal smoke from the boat; 1 seagull top-right. Last frame 1848 = no fade-out, hard stop (video loops).
+- RULES FOR OUR VIDEO: end on the money shot with the title word as the caption, no fade, so the loop restarts cleanly.
+
+# ===== SYNTHESIS: WHAT OUR HERO + CAMERA MUST DO (all 1848 frames reviewed) =====
+Reference = 61.6 s, 30 fps, ~1 new pose every 3-6 f, ~1 camera move every 20-60 f.
+1. HERO ALWAYS MOVING: never a frozen standing pose. Idle = breathing 1 px + helmet nod + a 6-8 f hand loop; hold-poses (cheer, arm-up) get 2 px finger flutter + 2 deg sway.
+2. REACT TO EVENTS: tide/wave hit -> stumble back (torso lean 15-20 deg, arms out, 1 step back, 6 f), then recover; flinch + panic run + brake + slump; dive/tuck; bird steal -> head tilt up + arm shoots up.
+3. STATE CHANGES by pop-in: props (stool, stove, cards, fruit) appear without transition or with easeOut scale 0.2 -> 1 in 3 f; hero rotates profile -> 3/4 -> front over 4-8 f to face the next prop.
+4. SIT/KNEEL/CLIMB/PULL-UP/DIG-LOOP poses exist: dig = 6 f cycle (up / down / strike / pull) with chips + a wall step per strike; sit = knees bend over 3 f with the stool popping in at the first bend.
+5. CAMERA (never static): push-in 1%/6 f during idles, crane down through the roof for a feet-first reveal, pull-back + crane-up for the wide, whip-pans between locations (6-8 deg/f), Dutch roll 5 deg during swoops, final slow orbit on the money shot.
+6. PARTICLES/FX: sphere-cluster smoke (4-9 spheres, grows with height), cream sphere dust, charcoal debris, white stretched-ellipsoid spray, flat pink tracer bars with red glow tip, translucent vision cone + cream ring, orange flat explosions.
+7. AMBIENT: seagulls (black-tipped flat wings), wake streaks, flickering stove glow, swinging bulb, muzzle flash, smoke columns.
+8. CAPTIONS: 2-word karaoke, accent colour changes per word, single-word captions over calm shots (BUT, CONGRATULATIONS).
+9. CHARACTER LOOK: low-poly man with helmet, dark V-neck tee, shorts, satchel strap + belt, boots; the same rig can be re-skinned (hard hat / storm-cellar outfit).
