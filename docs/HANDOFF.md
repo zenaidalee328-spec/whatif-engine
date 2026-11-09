@@ -268,3 +268,8 @@ Project root: `whatif-engine/`.
 ## TankRoomDemo v4 (builder hero)
 - Hero is the BUILDER: shovel dig loop (act 7, 8 strikes, pit/mound grow, soil chips), tool pops in hand, climbs out, welds the door with torch (act 8, sparks + light), presents (11), V-cheer (10). Notes: docs/ref3-character-motion.md.
 - Camera at weld/cheer raised so hero is visible above the flood. Re-skin to soldier look still TODO. Pack: out/packs/TankRoomDemo-pack.zip.
+
+## Bunker (full 61.6 s replica of the beach-bunker short)
+- Scene `bunker` (src/scenes/Bunker.tsx), generator tools/gen/bunker.py -> src/timelines/bunker.json (id `Bunker`). Beats, camera and timing follow docs/ref3-*.md frame by frame; VO is our own wording, each sentence speed-fitted to the reference beat window (Kokoro am_michael).
+- Hero = same rig, olive helmet added, builder tools: shovel (1), torch (2), hammer (3), pick (4). 18 beats: hole, wave, concrete, blast, thick buried bunker, tank, X traps, tide, poles+mines, MG, tunnel, window lasers, turn, stove/cards/gull, plume ending.
+- TODO polish: soldier shorts/tee texture, ref-like ship models, more camera whip pans. Pack: out/packs/Bunker-pack.zip (RENDER-Bunker.bat, RENDER-Bunker-10s-DEMO.bat).
